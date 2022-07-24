@@ -1,5 +1,4 @@
 import { ApplicationActions } from "@actions";
-import { AssistiveTouch } from "@components";
 import { BaseSetting, useTheme } from "@config";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -12,11 +11,10 @@ import { Platform, StatusBar, View } from "react-native";
 import { DarkModeProvider, useDarkMode } from "react-native-dark-mode";
 import SplashScreen from "react-native-splash-screen";
 import { useDispatch, useSelector } from "react-redux";
-import { AllScreens, ModalScreens } from "./config";
+import { AllScreens, NewsScreens, ModalScreens } from "./config";
 const RootStack = createStackNavigator();
 const MainStack = createStackNavigator();
 import { StackActions } from "@react-navigation/native";
-import { getInto } from "@selectors"
 
 const MainScreens = () => {
     return (
@@ -24,7 +22,6 @@ const MainScreens = () => {
             // initialRouteName="SliderIntro"
             screenOptions={{
                 headerShown: false,
-               
             }}
         >
             {Object.keys(AllScreens).map((name, index) => {
@@ -50,7 +47,6 @@ const Navigator = (props) => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
     const navigationRef = useRef(null);
-    const intro = useSelector(getInto);
 
     useEffect(() => {
         // Config status bar
@@ -66,7 +62,7 @@ const Navigator = (props) => {
     useEffect(() => {
         // Hide screen loading
         SplashScreen.hide();
-        
+
         const onProcess = async () => {
             // Get current language of device
             const languageCode = language ?? BaseSetting.defaultLanguage;
@@ -79,26 +75,21 @@ const Navigator = (props) => {
             });
             Utils.enableExperimental();
             setLoading(false);
+
             navigationRef?.current?.dispatch(
-                StackActions.replace(intro ? "SliderIntro" : "MaziHome")
+                StackActions.replace("NewsMenu")
             );
-            // navigationRef?.current?.dispatch(
-            //     StackActions.replace(intro ? "ProjectMenu" : "MaziHome")
-            // );
+            navigationRef?.current?.navigate("NewsMenu");
         };
         onProcess();
     }, []);
-
-    const goToApp = (name) => {
-        navigationRef?.current?.navigate(name);
-    };
 
     return (
         <View style={{ flex: 1, position: "relative" }}>
             <DarkModeProvider>
                 <NavigationContainer theme={theme} ref={navigationRef}>
                     <RootStack.Navigator
-                        
+
                         screenOptions={{
                             headerShown: false,
                             cardStyle: { backgroundColor: "transparent" },
@@ -142,7 +133,6 @@ const Navigator = (props) => {
                     </RootStack.Navigator>
                 </NavigationContainer>
             </DarkModeProvider>
-            {!loading && <AssistiveTouch goToApp={goToApp} />}
         </View>
     );
 };
