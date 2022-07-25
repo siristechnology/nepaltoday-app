@@ -59,7 +59,16 @@ buck-out/
 appcenter-config.json
 android/app/release/*
 android/app/debug/*
-
+android/app/signed/*
+**/*.apk*
 
 # CocoaPods
 /ios/Pods/
+
+# vscode
+.vscode/**
+!.vscode/extensions.json
+**/*.prefs
+
+# env files
+.env
