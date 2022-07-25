@@ -159,69 +159,26 @@ const Home = (props) => {
 							/>
 						)}
 					/>
-					<View style={styles.topicsView}>
-						<Text title3 semibold style={styles.title}>
-							{'browse topics'}
-						</Text>
-						<Text light footnote regular grayColor>
-							{'sss sss ww'}
-						</Text>
-						<FlatList
-							contentContainerStyle={{ marginTop: 10 }}
-							data={topics}
-							keyExtractor={(item, index) => item.id}
-							renderItem={({ item, index }) => (
-								<CategoryList
-									loading={loading}
-									onPress={goPost(item)}
-									style={{
-										marginBottom: index == topics.length - 1 ? 0 : 15,
-									}}
-									image={item.image}
-									title={item.title}
-									subtitle={item.subtitle}
-								/>
-							)}
-							ListFooterComponent={
-								<TouchableOpacity onPress={goToCategory}>
-									<Text body2 semibold accentColor>
-										{'see_more'}
-									</Text>
-								</TouchableOpacity>
-							}
-							ListFooterComponentStyle={{
-								width: '100%',
-								alignItems: 'center',
-								paddingTop: 15,
-							}}
-						/>
-					</View>
-					<View>
-						<Text title3 semibold style={styles.title}>
-							{'discover_channels'}
-						</Text>
-						<Text light footnote regular grayColor>
-							{'description_discover_channels'}
-						</Text>
-						<FlatList
-							contentContainerStyle={{ marginTop: 15 }}
-							horizontal={true}
-							showsHorizontalScrollIndicator={false}
-							data={channels}
-							keyExtractor={(item, index) => item.id}
-							renderItem={({ item, index }) => (
-								<CardChannelGrid
-									loading={loading}
-									onPress={goPostDetail}
-									style={{
-										marginRight: index == channels.length - 1 ? 0 : 15,
-									}}
-									image={item.image}
-									title={item.title}
-								/>
-							)}
-						/>
-					</View>
+
+					<FlatList
+						scrollEnabled={false}
+						contentContainerStyle={styles.paddingFlatList}
+						data={list}
+						keyExtractor={(item, index) => index.toString()}
+						renderItem={({ item, index }) => (
+							<NewsList
+								loading={loading}
+								image={item.image}
+								title={item.title}
+								subtitle={item.subtitle}
+								date={item.date}
+								style={{
+									marginBottom: index == list.length - 1 ? 0 : 15,
+								}}
+								onPress={goPostDetail(item)}
+							/>
+						)}
+					/>
 				</ScrollView>
 			</View>
 		)
