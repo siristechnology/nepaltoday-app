@@ -154,7 +154,6 @@ export { default as TitleFintech } from './Title/Fintech'
 // Progress
 export { default as ProgressBar } from './Progress/Bar'
 export { default as ProgressCircle } from './Progress/Circle'
-export { default as AssistiveTouch } from './AssistiveTouch'
 
 // TextInput
 export { default as TextInput } from './TextInput'

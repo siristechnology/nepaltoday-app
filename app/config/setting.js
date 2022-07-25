@@ -2,8 +2,8 @@
  * Basic Setting Variables Define
  */
 export const BaseSetting = {
-	name: 'mazi',
-	displayName: 'Mazi',
+	name: 'nepaltodayapp',
+	displayName: 'NepalToday',
 	appVersion: '1.0.5',
 	defaultLanguage: 'en',
 	languageSupport: [

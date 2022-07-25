@@ -5,7 +5,7 @@ import { BaseColor, BaseStyle } from '@config'
 import { HomeChannelData, HomeListData, HomePopularData, HomeTopicData, PostListData } from '@data'
 import StationsData from './stations'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { CardChannelGrid, CardSlide, CategoryList, News43, NewsList, SafeAreaView, Text } from '@components'
+import { CardChannelGrid, CardSlide, CategoryList, SafeAreaView, Text } from '@components'
 import SearchBox from './SearchBox'
 import styles from './styles'
 
@@ -94,6 +94,8 @@ const Home = (props) => {
 										subtitle={item.subtitle}
 									/>
 								)}
+								showsHorizontalScrollIndicator={false}
+								showsVerticalScrollIndicator={false}
 							/>
 						</SafeAreaView>
 					</View>

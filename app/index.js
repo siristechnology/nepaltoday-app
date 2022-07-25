@@ -8,7 +8,7 @@ import * as Utils from '@utils'
 console.disableYellowBox = true
 Utils.setupLayoutAnimation()
 
-const Mazi = () => {
+const NTApp = () => {
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
@@ -20,4 +20,4 @@ const Mazi = () => {
 	)
 }
 
-export default Mazi
+export default NTApp

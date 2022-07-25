@@ -1,4 +1,4 @@
-package com.mazi;
+package com.siristechnology.nepaltodayapp.beta;
 import org.devio.rn.splashscreen.SplashScreen;
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "mazi";
+        return "nepaltodayapp";
     }
 
     @Override
