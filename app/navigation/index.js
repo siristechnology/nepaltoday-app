@@ -18,7 +18,7 @@ const MainStack = createStackNavigator()
 const MainScreens = () => {
 	return (
 		<MainStack.Navigator
-			// initialRouteName="SliderIntro"
+			// initialRouteName="NewsMenu"
 			screenOptions={{
 				headerShown: false,
 			}}
@@ -79,7 +79,7 @@ const Navigator = (props) => {
 						screenOptions={{
 							headerShown: false,
 							cardStyle: { backgroundColor: 'transparent' },
-							cardOverlayEnabled: true,
+							cardOverlayEnabled: false,
 							cardStyleInterpolator: ({ current: { progress } }) => ({
 								cardStyle: {
 									opacity: progress.interpolate({

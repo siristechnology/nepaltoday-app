@@ -14,13 +14,7 @@ const MENUS = {
 		iconName: 'book',
 		title: 'News',
 		navigate: 'NewsMenu',
-	},
-	eCommerce: {
-		id: 'eCommerce',
-		iconName: 'shopping-cart',
-		title: 'E-commerce',
-		navigate: 'ECommerceMenu',
-	},
+	}
 }
 const index = () => {
 	const navigation = useNavigation()

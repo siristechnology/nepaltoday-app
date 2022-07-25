@@ -6,31 +6,32 @@ import React from 'react'
 import { ImageBackground, TouchableOpacity, View } from 'react-native'
 import styles from './styles'
 import Loading from './Loading'
+import { getRelativeTime } from '../../../helper/time'
 
 const News43 = (props) => {
-	const { name, description, title, image, style, avatar, onPress, loading } = props
-	if (loading) {
+	const { article, style, onPress, loading } = props
+	if (loading || !article) {
 		return <Loading style={style} />
 	}
 
 	return (
 		<TouchableOpacity style={style} onPress={onPress}>
-			<ImageBackground source={image} style={styles.imageBackground} borderRadius={8}>
+			<ImageBackground source={{ uri: article.imageLink }} style={styles.imageBackground} borderRadius={8}>
 				<View style={styles.viewBackground}>
 					<View style={styles.viewItem}>
 						<ProfileAuthor
 							styleThumb={styles.styleThumb}
-							image={avatar}
+							image={{ uri: article.source.logoLink }}
 							styleName={{ color: BaseColor.whiteColor }}
 							styleDescription={{
 								color: BaseColor.whiteColor,
 							}}
-							name={name}
-							description={description}
+							name={`${article.source.name}`}
+							description={getRelativeTime(article.createdDate)}
 						/>
 					</View>
 					<Text title3 whiteColor semibold>
-						{title}
+						{article.title}
 					</Text>
 				</View>
 			</ImageBackground>

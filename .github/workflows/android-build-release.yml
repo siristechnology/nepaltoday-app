@@ -36,7 +36,7 @@ jobs:
 
             - name: Publish Apk to Github Release
               uses: marvinpinto/action-automatic-releases@latest
-              if: github.ref == 'refs/heads/master'
+              if: github.ref == 'refs/heads/main'
               with:
                   files: android/app/build/outputs/apk/signed/release/app-signed-release.apk
                   repo_token: ${{ secrets.GITHUB_TOKEN }}

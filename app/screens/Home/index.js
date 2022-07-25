@@ -1,26 +1,93 @@
-import { CardChannelGrid, CardSlide, CategoryList, News43, NewsList, SafeAreaView, Text } from '@components'
-import { BaseColor, BaseStyle } from '@config'
-import { HomeChannelData, HomeListData, HomePopularData, HomeTopicData, PostListData } from '@data'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, ScrollView, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useLazyQuery } from '@apollo/react-hooks'
+import crashlytics from '@react-native-firebase/crashlytics'
+import { CardChannelGrid, CardSlide, CategoryList, News43, NewsList, SafeAreaView, Text } from '@components'
+import { BaseColor, BaseStyle } from '@config'
+import { HomeChannelData, HomeListData, HomePopularData, HomeTopicData, PostListData } from '@data'
 import styles from './styles'
+import { fetchfromAsync, storetoAsync } from '../../helper/cacheStorage'
+import { getFormattedCurrentNepaliDate } from '../../helper/dateFormatter'
+import GET_ARTICLES_QUERY from './GET_ARTICLES_QUERY'
+import Weather from './weather.component'
 
 const Home = (props) => {
 	const { navigation } = props
 	const { t } = useTranslation()
+	const [nepaliDate, setNepaliDate] = useState('')
+	const [refreshing, setRefreshing] = useState(false)
 	const [topics, setTopics] = useState(HomeTopicData)
 	const [channels, setChannels] = useState(HomeChannelData)
 	const [popular, setPopular] = useState(HomePopularData)
 	const [list, setList] = useState(HomeListData)
-	const [loading, setLoading] = useState(true)
+	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
+
+	const [fetchNews, { loading, data, refetch, error, called }] = useLazyQuery(GET_ARTICLES_QUERY, {
+		variables: {},
+	})
+
+	const handleRefresh = () => {
+		setRefreshing(true)
+		if (called) {
+			refetch()
+				.then(() => {
+					setRefreshing(false)
+				})
+				.catch((err) => setRefreshing(false))
+		} else {
+			fetchNews()
+			setRefreshing(false)
+		}
+	}
+
+	const fetchArticlesFromAsyncStorage = async () => {
+		fetchfromAsync()
+			.then((res) => {
+				setLocalArticles({ getArticles: res })
+			})
+			.catch((err) => {
+				crashlytics().recordError(err)
+				setLocalArticles([])
+			})
+	}
 
 	useEffect(() => {
-		setTimeout(() => {
-			setLoading(false)
-		}, 1000)
-	}, [])
+		getFormattedCurrentNepaliDate().then((npDate) => {
+			setNepaliDate(npDate)
+		})
+		fetchArticlesFromAsyncStorage()
+			.then(() => {
+				fetchNews()
+			})
+			.then(() => {
+				const article = props.route.params?.article
+				if (article && article.source) {
+					props.navigation.navigate('ArticleDetail', { article, articles: [article] })
+				}
+			})
+	}, [fetchNews])
+
+	if (!loading && data != null && data.getArticles && data.getArticles.length) {
+		const myArticles = data.getArticles
+		storetoAsync(myArticles)
+	}
+
+	if (error) {
+		crashlytics().recordError(new Error(error))
+	}
+
+	const dataArticles = (data && data.getArticles) || []
+
+	const homeArticles = (dataArticles.length && dataArticles) || localArticles.getArticles
+
+	const topHeadline = homeArticles.find((a) => a.category === 'headline') || homeArticles[0]
+	const headlineArticles = homeArticles.filter((x) => x.category == 'headline') || []
+	const topNews = homeArticles
+		.filter((a) => a._id !== topHeadline._id)
+		.sort((a, b) => b.totalWeight - a.totalWeight)
+		.slice(0, 100)
 
 	const goPost = (item) => () => {
 		navigation.navigate('Post', { item: item })
@@ -38,16 +105,15 @@ const Home = (props) => {
 		const mainNews = PostListData[0]
 		return (
 			<View>
-				<View style={{ paddingHorizontal: 20, paddingBottom: 10 }}>
-					<Text header bold>
-						{t('सोमबार, श्रावण ०८')}
+				<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+					<Text title1 bold>
+						{nepaliDate}
 					</Text>
-					<Text subhead grayColor style={{ marginTop: 5 }}>
-						{t('discover_last_news_today')}
-					</Text>
+					<Weather />
 				</View>
 				<ScrollView contentContainerStyle={styles.paddingSrollView}>
 					<News43
+						article={topHeadline}
 						loading={loading}
 						onPress={goPostDetail(mainNews)}
 						style={{ marginTop: 5 }}
@@ -97,10 +163,10 @@ const Home = (props) => {
 					/>
 					<View style={styles.topicsView}>
 						<Text title3 semibold style={styles.title}>
-							{t('browse_topics')}
+							{t('browse topics')}
 						</Text>
 						<Text light footnote regular grayColor>
-							{t('select_your_most_interesting_category')}
+							{t('sss sss ww')}
 						</Text>
 						<FlatList
 							contentContainerStyle={{ marginTop: 10 }}
