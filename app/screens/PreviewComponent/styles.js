@@ -1,10 +1,10 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-    title: {
-        marginTop: 20,
-        marginBottom: 10,
-        fontWeight: "bold",
-        fontSize: 20,
-    },
-});
+	title: {
+		marginTop: 20,
+		marginBottom: 10,
+		fontWeight: 'bold',
+		fontSize: 20,
+	},
+})

@@ -1,4 +1,4 @@
-import * as Utils from "@utils";
-import { StyleSheet } from "react-native";
+import * as Utils from '@utils'
+import { StyleSheet } from 'react-native'
 
-export default StyleSheet.create({});
+export default StyleSheet.create({})

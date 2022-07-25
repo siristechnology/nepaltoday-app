@@ -1,17 +1,17 @@
-import { StyleSheet } from "react-native";
-import { BaseColor } from "@config";
-import * as Utils from "@utils";
+import { StyleSheet } from 'react-native'
+import { BaseColor } from '@config'
+import * as Utils from '@utils'
 
 export default StyleSheet.create({
-  contain: {
-    flexDirection: "row",
-    height: Utils.scaleWithPixel(115),
-    borderRadius: 8,
-  },
-  imageBackground: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  content: { alignItems: "center" },
-});
+	contain: {
+		flexDirection: 'row',
+		height: Utils.scaleWithPixel(115),
+		borderRadius: 8,
+	},
+	imageBackground: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	content: { alignItems: 'center' },
+})
