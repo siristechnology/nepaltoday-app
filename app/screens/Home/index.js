@@ -40,7 +40,7 @@ const Home = (props) => {
 			<View>
 				<View style={{ paddingHorizontal: 20, paddingBottom: 10 }}>
 					<Text header bold>
-						{t('today')}
+						{t('सोमबार, श्रावण ०८')}
 					</Text>
 					<Text subhead grayColor style={{ marginTop: 5 }}>
 						{t('discover_last_news_today')}

@@ -12,7 +12,7 @@ import Home from '@screens/Home'
 import NewsCategory from '@screens/NewsCategory'
 import Profile from '@screens/Profile'
 import Category from '@screens/Category'
-import Favourite from '@screens/Favourite'
+import Tweet from '@screens/Tweet'
 import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@navigation/components'
 
 export const NewsTabScreens = {
@@ -28,16 +28,16 @@ export const NewsTabScreens = {
 			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'th-large' }),
 		},
 	},
+	Tweet: {
+		component: Tweet,
+		options: {
+			tabBarIcon: ({ color }) => tabBarIconHaveNoty({ color, name: 'twitter' }),
+		},
+	},
 	Category: {
 		component: Category,
 		options: {
 			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'th-large' }),
-		},
-	},
-	Favourite: {
-		component: Favourite,
-		options: {
-			tabBarIcon: ({ color }) => tabBarIconHaveNoty({ color, name: 'bookmark' }),
 		},
 	},
 	Profile: {
