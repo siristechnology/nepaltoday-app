@@ -37,47 +37,6 @@ export { default as News169 } from './News/169'
 export { default as News43 } from './News/43'
 export { default as NewsGrid } from './News/Grid'
 
-// Profile components
-export { default as ProfileDescription } from './Profile/Description'
-export { default as ProfileGroup } from './Profile/Group'
-export { default as ProfileAuthor } from './Profile/Author'
-export { default as ProfileDetail } from './Profile/Detail'
-export { default as ProfilePerformance } from './Profile/Performance'
-export { default as ProfileCall } from './Profile/Call'
-export { default as ProfileGridSmall } from './Profile/GridSmall'
-export { default as ProfileGrid } from './Profile/Grid'
-
-// Payment components
-export { default as PaymentOption } from './Payment/Option'
-export { default as PaymentOptions } from './Payment/Options'
-export { default as PaymentItem } from './Payment/Item'
-
-// Product component
-export { default as ProductBlock } from './Product/Block'
-export { default as ProductCard1 } from './Product/Card1'
-export { default as ProductCard2 } from './Product/Card2'
-export { default as ProductCard3 } from './Product/Card3'
-export { default as ProductCard4 } from './Product/Card4'
-export { default as ProductCheckoutPrice } from './Product/CheckoutPrice'
-export { default as ProductColorPicker } from './Product/ColorPicker'
-export { default as ProductGrid1 } from './Product/Grid1'
-export { default as ProductGrid2 } from './Product/Grid2'
-export { default as ProductList } from './Product/List'
-export { default as ProductOrderItemList } from './Product/OrderItemList'
-export { default as ProductPaymentBankItem } from './Product/PaymentBankItem'
-export { default as ProductSize } from './Product/Size'
-export { default as ProductSpecGrid } from './Product/SpecGrid'
-export { default as ProductCategory1 } from './Product/Category1'
-export { default as ProductCategory2 } from './Product/Category2'
-export { default as ProductCategory3 } from './Product/Category3'
-export { default as ProductGallery } from './Product/Gallery'
-export { default as ProductPaymentBankItemActive } from './Product/PaymentBankItemActive'
-
-// Filter components
-export { default as FilterSort } from './Filter/Sort'
-export { default as FilterESort } from './Filter/ESort'
-export { default as FilterBar } from './Filter/Bar'
-
 // List components
 export { default as ListThumbSquare } from './List/ThumbSquare'
 export { default as ListThumbCircle } from './List/ThumbCircle'
@@ -96,11 +55,6 @@ export { default as HeaderLargeTitle, HeaderLargeTitleStore, HeaderLargeTitleBad
 export { default as HeaderAnimated } from './Header/Animated'
 export { default as HeaderText } from './Header/Text'
 
-// Form components
-export { default as FormCounterSelect } from './Form/CounterSelect'
-export { default as FormCounterSelectH } from './Form/CounterSelectH'
-export { default as FormDoubleSelectOption } from './Form/DoubleSelectOption'
-
 // Common components
 export { default as Text } from './Text'
 export { default as Button } from './Button'
@@ -112,13 +66,10 @@ export { default as CommentItem } from './CommentItem'
 export { SafeAreaView } from 'react-native-safe-area-context'
 export { default as StarRating } from './StarRating'
 export { default as RateDetail } from './RateDetail'
-export { default as BookingTime } from './BookingTime'
 export { default as PlaceItem } from './PlaceItem'
 export { default as SearchBox } from './SearchBox'
 export { default as ModalFilter } from './ModalFilter'
 export { default as ShopCard1 } from './ShopCard1'
-export { default as PaymentBankItem } from './Product/PaymentBankItem'
-export { default as MonthYearPicker } from './MonthYearPicker'
 export { default as TimeLine } from './TimeLine'
 export { default as Avatars } from './Avatars'
 export { default as ActionButton } from './ActionButton'
@@ -132,22 +83,6 @@ export { default as LabelUpper2Row } from './Label/Upper2Row'
 export { default as TabSlider } from './Tab/Slider'
 export { default as TabTag } from './Tab/Tag'
 
-// Finanace
-export { default as Price3Col } from './Price/3Col'
-export { default as Price2Col } from './Price/2Col'
-export { default as Transaction2Col } from './Transaction2Col'
-export { default as StatisticText3Col } from './StatisticText3Col'
-
-// Chart
-export { default as LineChart } from './Chart/LineChart'
-export { default as BarChart } from './Chart/BarChart'
-export { default as StackedBarChart } from './Chart/StackedBarChart'
-export { default as PieChart } from './Chart/PieChart'
-
-// ActionSheet
-export { default as ActionSheetSelectOptionIcon } from './ActionSheet/SelectOptionIcon'
-export { default as CalendarPicker } from './CalendarPicker'
-
 // Title
 export { default as TitleFintech } from './Title/Fintech'
 
@@ -159,11 +94,3 @@ export { default as ProgressCircle } from './Progress/Circle'
 export { default as TextInput } from './TextInput'
 
 export { default as NotFound } from './NotFound'
-
-// Project
-export { default as Project01 } from './Project/01'
-export { default as Project02 } from './Project/02'
-export { default as PSelectOption } from './PSelectOption'
-export { default as PButtonAddUser } from './PButtonAddUser'
-// Ticket
-export { default as Ticket } from './Ticket'
