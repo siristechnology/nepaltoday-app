@@ -42,7 +42,7 @@ export const BottomTabNavigatorMazi = ({ tabScreens = {} }) => {
 			initialRouteName="Home"
 			tabBarOptions={{
 				showIcon: true,
-				showLabel: true,
+				showLabel: false,
 				activeTintColor: colors.primaryColor,
 				inactiveTintColor: BaseColor.grayColor,
 				style: BaseStyle.tabBar,

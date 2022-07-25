@@ -9,7 +9,7 @@ import Search from '@screens/Search'
 import SearchHistory from '@screens/SearchHistory'
 /* Bottom News Screen */
 import Home from '@screens/Home'
-import Post from '@screens/Post'
+import NewsCategory from '@screens/NewsCategory'
 import Profile from '@screens/Profile'
 import Category from '@screens/Category'
 import Favourite from '@screens/Favourite'
@@ -19,35 +19,30 @@ export const NewsTabScreens = {
 	Home: {
 		component: Home,
 		options: {
-			title: 'home',
 			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'home' }),
+		},
+	},
+	NewsCategory: {
+		component: NewsCategory,
+		options: {
+			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'th-large' }),
 		},
 	},
 	Category: {
 		component: Category,
 		options: {
-			title: 'category',
 			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'th-large' }),
-		},
-	},
-	Post: {
-		component: Post,
-		options: {
-			title: 'posts',
-			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'file' }),
 		},
 	},
 	Favourite: {
 		component: Favourite,
 		options: {
-			title: 'favorites',
 			tabBarIcon: ({ color }) => tabBarIconHaveNoty({ color, name: 'bookmark' }),
 		},
 	},
 	Profile: {
 		component: Profile,
 		options: {
-			title: 'account',
 			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'user-circle' }),
 		},
 	},

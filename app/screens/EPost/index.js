@@ -1,5 +1,5 @@
 import { EPostProductData } from '@data'
-import Post, { modes } from '@screens/Post'
+import Post, { modes } from '@screens/NewsCategory'
 import React from 'react'
 
 const EPost = () => {
