@@ -11,7 +11,7 @@ import SearchHistory from '@screens/SearchHistory'
 import Home from '@screens/Home'
 import NewsCategory from '@screens/NewsCategory'
 import Profile from '@screens/Profile'
-import Category from '@screens/Category'
+import FM from '@screens/FM'
 import Tweet from '@screens/Tweet'
 import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@navigation/components'
 
@@ -34,10 +34,10 @@ export const NewsTabScreens = {
 			tabBarIcon: ({ color }) => tabBarIconHaveNoty({ color, name: 'twitter' }),
 		},
 	},
-	Category: {
-		component: Category,
+	FM: {
+		component: FM,
 		options: {
-			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'th-large' }),
+			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'podcast' }),
 		},
 	},
 	Profile: {
