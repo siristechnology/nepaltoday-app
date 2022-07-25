@@ -26,7 +26,7 @@ const News43 = (props) => {
 							styleDescription={{
 								color: BaseColor.whiteColor,
 							}}
-							name={`${article.source.name}`}
+							name={article.source.name}
 							description={getRelativeTime(article.createdDate)}
 						/>
 					</View>

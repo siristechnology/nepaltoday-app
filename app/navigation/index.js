@@ -69,7 +69,7 @@ const Navigator = (props) => {
 			navigationRef?.current?.navigate('NewsMenu')
 		}
 		onProcess()
-	}, [])
+	}, [dispatch, language])
 
 	return (
 		<View style={{ flex: 1, position: 'relative' }}>

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { FlatList, ScrollView, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useLazyQuery } from '@apollo/react-hooks'
 import crashlytics from '@react-native-firebase/crashlytics'
-import { CardChannelGrid, CardSlide, CategoryList, News43, NewsList, SafeAreaView, Text } from '@components'
+import { CardChannelGrid, CardSlide, CategoryList, News169, NewsList, SafeAreaView, Text } from '@components'
 import { BaseColor, BaseStyle } from '@config'
 import { HomeChannelData, HomeListData, HomePopularData, HomeTopicData, PostListData } from '@data'
 import styles from './styles'
@@ -15,7 +14,6 @@ import Weather from './weather.component'
 
 const Home = (props) => {
 	const { navigation } = props
-	const { t } = useTranslation()
 	const [nepaliDate, setNepaliDate] = useState('')
 	const [refreshing, setRefreshing] = useState(false)
 	const [topics, setTopics] = useState(HomeTopicData)
@@ -82,6 +80,8 @@ const Home = (props) => {
 
 	const homeArticles = (dataArticles.length && dataArticles) || localArticles.getArticles
 
+	console.log('printing homeArticles', homeArticles)
+
 	const topHeadline = homeArticles.find((a) => a.category === 'headline') || homeArticles[0]
 	const headlineArticles = homeArticles.filter((x) => x.category == 'headline') || []
 	const topNews = homeArticles
@@ -112,15 +112,15 @@ const Home = (props) => {
 					<Weather />
 				</View>
 				<ScrollView contentContainerStyle={styles.paddingSrollView}>
-					<News43
+					<News169
 						article={topHeadline}
+						avatar={mainNews.image}
 						loading={loading}
-						onPress={goPostDetail(mainNews)}
-						style={{ marginTop: 5 }}
-						image={mainNews.image}
 						name={mainNews.name}
 						description={mainNews.description}
 						title={mainNews.title}
+						image={mainNews.image}
+						onPress={goPostDetail(mainNews)}
 					/>
 					<FlatList
 						scrollEnabled={false}
@@ -163,10 +163,10 @@ const Home = (props) => {
 					/>
 					<View style={styles.topicsView}>
 						<Text title3 semibold style={styles.title}>
-							{t('browse topics')}
+							{'browse topics'}
 						</Text>
 						<Text light footnote regular grayColor>
-							{t('sss sss ww')}
+							{'sss sss ww'}
 						</Text>
 						<FlatList
 							contentContainerStyle={{ marginTop: 10 }}
@@ -187,7 +187,7 @@ const Home = (props) => {
 							ListFooterComponent={
 								<TouchableOpacity onPress={goToCategory}>
 									<Text body2 semibold accentColor>
-										{t('see_more')}
+										{'see_more'}
 									</Text>
 								</TouchableOpacity>
 							}
@@ -200,10 +200,10 @@ const Home = (props) => {
 					</View>
 					<View>
 						<Text title3 semibold style={styles.title}>
-							{t('discover_channels')}
+							{'discover_channels'}
 						</Text>
 						<Text light footnote regular grayColor>
-							{t('description_discover_channels')}
+							{'description_discover_channels'}
 						</Text>
 						<FlatList
 							contentContainerStyle={{ marginTop: 15 }}
