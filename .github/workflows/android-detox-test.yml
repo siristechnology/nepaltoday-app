@@ -11,7 +11,7 @@ jobs:
         env:
             ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v3
 
             - name: Use specific Java version for sdkmanager to work
               uses: joschi/setup-jdk@v1
@@ -19,10 +19,10 @@ jobs:
                   java-version: 'openjdk8'
                   architecture: 'x64'
 
-            - name: Use Node.js 14.11.0
-              uses: actions/setup-node@v1
+            - name: Use Node.js 16.13.1
+              uses: actions/setup-node@v3
               with:
-                  node-version: '14.11.0'
+                  node-version: '16.13.1'
 
             - name: Download Android Emulator Image
               run: |

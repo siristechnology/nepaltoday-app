@@ -80,8 +80,6 @@ const Home = (props) => {
 
 	const homeArticles = (dataArticles.length && dataArticles) || localArticles.getArticles
 
-	console.log('printing homeArticles', homeArticles)
-
 	const topHeadline = homeArticles.find((a) => a.category === 'headline') || homeArticles[0]
 	const headlineArticles = homeArticles.filter((x) => x.category == 'headline') || []
 	const topNews = homeArticles
