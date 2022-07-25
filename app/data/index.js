@@ -36,18 +36,4 @@ export {
 	FTransactions,
 	FHotNews2,
 } from './fHome'
-export { FLinks, FTransactionsTab } from './fCryptol'
-export { FBuyList, FSellList, FTransfer, FTypes, FChooseCategories, FMarkers, FCurrencies } from './fAddTransaction'
-export { FFriends } from './fFriend'
-export { FPaymentItemsData } from './fBank'
-export { FHistory } from './fHistory'
-export { FPayment, FPeriod } from './fActivityFilter'
-export { FNotificationData } from './fNotification'
 export { MaziListApp } from './maziHome'
-export { FCategoryData } from './fCategory'
-export { PProjectHome } from './pHome'
-export { PProject, PProjectType, PProjectAction } from './pProject'
-export { PTeamMembersInCreate, PAttachments } from './pProjectCreate'
-export { PTaskStatus, PTaskType, PTaskPriority } from './pTaskCreate'
-export { PTasks } from './pTask'
-export { PAttachmentsInTaskView } from './pTaskView'

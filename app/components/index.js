@@ -157,7 +157,6 @@ export { default as ProgressCircle } from './Progress/Circle'
 
 // TextInput
 export { default as TextInput } from './TextInput'
-export { default as TextInputMoney } from './TextInput/Money'
 
 export { default as NotFound } from './NotFound'
 
