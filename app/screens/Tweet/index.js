@@ -72,10 +72,10 @@ const Favourite = (props) => {
 
 	const renderContent = () => {
 		return (
-			<View style={[{ flex: 1, paddingTop: 20 }]}>
-				<View style={{ marginBottom: 16, paddingHorizontal: 20 }}>
-					<Text header bold>
-						{t('Top Tweets')}
+			<View style={[{ flex: 1 }]}>
+				<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+					<Text title1 bold>
+						{'Top Tweets'}
 					</Text>
 				</View>
 

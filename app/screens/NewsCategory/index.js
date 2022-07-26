@@ -1,82 +1,87 @@
-import { Text, News169, TabSlider, SafeAreaView } from '@components'
-import { BaseStyle, useTheme } from '@config'
-// Load sample data
-import { PostListData } from '@data'
-import * as Utils from '@utils'
 import React, { useEffect, useRef, useState } from 'react'
 import { Animated, Platform, RefreshControl, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import crashlytics from '@react-native-firebase/crashlytics'
+import { Text, News169, TabSlider, SafeAreaView } from '@components'
+import { BaseStyle, useTheme } from '@config'
+import * as Utils from '@utils'
 import { SceneMap } from 'react-native-tab-view'
 import styles from './styles'
-import { useTranslation } from 'react-i18next'
-import { useNavigation, useRoute } from '@react-navigation/native'
 
-export const modes = {
-	square: 'square',
-	bars: 'bars',
-	thList: 'th-list',
-	thLarge: 'th-large',
-}
+import { useLazyQuery } from '@apollo/client'
+import GET_ARTICLES_QUERY from './GET_ARTICLES_QUERY'
+import { fetchCategoryArticlesfromAsync, storeCategoryArticlestoAsync } from '../../helper/cacheStorage'
 
-const Post = ({ mode = modes.square, posts = PostListData }) => {
+const NewsCategory = () => {
 	const navigation = useNavigation()
-	const { t } = useTranslation()
 	const { colors } = useTheme()
 	const [refreshing, setRefreshing] = useState(false)
-	const [modeView, setModeView] = useState(mode)
-	const [index, setIndex] = React.useState(0)
-	const [list, setList] = useState(posts)
-	const [loading, setLoading] = useState(true)
+	const [index, setIndex] = useState(0)
+
+	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
+	const [articles, setArticles] = useState([])
+
+	// const [loading, setLoading] = useState(true)
 	const scrollAnim = useRef(new Animated.Value(0)).current
-	const offsetAnim = useRef(new Animated.Value(0)).current
-	const clampedScroll = useRef(
-		Animated.diffClamp(
-			Animated.add(
-				scrollAnim.interpolate({
-					inputRange: [0, 1],
-					outputRange: [0, 1],
-					extrapolateLeft: 'clamp',
-				}),
-				offsetAnim,
-			),
-			0,
-			40,
-		),
-	).current
 
-	useEffect(() => {
-		setTimeout(() => {
-			setLoading(false)
-		}, 1000)
-	}, [])
+	const [fetchNews, { loading, data, refetch, error }] = useLazyQuery(GET_ARTICLES_QUERY, {
+		variables: {},
+	})
 
-	const goPostDetail = (item) => () => {
-		navigation.navigate('PostDetail', { item: item })
+	const handleRefresh = () => {
+		setRefreshing(true)
+		refetch().then(() => setRefreshing(false))
 	}
 
-	const renderItem = ({ item, index }) => {
+	const fetchArticlesFromAsyncStorage = async () => {
+		fetchCategoryArticlesfromAsync()
+			.then((res) => {
+				setLocalArticles({ getArticles: res })
+			})
+			.catch((err) => {
+				crashlytics().recordError(err)
+				setLocalArticles([])
+			})
+	}
+
+	useEffect(() => {
+		fetchArticlesFromAsyncStorage()
+		fetchNews()
+	}, [fetchNews])
+
+	useEffect(() => {
+		const categoryArticles = data?.getArticles || localArticles.getArticles
+		const sortedArticles = categoryArticles.slice().sort((a, b) => b.createdDate - a.createdDate)
+		setArticles(sortedArticles)
+	}, [loading, data, localArticles])
+
+	if (error) {
+		crashlytics().recordError(new Error(error))
+	}
+
+	if (!loading && data?.getArticles?.length) {
+		storeCategoryArticlestoAsync(data.getArticles)
+	}
+
+	const goPostDetail = (article) => () => {
+		navigation.navigate('PostDetail', { article: article })
+	}
+
+	const renderItem = ({ item }) => {
 		return (
 			<News169
-				avatar={item.avatar}
+				key={item._id}
+				article={item}
 				loading={loading}
 				style={{ marginVertical: 8 }}
-				name={item.name}
-				description={item.description}
-				title={item.title}
-				image={item.image}
 				onPress={goPostDetail(item)}
 			/>
 		)
 	}
 
-	console.log('modeView', modeView)
+	const renderList = (category) => {
+		const categoryArticles = articles.filter((a) => a.category == category)
 
-	const renderList = () => {
-		const navbarTranslate = clampedScroll.interpolate({
-			inputRange: [0, 40],
-			outputRange: [0, -40],
-			extrapolate: 'clamp',
-		})
-		const android = Platform.OS == 'android'
 		return (
 			<View style={{ flex: 1 }}>
 				<Animated.FlatList
@@ -90,7 +95,7 @@ const Post = ({ mode = modes.square, posts = PostListData }) => {
 							colors={[colors.primary]}
 							tintColor={colors.primary}
 							refreshing={refreshing}
-							onRefresh={() => {}}
+							onRefresh={handleRefresh}
 						/>
 					}
 					scrollEventThrottle={1}
@@ -106,38 +111,44 @@ const Post = ({ mode = modes.square, posts = PostListData }) => {
 						],
 						{ useNativeDriver: true },
 					)}
-					data={list}
+					data={categoryArticles}
 					key={1}
 					numColumns={1}
-					keyExtractor={(item, index) => item.id}
+					keyExtractor={(item) => item._id}
 					renderItem={renderItem}
 				/>
 			</View>
 		)
 	}
 
-	const [routes] = React.useState([
-		{ key: 'apps1', title: 'apps1' },
-		{ key: 'apps2', title: 'apps2' },
-		// { key: 'screens', title: 'screens' },
-		// { key: 'components', title: 'components' },
-		// { key: 'setting', title: 'setting' },
+	const [routes] = useState([
+		{ key: 'news', title: 'समाचार' },
+		{ key: 'entertainment', title: 'मनोरन्जन' },
+		{ key: 'sports', title: 'खेलकुद' },
+		{ key: 'cartoon', title: 'कार्टुन' },
+		{ key: 'business', title: 'अर्थ' },
+		{ key: 'social', title: 'समाज' },
+		{ key: 'health', title: 'स्वास्थ्य' },
+		{ key: 'technology', title: 'सूचना प्रविधि' },
+		{ key: 'share', title: 'सेयर' },
+		{ key: 'agriculture', title: 'कृषि' },
 	])
 
-	const scene1 = () => {
-		return renderList()
+	const renderCategoryTabs = () => {
+		const scenes = {}
+		routes.forEach((route) => {
+			scenes[route.key] = () => {
+				return renderList(route.key)
+			}
+		})
+		return SceneMap(scenes)
 	}
-
-	const renderScene = SceneMap({
-		apps1: scene1,
-		apps2: scene1,
-	})
 
 	return (
 		<SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
-			<View style={{ paddingHorizontal: 10, paddingTop: 10 }}>
-				<Text title2 bold>
-					{t('Categories')}
+			<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+				<Text title1 bold>
+					{'शीर्षकहरू'}
 				</Text>
 			</View>
 			<TabSlider
@@ -145,11 +156,11 @@ const Post = ({ mode = modes.square, posts = PostListData }) => {
 					index,
 					routes: routes,
 				}}
-				renderScene={renderScene}
+				renderScene={renderCategoryTabs()}
 				onIndexChange={setIndex}
 			/>
 		</SafeAreaView>
 	)
 }
 
-export default Post
+export default NewsCategory

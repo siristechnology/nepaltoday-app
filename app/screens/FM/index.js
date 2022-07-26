@@ -39,12 +39,13 @@ const Home = (props) => {
 	const renderContent = () => {
 		const mainNews = PostListData[0]
 		return (
-			<View style={[{ flex: 1, paddingTop: 20 }]}>
-				<View style={{ paddingHorizontal: 20 }}>
-					<Text header bold>
-						{t('FM')}
+			<View style={[{ flex: 1 }]}>
+				<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+					<Text title1 bold>
+						{'रेडियो'}
 					</Text>
 				</View>
+
 				<SearchBox onSubmitEditing={() => {}} loading={false} />
 				<ScrollView contentContainerStyle={styles.paddingSrollView}>
 					<View>

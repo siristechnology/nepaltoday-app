@@ -23,10 +23,10 @@ const NewsList = (props) => {
 					paddingVertical: 5,
 				}}
 			>
-				<Text light footnote grayColor>
+				<Text light footnote semibold grayColor>
 					{getRelativeTime(article.createdDate)}
 				</Text>
-				<Text numberOfLines={2} style={styles.marginVertical5}>
+				<Text headline semibold numberOfLines={2} style={styles.marginVertical5}>
 					{article.title}
 				</Text>
 				<Text caption1 light grayColor>

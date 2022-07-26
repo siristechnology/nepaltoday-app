@@ -1,44 +1,26 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Animated, FlatList, I18nManager, ScrollView, Share, TouchableOpacity, View } from 'react-native'
-import { Header, Image, NewsList, SafeAreaView, Tag, Text, PlaceholderLine, Placeholder } from '@components'
+import { Animated, I18nManager, ScrollView, Share, TouchableOpacity, View } from 'react-native'
+import { Header, Image, SafeAreaView, Tag, Text, PlaceholderLine, Placeholder } from '@components'
 import ProfileAuthor from '@components/Profile/Author'
 import { BaseColor, BaseStyle, useTheme, Images } from '@config'
-import { HomeListData } from '@data'
 import * as Utils from '@utils'
 import { getRelativeTime } from '../../helper/time'
 import styles from './styles'
 
-const facilitiesInit = [
-	{ id: '1', icon: 'wifi', name: 'News', checked: true },
-	{ id: '2', icon: 'bath', name: 'Impeachment' },
-	{ id: '3', icon: 'paw', name: 'West Bank' },
-	{ id: '4', icon: 'bus', name: 'Donald Trump' },
-	{ id: '5', icon: 'cart-plus', name: 'Corona Virus' },
-	{ id: '6', icon: 'clock', name: 'White House' },
-]
-
 const PostDetail = (props) => {
 	const { navigation, route } = props
-	const { t } = useTranslation()
 	const { colors } = useTheme()
 	const article = route?.params?.article
 	const [loading, setLoading] = useState(true)
-	const [list, setList] = useState(HomeListData)
-	const [facilities, setFacilities] = useState(facilitiesInit)
 	const [heightHeader, setHeightHeader] = useState(Utils.heightHeader())
 	const scrollY = useRef(new Animated.Value(0)).current
-	const { category, imageLink, title, source, createdDate, content } = article
+	const { imageLink, title, source, createdDate, content } = article
 
 	useEffect(() => {
 		setTimeout(() => {
 			setLoading(false)
 		}, 1000)
 	}, [])
-
-	const goPostDetail = (item) => () => {
-		navigation.push('PostDetail', { item: item })
-	}
 
 	const onShare = async () => {
 		try {
@@ -103,7 +85,7 @@ const PostDetail = (props) => {
 			<Fragment>
 				<View style={styles.contentDescription}>
 					<Text
-						body2
+						body1
 						style={{
 							lineHeight: 20,
 							paddingTop: 10,
@@ -114,61 +96,23 @@ const PostDetail = (props) => {
 						{content}
 					</Text>
 				</View>
-				<Text
-					title3
-					semibold
-					style={{
-						paddingHorizontal: 20,
-						paddingTop: 15,
-						paddingBottom: 5,
-					}}
-				>
-					{t('tags')}
-				</Text>
 				<View style={styles.wrapContent}>
-					{facilities.map((item) => {
+					{article.tags.map((item) => {
 						return (
 							<Tag
 								chip
-								key={item.id}
+								key={item}
 								style={{
 									marginTop: 10,
 									marginRight: 10,
 									paddingHorizontal: 10,
 								}}
 							>
-								{item.name}
+								{item}
 							</Tag>
 						)
 					})}
 				</View>
-				<Text
-					title3
-					semibold
-					style={{
-						paddingHorizontal: 20,
-						marginBottom: 20,
-					}}
-				>
-					{'Related News'}
-				</Text>
-				<FlatList
-					contentContainerStyle={{ paddingHorizontal: 20 }}
-					data={list}
-					keyExtractor={(item, index) => index.toString()}
-					renderItem={({ item, index }) => (
-						<NewsList
-							image={item.image}
-							date={item.date}
-							title={item.title}
-							subtitle={item.subtitle}
-							style={{
-								marginBottom: index == list.length - 1 ? 0 : 20,
-							}}
-							onPress={goPostDetail(item)}
-						/>
-					)}
-				/>
 			</Fragment>
 		)
 	}

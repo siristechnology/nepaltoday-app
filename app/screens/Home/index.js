@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, RefreshControl, ScrollView, View } from 'react-native'
+import { FlatList, RefreshControl, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useLazyQuery } from '@apollo/react-hooks'
 import crashlytics from '@react-native-firebase/crashlytics'
 import { CardSlide, News169, NewsList, SafeAreaView, Text } from '@components'
 import { BaseColor, BaseStyle } from '@config'
-import { HomeChannelData, HomeListData, HomePopularData, HomeTopicData } from '@data'
 import styles from './styles'
 import { fetchfromAsync, storetoAsync } from '../../helper/cacheStorage'
 import { getFormattedCurrentNepaliDate } from '../../helper/dateFormatter'
@@ -16,8 +15,6 @@ const Home = (props) => {
 	const { navigation } = props
 	const [nepaliDate, setNepaliDate] = useState('')
 	const [refreshing, setRefreshing] = useState(false)
-	const [popular, setPopular] = useState(HomePopularData)
-	const [list, setList] = useState(HomeListData)
 	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
 
 	const [fetchNews, { loading, data, refetch, error, called }] = useLazyQuery(GET_ARTICLES_QUERY, {
@@ -112,6 +109,7 @@ const Home = (props) => {
 								{topNews.slice(0, 3).map((item, index) => {
 									return (
 										<NewsList
+											key={item._id}
 											loading={loading}
 											article={item}
 											image={item.image}
@@ -119,7 +117,7 @@ const Home = (props) => {
 											subtitle={item.subtitle}
 											date={item.date}
 											style={{
-												marginBottom: index == list.length - 1 ? 0 : 15,
+												marginBottom: index == 2 ? 0 : 15,
 											}}
 											onPress={goPostDetail(item)}
 										/>
@@ -135,11 +133,12 @@ const Home = (props) => {
 								keyExtractor={(item) => item._id}
 								renderItem={({ item, index }) => (
 									<CardSlide
-										loading={loading}
+										key={item._id}
 										article={item}
+										loading={loading}
 										onPress={goPostDetail(item)}
 										style={{
-											marginRight: index == popular.length - 1 ? 0 : 15,
+											marginRight: index == entertainmentArticles.length - 1 ? 0 : 15,
 										}}
 									/>
 								)}
@@ -148,15 +147,16 @@ const Home = (props) => {
 					}
 					renderItem={({ item, index }) => (
 						<NewsList
-							loading={loading}
+							key={item._id}
 							article={item}
+							loading={loading}
 							style={{
-								marginBottom: index == list.length - 1 ? 0 : 15,
+								marginBottom: index == topNews.slice(3).length - 1 ? 0 : 15,
 							}}
 							onPress={goPostDetail(item)}
 						/>
 					)}
-					refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => {}} />}
+					refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
 				/>
 			</SafeAreaView>
 		)

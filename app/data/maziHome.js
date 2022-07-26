@@ -23,22 +23,6 @@ export const MaziListApp = [
 		isHideInScreens: true,
 	},
 	{
-		id: 'WalletMenu',
-		title: 'wallet_app',
-		image: Images.dashboardWallet,
-		subtitle: `${Object.keys(FinanceScreens).length}+ UI KITs`,
-		screens: FinanceScreens,
-		icon: 'address-card',
-	},
-	{
-		id: 'CryptoMenu',
-		title: 'crypto_app',
-		image: Images.dashboardCrypto,
-		subtitle: `${Object.keys(FryptoScreens).length}+ UI KITs`,
-		screens: FryptoScreens,
-		icon: 'bitcoin',
-	},
-	{
 		id: 'ECommerceMenu',
 		title: 'ecommerce_app',
 		image: Images.dashboardEcomercial,
