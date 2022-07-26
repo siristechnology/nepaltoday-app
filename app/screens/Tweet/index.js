@@ -1,122 +1,59 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
-import { BaseColor, BaseStyle, useTheme } from '@config'
-import { FavouriteData } from '@data'
-import { useTranslation } from 'react-i18next'
-import { Header, NewsWishlist, SafeAreaView, Text, ModalFilter } from '@components'
+import crashlytics from '@react-native-firebase/crashlytics'
+import { BaseStyle, useTheme } from '@config'
+import { SafeAreaView, Text } from '@components'
 import SingleTweet from './SingleTweet'
 import styles from './styles'
+import { useQuery } from '@apollo/client'
+import GET_TWEETS_QUERY from './GET_TWEETS_QUERY'
 
-const sortOptionInit = [
-	{
-		value: 'remove',
-		icon: 'sort-amount-up',
-		text: 'remove',
-	},
-	{
-		value: 'share_this_article',
-		icon: 'sort-amount-down',
-		text: 'share_this_article',
-	},
-	{
-		value: 'view_detail',
-		icon: 'sort-amount-up',
-		text: 'view_detail',
-	},
-	{
-		value: 'reset_all',
-		icon: 'sort-amount-up',
-		text: 'reset_all',
-	},
-]
-
-const Favourite = (props) => {
-	const { navigation } = props
-	const { t } = useTranslation()
+const Favourite = () => {
 	const { colors } = useTheme()
+
 	const [refreshing, setRefreshing] = useState(false)
-	const [favourite, setFavourite] = useState(FavouriteData)
-	const [loading, setLoading] = useState(true)
-	const [modalVisible, setModalVisible] = useState(false)
-	const [sortOption, setSortOption] = useState(sortOptionInit)
 
-	useEffect(() => {
-		setTimeout(() => {
-			setLoading(false)
-		}, 1000)
-	}, [])
-
-	const onSelectFilter = (selected) => {
-		setSortOption(
-			sortOption.map((item) => {
-				return {
-					...item,
-					checked: item.value == selected.value,
-				}
-			}),
-		)
+	const handleRefresh = () => {
+		setRefreshing(true)
+		refetch().then(() => setRefreshing(false))
 	}
 
-	const onApply = () => {
-		let itemSelected = null
-		for (const item of sortOption) {
-			if (item.checked) {
-				itemSelected = item
-			}
-		}
-		if (itemSelected) {
-			setModalVisible(false)
-			setSortOption(sortOptionInit)
-		}
+	const { loading, data, refetch, error } = useQuery(GET_TWEETS_QUERY, {
+		variables: {},
+	})
+
+	if (error) {
+		crashlytics().recordError(new Error('Twitter Api error' + error.message))
 	}
+
+	const tweets = data?.getTweets || []
 
 	const renderContent = () => {
 		return (
 			<View style={[{ flex: 1 }]}>
-				<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
-					<Text title1 bold>
-						{'Top Tweets'}
-					</Text>
-				</View>
-
 				<FlatList
 					showsHorizontalScrollIndicator={false}
 					showsVerticalScrollIndicator={false}
+					data={tweets}
+					keyExtractor={(item) => item._id}
+					ListHeaderComponent={() => {
+						return (
+							<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+								<Text title1 bold>
+									{'Top Tweets'}
+								</Text>
+							</View>
+						)
+					}}
+					renderItem={({ item, index }) => <SingleTweet tweet={item} loading={loading} />}
 					refreshControl={
 						<RefreshControl
 							colors={[colors.primary]}
 							tintColor={colors.primary}
 							refreshing={refreshing}
-							onRefresh={() => {}}
+							onRefresh={handleRefresh}
 						/>
 					}
-					data={favourite}
-					keyExtractor={(item, index) => item.id}
-					renderItem={({ item, index }) => (
-						<SingleTweet
-							loading={loading}
-							image={item.image}
-							title={item.title}
-							subtitle={item.subtitle}
-							rate={item.rate}
-							onPress={() =>
-								navigation.navigate('PostDetail', {
-									item: item,
-								})
-							}
-							onAction={() => setModalVisible(true)}
-						/>
-					)}
-				/>
-				<ModalFilter
-					options={sortOption}
-					isVisible={modalVisible}
-					onSwipeComplete={() => {
-						setModalVisible(false)
-						setSortOption(sortOptionInit)
-					}}
-					onApply={onApply}
-					onSelectFilter={onSelectFilter}
 				/>
 			</View>
 		)
