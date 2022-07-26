@@ -5,11 +5,12 @@ import React from 'react'
 import { Image as RNImage, ImageBackground, TouchableOpacity } from 'react-native'
 import styles from './styles'
 import Loading from './Loading'
+import { getRelativeTime } from '../../../helper/time'
 
 const CardSlide = (props) => {
-	const { date, title, image, style, onPress, loading } = props
+	const { article, style, onPress, loading } = props
 	const { colors } = useTheme()
-	if (loading) {
+	if (loading && !article) {
 		return <Loading style={style} />
 	}
 	return (
@@ -25,17 +26,17 @@ const CardSlide = (props) => {
 			onPress={onPress}
 		>
 			<ImageBackground
-				source={image}
+				source={{ uri: article.imageLink }}
 				style={styles.imageBackground}
 				borderTopLeftRadius={8}
 				borderTopRightRadius={8}
 			/>
 
-			<Text body2 semibold style={styles.title} numberOfLines={2}>
-				{title}
+			<Text body2 style={styles.title} numberOfLines={2}>
+				{article.title}
 			</Text>
 			<Text overline medium grayColor style={styles.description}>
-				{date}
+				{getRelativeTime(article.createdDate)}
 			</Text>
 		</TouchableOpacity>
 	)

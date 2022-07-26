@@ -3,9 +3,9 @@ import { FlatList, ScrollView, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useLazyQuery } from '@apollo/react-hooks'
 import crashlytics from '@react-native-firebase/crashlytics'
-import { CardChannelGrid, CardSlide, CategoryList, News169, NewsList, SafeAreaView, Text } from '@components'
+import { CardSlide, News169, NewsList, SafeAreaView, Text } from '@components'
 import { BaseColor, BaseStyle } from '@config'
-import { HomeChannelData, HomeListData, HomePopularData, HomeTopicData, PostListData } from '@data'
+import { HomeChannelData, HomeListData, HomePopularData, HomeTopicData } from '@data'
 import styles from './styles'
 import { fetchfromAsync, storetoAsync } from '../../helper/cacheStorage'
 import { getFormattedCurrentNepaliDate } from '../../helper/dateFormatter'
@@ -81,18 +81,15 @@ const Home = (props) => {
 	const homeArticles = (dataArticles.length && dataArticles) || localArticles.getArticles
 
 	const topHeadline = homeArticles.find((a) => a.category === 'headline') || homeArticles[0]
-	const headlineArticles = homeArticles.filter((x) => x.category == 'headline') || []
 	const topNews = homeArticles
 		.filter((a) => a._id !== topHeadline._id)
 		.sort((a, b) => b.totalWeight - a.totalWeight)
 		.slice(0, 100)
 
-	const goPost = (item) => () => {
-		navigation.navigate('Post', { item: item })
-	}
+	const entertainmentArticles = homeArticles.filter((x) => x.category == 'entertainment') || []
 
-	const goPostDetail = (item) => () => {
-		navigation.navigate('PostDetail', { item: item })
+	const goPostDetail = (article) => () => {
+		navigation.navigate('PostDetail', { article: article })
 	}
 
 	const goToCategory = () => {
@@ -100,7 +97,6 @@ const Home = (props) => {
 	}
 
 	const renderContent = () => {
-		const mainNews = PostListData[0]
 		return (
 			<View>
 				<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
@@ -110,24 +106,16 @@ const Home = (props) => {
 					<Weather />
 				</View>
 				<ScrollView contentContainerStyle={styles.paddingSrollView}>
-					<News169
-						article={topHeadline}
-						avatar={mainNews.image}
-						loading={loading}
-						name={mainNews.name}
-						description={mainNews.description}
-						title={mainNews.title}
-						image={mainNews.image}
-						onPress={goPostDetail(mainNews)}
-					/>
+					<News169 article={topHeadline} loading={loading} onPress={goPostDetail(topHeadline)} />
 					<FlatList
 						scrollEnabled={false}
 						contentContainerStyle={styles.paddingFlatList}
-						data={list}
-						keyExtractor={(item, index) => index.toString()}
+						data={topNews.slice(0, 3)}
+						keyExtractor={(item) => item._id}
 						renderItem={({ item, index }) => (
 							<NewsList
 								loading={loading}
+								article={item}
 								image={item.image}
 								title={item.title}
 								subtitle={item.subtitle}
@@ -144,18 +132,16 @@ const Home = (props) => {
 						contentContainerStyle={styles.paddingFlatList}
 						horizontal={true}
 						showsHorizontalScrollIndicator={false}
-						data={popular}
-						keyExtractor={(item, index) => item.id}
+						data={entertainmentArticles}
+						keyExtractor={(item) => item._id}
 						renderItem={({ item, index }) => (
 							<CardSlide
 								loading={loading}
+								article={item}
 								onPress={goPostDetail(item)}
 								style={{
 									marginRight: index == popular.length - 1 ? 0 : 15,
 								}}
-								image={item.image}
-								date={item.date}
-								title={item.title}
 							/>
 						)}
 					/>
@@ -163,15 +149,12 @@ const Home = (props) => {
 					<FlatList
 						scrollEnabled={false}
 						contentContainerStyle={styles.paddingFlatList}
-						data={list}
+						data={topNews.slice(3)}
 						keyExtractor={(item, index) => index.toString()}
 						renderItem={({ item, index }) => (
 							<NewsList
 								loading={loading}
-								image={item.image}
-								title={item.title}
-								subtitle={item.subtitle}
-								date={item.date}
+								article={item}
 								style={{
 									marginBottom: index == list.length - 1 ? 0 : 15,
 								}}

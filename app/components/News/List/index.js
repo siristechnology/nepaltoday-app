@@ -6,15 +6,16 @@ import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import styles from './styles'
 import Loading from './Loading'
+import { getRelativeTime } from '../../../helper/time'
 
 const NewsList = (props) => {
-	const { style, onPress, image, title, subtitle, date, loading } = props
-	if (loading) {
+	const { article, style, onPress, loading } = props
+	if (loading || !article) {
 		return <Loading style={style} />
 	}
 	return (
 		<TouchableOpacity style={[styles.contain, style]} onPress={onPress} activeOpacity={0.9}>
-			<Image source={image} style={styles.image} />
+			<Image source={{ uri: article.imageLink }} style={styles.image} />
 			<View
 				style={{
 					paddingHorizontal: 10,
@@ -22,14 +23,14 @@ const NewsList = (props) => {
 					paddingVertical: 5,
 				}}
 			>
-				<Text light footnote semibold grayColor>
-					{subtitle}
+				<Text light footnote grayColor>
+					{getRelativeTime(article.createdDate)}
 				</Text>
-				<Text headline semibold numberOfLines={2} style={styles.marginVertical5}>
-					{title}
+				<Text numberOfLines={2} style={styles.marginVertical5}>
+					{article.title}
 				</Text>
 				<Text caption1 light grayColor>
-					{date}
+					{article.source.name}
 				</Text>
 				<View style={styles.contentRate} />
 			</View>

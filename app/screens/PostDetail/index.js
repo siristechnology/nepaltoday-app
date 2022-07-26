@@ -1,22 +1,12 @@
-import {
-	CardSlide,
-	Header,
-	Icon,
-	Image,
-	NewsList,
-	SafeAreaView,
-	StarRating,
-	Tag,
-	Text,
-	PlaceholderLine,
-	Placeholder,
-} from '@components'
-import { BaseColor, BaseStyle, useTheme, Images } from '@config'
-import { HomeListData, HomePopularData } from '@data'
-import * as Utils from '@utils'
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Animated, FlatList, I18nManager, ScrollView, Share, TouchableOpacity, View } from 'react-native'
+import { Header, Image, NewsList, SafeAreaView, Tag, Text, PlaceholderLine, Placeholder } from '@components'
+import ProfileAuthor from '@components/Profile/Author'
+import { BaseColor, BaseStyle, useTheme, Images } from '@config'
+import { HomeListData } from '@data'
+import * as Utils from '@utils'
+import { getRelativeTime } from '../../helper/time'
 import styles from './styles'
 
 const facilitiesInit = [
@@ -32,14 +22,13 @@ const PostDetail = (props) => {
 	const { navigation, route } = props
 	const { t } = useTranslation()
 	const { colors } = useTheme()
-	const item = route?.params?.item || HomeListData[0]
+	const article = route?.params?.article
 	const [loading, setLoading] = useState(true)
-	const [popular, setPopular] = useState(HomePopularData)
 	const [list, setList] = useState(HomeListData)
 	const [facilities, setFacilities] = useState(facilitiesInit)
 	const [heightHeader, setHeightHeader] = useState(Utils.heightHeader())
 	const scrollY = useRef(new Animated.Value(0)).current
-	const { id, image, title, subtitle, date, content } = item
+	const { category, imageLink, title, source, createdDate, content } = article
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -161,37 +150,7 @@ const PostDetail = (props) => {
 						marginBottom: 20,
 					}}
 				>
-					{t('popular_posts')}
-				</Text>
-
-				<FlatList
-					contentContainerStyle={{ paddingHorizontal: 20 }}
-					horizontal={true}
-					showsHorizontalScrollIndicator={false}
-					data={popular}
-					keyExtractor={(item, index) => item.id}
-					renderItem={({ item, index }) => (
-						<CardSlide
-							onPress={goPostDetail(item)}
-							style={{
-								marginRight: index == popular.length - 1 ? 0 : 15,
-							}}
-							image={item.image}
-							date={item.date}
-							title={item.title}
-						/>
-					)}
-				/>
-				<Text
-					title3
-					semibold
-					style={{
-						paddingHorizontal: 20,
-						marginTop: 30,
-						marginBottom: 20,
-					}}
-				>
-					{t('related_posts')}
+					{'Related News'}
 				</Text>
 				<FlatList
 					contentContainerStyle={{ paddingHorizontal: 20 }}
@@ -248,36 +207,11 @@ const PostDetail = (props) => {
 						}}
 					>
 						<Text medium caption1 grayColor>
-							{date}
+							{getRelativeTime(createdDate)}
 						</Text>
-						<Text title1 semibold style={{ marginVertical: 10 }}>
+						<Text title1 semibold style={{ marginTop: 10 }}>
 							{title}
 						</Text>
-
-						<View style={styles.lineSpace}>
-							<View>
-								<TouchableOpacity style={styles.rateLine} onPress={() => navigation.navigate('Review')}>
-									<Tag
-										rateSmall
-										style={{ marginRight: 5 }}
-										onPress={() => navigation.navigate('Review')}
-									>
-										9.4
-									</Tag>
-									<StarRating
-										disabled={true}
-										starSize={10}
-										maxStars={5}
-										rating={4.5}
-										fullStarColor={BaseColor.yellowColor}
-										on
-									/>
-									<Text footnote grayColor style={{ marginLeft: 5 }}>
-										(609)
-									</Text>
-								</TouchableOpacity>
-							</View>
-						</View>
 					</View>
 
 					{loading ? renderPlaceholder() : renderContent()}
@@ -292,18 +226,12 @@ const PostDetail = (props) => {
 					},
 				]}
 			>
-				<Image source={image} style={{ height: '100%', width: '100%' }} />
+				<Image source={{ uri: imageLink }} style={{ height: '100%', width: '100%' }} />
 				<TouchableOpacity
 					style={[styles.viewIcon, { backgroundColor: colors.primaryLight }]}
 					onPress={() => console.log('Your code')}
 				>
-					<Icon
-						solid
-						name="bookmark"
-						size={20}
-						color={BaseColor.whiteColor}
-						// onPress={() => console.log("Your code")}
-					/>
+					<ProfileAuthor image={{ uri: source.logoLink }} size={20} />
 				</TouchableOpacity>
 			</Animated.View>
 			<Animated.View style={[styles.headerStyle, { position: 'absolute' }]}>
