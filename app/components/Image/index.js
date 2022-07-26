@@ -22,6 +22,7 @@ const Image = (props) => {
 		}
 		return resize
 	}
+
 	return <FastImage style={StyleSheet.flatten([style && style])} {...rest} resizeMode={getMode()} />
 }
 

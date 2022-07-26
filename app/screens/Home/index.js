@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, ScrollView, View } from 'react-native'
+import { FlatList, RefreshControl, ScrollView, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useLazyQuery } from '@apollo/react-hooks'
 import crashlytics from '@react-native-firebase/crashlytics'
@@ -16,8 +16,6 @@ const Home = (props) => {
 	const { navigation } = props
 	const [nepaliDate, setNepaliDate] = useState('')
 	const [refreshing, setRefreshing] = useState(false)
-	const [topics, setTopics] = useState(HomeTopicData)
-	const [channels, setChannels] = useState(HomeChannelData)
 	const [popular, setPopular] = useState(HomePopularData)
 	const [list, setList] = useState(HomeListData)
 	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
@@ -92,78 +90,75 @@ const Home = (props) => {
 		navigation.navigate('PostDetail', { article: article })
 	}
 
-	const goToCategory = () => {
-		navigation.navigate('Category')
-	}
-
 	const renderContent = () => {
 		return (
-			<View>
-				<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
-					<Text title1 bold>
-						{nepaliDate}
-					</Text>
-					<Weather />
-				</View>
-				<ScrollView contentContainerStyle={styles.paddingSrollView}>
-					<News169 article={topHeadline} loading={loading} onPress={goPostDetail(topHeadline)} />
-					<FlatList
-						scrollEnabled={false}
-						contentContainerStyle={styles.paddingFlatList}
-						data={topNews.slice(0, 3)}
-						keyExtractor={(item) => item._id}
-						renderItem={({ item, index }) => (
-							<NewsList
-								loading={loading}
-								article={item}
-								image={item.image}
-								title={item.title}
-								subtitle={item.subtitle}
-								date={item.date}
-								style={{
-									marginBottom: index == list.length - 1 ? 0 : 15,
-								}}
-								onPress={goPostDetail(item)}
-							/>
-						)}
-					/>
+			<SafeAreaView style={{ width: '100%' }}>
+				<FlatList
+					contentContainerStyle={{ ...styles.paddingSrollView, paddingTop: 4 }}
+					data={topNews.slice(3)}
+					keyExtractor={(item) => item._id}
+					ListHeaderComponent={
+						<>
+							<View style={{ paddingBottom: 10 }}>
+								<Text title1 bold>
+									{nepaliDate}
+								</Text>
+								<Weather />
+							</View>
 
-					<FlatList
-						contentContainerStyle={styles.paddingFlatList}
-						horizontal={true}
-						showsHorizontalScrollIndicator={false}
-						data={entertainmentArticles}
-						keyExtractor={(item) => item._id}
-						renderItem={({ item, index }) => (
-							<CardSlide
-								loading={loading}
-								article={item}
-								onPress={goPostDetail(item)}
-								style={{
-									marginRight: index == popular.length - 1 ? 0 : 15,
-								}}
-							/>
-						)}
-					/>
+							<News169 article={topHeadline} loading={loading} onPress={goPostDetail(topHeadline)} />
 
-					<FlatList
-						scrollEnabled={false}
-						contentContainerStyle={styles.paddingFlatList}
-						data={topNews.slice(3)}
-						keyExtractor={(item, index) => index.toString()}
-						renderItem={({ item, index }) => (
-							<NewsList
-								loading={loading}
-								article={item}
-								style={{
-									marginBottom: index == list.length - 1 ? 0 : 15,
-								}}
-								onPress={goPostDetail(item)}
+							<View style={styles.paddingFlatList}>
+								{topNews.slice(0, 3).map((item, index) => {
+									return (
+										<NewsList
+											loading={loading}
+											article={item}
+											image={item.image}
+											title={item.title}
+											subtitle={item.subtitle}
+											date={item.date}
+											style={{
+												marginBottom: index == list.length - 1 ? 0 : 15,
+											}}
+											onPress={goPostDetail(item)}
+										/>
+									)
+								})}
+							</View>
+
+							<FlatList
+								contentContainerStyle={{ ...styles.paddingFlatList, paddingBottom: 20 }}
+								horizontal={true}
+								showsHorizontalScrollIndicator={false}
+								data={entertainmentArticles}
+								keyExtractor={(item) => item._id}
+								renderItem={({ item, index }) => (
+									<CardSlide
+										loading={loading}
+										article={item}
+										onPress={goPostDetail(item)}
+										style={{
+											marginRight: index == popular.length - 1 ? 0 : 15,
+										}}
+									/>
+								)}
 							/>
-						)}
-					/>
-				</ScrollView>
-			</View>
+						</>
+					}
+					renderItem={({ item, index }) => (
+						<NewsList
+							loading={loading}
+							article={item}
+							style={{
+								marginBottom: index == list.length - 1 ? 0 : 15,
+							}}
+							onPress={goPostDetail(item)}
+						/>
+					)}
+					refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => {}} />}
+				/>
+			</SafeAreaView>
 		)
 	}
 

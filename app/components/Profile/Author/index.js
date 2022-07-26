@@ -30,7 +30,7 @@ export default function ProfileAuthor(props) {
 			<View style={[styles.contentLeft, styleLeft]}>
 				<Image source={image} style={[styles.thumb, styleThumb]} />
 				<View>
-					<Text headline semibold numberOfLines={1} style={styleName}>
+					<Text numberOfLines={1} style={styleName}>
 						{name}
 					</Text>
 					<Text footnote grayColor numberOfLines={1} style={styleDescription}>
