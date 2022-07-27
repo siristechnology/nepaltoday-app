@@ -1,7 +1,7 @@
 import { Text } from '@components'
 import { BaseColor, useTheme } from '@config'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+
 import { Dimensions, View } from 'react-native'
 import { TabBar, TabView } from 'react-native-tab-view'
 import styles from './styles'
@@ -10,7 +10,6 @@ const initialLayout = { width: Dimensions.get('window').width }
 
 const TabSlider = (props) => {
 	const { colors } = useTheme()
-	const { t } = useTranslation()
 
 	const renderTabBar = (props) => (
 		<TabBar
@@ -32,7 +31,7 @@ const TabSlider = (props) => {
 						]}
 					>
 						<Text style={{ width: '100%' }} subhead bold={focused} grayColor={!focused}>
-							{t(route.title)}
+							{route.title}
 						</Text>
 					</View>
 				)

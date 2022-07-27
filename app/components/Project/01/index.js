@@ -6,7 +6,7 @@ import Text from '@components/Text'
 import { BaseColor, useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React, { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
+
 import { TouchableOpacity, View } from 'react-native'
 import styles from './styles'
 
@@ -24,7 +24,6 @@ const Project01 = ({
 	completedTickets = 0,
 	status = '',
 }) => {
-	const { t } = useTranslation()
 	const { colors } = useTheme()
 	const { remainder, usersLimit } = useMemo(() => {
 		const limitInt = parseInt(limit)
@@ -125,7 +124,7 @@ const Project01 = ({
 							paddingRight: 20,
 						}}
 					>
-						{tasks} {t('tasks')}
+						{tasks} {'some content'}
 					</Text>
 
 					<Icon solid name="comment" size={14} color={colors.text} />
@@ -135,7 +134,7 @@ const Project01 = ({
 							paddingHorizontal: 5,
 						}}
 					>
-						{comments} {t('comments')}
+						{comments} {'some content'}
 					</Text>
 				</View>
 				<Text caption2 light>
@@ -168,10 +167,10 @@ const Project01 = ({
 					}}
 				>
 					<Text overline>
-						{t('completed')} {`${percent}%`}
+						{'some content'} {`${percent}%`}
 					</Text>
 					<Text overline>
-						{`${completedTickets}/${tickets}`} {t('tickets')}
+						{`${completedTickets}/${tickets}`} {'some content'}
 					</Text>
 				</View>
 				<ProgressBar style={{ flex: 1, paddingRight: 20 }} color={BaseColor.accentColor} percent={percent} />

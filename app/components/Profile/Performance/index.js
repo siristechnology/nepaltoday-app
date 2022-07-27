@@ -1,12 +1,11 @@
 import Text from '@components/Text'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+
 import { View } from 'react-native'
 import styles from './styles'
 
 export default function ProfilePerformance(props) {
-	const { t } = useTranslation()
 	const renderValue = (type, value) => {
 		switch (type) {
 			case 'primary':
@@ -35,19 +34,19 @@ export default function ProfilePerformance(props) {
 			case 'primary':
 				return (
 					<Text body2 grayColor>
-						{t(value)}
+						{value}
 					</Text>
 				)
 			case 'small':
 				return (
 					<Text caption1 grayColor>
-						{t(value)}
+						{value}
 					</Text>
 				)
 			default:
 				return (
 					<Text body2 grayColor>
-						{t(value)}
+						{value}
 					</Text>
 				)
 		}

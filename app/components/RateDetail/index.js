@@ -1,15 +1,13 @@
+import React from 'react'
+import { View } from 'react-native'
 import Icon from '@components/Icon'
 import Text from '@components/Text'
 import { BaseColor, useTheme } from '@config'
 import PropTypes from 'prop-types'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
 import styles from './styles'
 
 export default function RateDetail(props) {
 	const { colors } = useTheme()
-	const { t } = useTranslation()
 	const { style, point, maxPoint, totalRating, data } = props
 	return (
 		<View style={[styles.contain, style]}>
@@ -18,7 +16,7 @@ export default function RateDetail(props) {
 					{point}
 				</Text>
 				<Text subhead grayColor semibold>
-					{t('out_of')} {maxPoint}
+					{'out_of'} {maxPoint}
 				</Text>
 			</View>
 			<View style={styles.containRight}>
@@ -100,7 +98,7 @@ export default function RateDetail(props) {
 					</View>
 				</View>
 				<Text body2 semibold>
-					{totalRating} {t('ratings')}
+					{totalRating} {'ratings'}
 				</Text>
 			</View>
 		</View>

@@ -1,12 +1,9 @@
-import { ApplicationActions } from '@actions'
 import { BaseSetting, useTheme } from '@config'
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { languageSelect } from '@selectors'
 import * as Utils from '@utils'
-import i18n from 'i18next'
 import React, { useEffect, useRef, useState } from 'react'
-import { initReactI18next } from 'react-i18next'
 import { Platform, StatusBar, View } from 'react-native'
 import { DarkModeProvider, useDarkMode } from 'react-native-dark-mode'
 import SplashScreen from 'react-native-splash-screen'
@@ -49,19 +46,9 @@ const Navigator = (props) => {
 	}, [isDarkMode])
 
 	useEffect(() => {
-		// Hide screen loading
 		SplashScreen.hide()
 
 		const onProcess = async () => {
-			// Get current language of device
-			const languageCode = language ?? BaseSetting.defaultLanguage
-			dispatch(ApplicationActions.onChangeLanguage(languageCode))
-			// Config language for app
-			await i18n.use(initReactI18next).init({
-				resources: BaseSetting.resourcesLanguage,
-				lng: languageCode,
-				fallbackLng: languageCode,
-			})
 			Utils.enableExperimental()
 			setLoading(false)
 

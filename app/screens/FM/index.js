@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { FlatList, ScrollView, View } from 'react-native'
 import { BaseColor, BaseStyle } from '@config'
 import { HomeChannelData, HomeListData, HomePopularData, HomeTopicData, PostListData } from '@data'
@@ -11,7 +10,6 @@ import styles from './styles'
 
 const Home = (props) => {
 	const { navigation } = props
-	const { t } = useTranslation()
 	const [topics, setTopics] = useState(HomeTopicData)
 	const [channels, setChannels] = useState(HomeChannelData)
 	const [popular, setPopular] = useState(HomePopularData)
@@ -50,7 +48,7 @@ const Home = (props) => {
 				<ScrollView contentContainerStyle={styles.paddingSrollView}>
 					<View>
 						<Text title3 semibold style={styles.title}>
-							{t('Favourite Stations')}
+							{'Favourite Stations'}
 						</Text>
 						<FlatList
 							contentContainerStyle={{ marginTop: 15 }}
@@ -73,10 +71,10 @@ const Home = (props) => {
 					</View>
 					<View style={styles.topicsView}>
 						<Text title3 semibold style={styles.title}>
-							{t('Browse Stations')}
+							{'Browse Stations'}
 						</Text>
 						<Text light footnote regular grayColor>
-							{t('Stations from all providences')}
+							{'Stations from all providences'}
 						</Text>
 						<SafeAreaView style={{ flex: 1 }}>
 							<FlatList

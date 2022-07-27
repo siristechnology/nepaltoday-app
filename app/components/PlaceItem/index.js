@@ -1,3 +1,5 @@
+import React from 'react'
+import { TouchableOpacity, View } from 'react-native'
 import StarRating from '@components/StarRating'
 import Icon from '@components/Icon'
 import Image from '@components/Image'
@@ -5,13 +7,9 @@ import Tag from '@components/Tag'
 import Text from '@components/Text'
 import { BaseColor, useTheme } from '@config'
 import PropTypes from 'prop-types'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { TouchableOpacity, View } from 'react-native'
 import styles from './styles'
 
 export default function PlaceItem(props) {
-	const { t } = useTranslation()
 	const { colors } = useTheme()
 	const {
 		grid,
@@ -39,7 +37,7 @@ export default function PlaceItem(props) {
 				<TouchableOpacity onPress={onPress} activeOpacity={0.9}>
 					<Image source={image} style={styles.blockImage} />
 					<Tag status style={styles.tagStatus}>
-						{t(status)}
+						{status}
 					</Tag>
 					<Icon name="heart" color={BaseColor.whiteColor} size={24} style={styles.iconLike} />
 					<View style={styles.blockContentRate}>
@@ -54,7 +52,7 @@ export default function PlaceItem(props) {
 							</Tag>
 							<View style={{ marginLeft: 10 }}>
 								<Text caption1 whiteColor semibold style={{ marginBottom: 5 }}>
-									{t(rateStatus)}
+									{rateStatus}
 								</Text>
 								<StarRating
 									disabled={true}
@@ -67,7 +65,7 @@ export default function PlaceItem(props) {
 							</View>
 						</View>
 						<Text caption1 semibold whiteColor style={{ marginTop: 5 }}>
-							{numReviews} {t('reviews')}
+							{numReviews} {'reviews'}
 						</Text>
 					</View>
 				</TouchableOpacity>
@@ -109,7 +107,7 @@ export default function PlaceItem(props) {
 				<TouchableOpacity onPress={onPress} activeOpacity={0.9}>
 					<Image source={image} style={styles.listImage} />
 					<Tag status style={styles.listTagStatus}>
-						{t(status)}
+						{status}
 					</Tag>
 				</TouchableOpacity>
 				<View style={styles.listContentRight}>
@@ -153,7 +151,7 @@ export default function PlaceItem(props) {
 				<TouchableOpacity onPress={onPress} activeOpacity={0.9}>
 					<Image source={image} style={styles.girdImage} />
 					<Tag status style={styles.tagGirdStatus}>
-						{t(status)}
+						{status}
 					</Tag>
 					<Icon name="heart" color={BaseColor.whiteColor} size={18} style={styles.iconGirdLike} />
 				</TouchableOpacity>

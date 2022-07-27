@@ -2,7 +2,6 @@ import { Icon, Tag, ModalOption } from '@components'
 import { useTheme } from '@config'
 import { EOptions } from '@data'
 import React, { Fragment, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 const PSelectOption = ({ title = 'Type', options = EOptions, value = [], onPress = () => {} }) => {
 	const { colors } = useTheme()

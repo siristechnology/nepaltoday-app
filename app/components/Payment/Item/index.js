@@ -2,7 +2,7 @@ import Icon from '@components/Icon'
 import Text from '@components/Text'
 import { useTheme } from '@config'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+
 import { TouchableHighlight, View } from 'react-native'
 import styles from './styles'
 
@@ -15,7 +15,6 @@ export default function PaymentItem({
 	style = {},
 	textPrimary = '',
 }) {
-	const { t } = useTranslation()
 	const { colors } = useTheme()
 	return (
 		<TouchableHighlight

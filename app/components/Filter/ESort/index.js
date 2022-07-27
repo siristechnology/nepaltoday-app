@@ -4,13 +4,12 @@ import Text from '@components/Text'
 import { BaseColor, useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+
 import { TouchableOpacity, View } from 'react-native'
 import styles from './styles'
 
 export default function FilterESort(props) {
 	const { colors } = useTheme()
-	const { t } = useTranslation()
 	const backgroundColor = colors.background
 	const cardColor = colors.card
 
@@ -106,7 +105,7 @@ export default function FilterESort(props) {
 				/>
 				<TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => onOpenSort()}>
 					<Text headline style={{ marginRight: 5 }}>
-						{t(sortSelected.text)}
+						{sortSelected.text}
 					</Text>
 					<Icon name={'chevron-down'} size={16} color={colors.text} solid />
 				</TouchableOpacity>

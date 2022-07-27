@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { View, TouchableOpacity, Switch, ScrollView } from 'react-native'
 import { BaseStyle, useTheme, BaseSetting } from '@config'
 import { Header, SafeAreaView, Icon, Text } from '@components'
-import { useTranslation } from 'react-i18next'
+
 import * as Utils from '@utils'
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native'
@@ -49,7 +49,7 @@ export default function Setting({ isShowHeader = true }) {
 						navigation.navigate('ChangeLanguage')
 					}}
 				>
-					<Text body1>{t('language')}</Text>
+					<Text body1>{'some content'}</Text>
 					<View
 						style={{
 							flexDirection: 'row',
@@ -80,7 +80,7 @@ export default function Setting({ isShowHeader = true }) {
 						navigation.navigate('ThemeSetting')
 					}}
 				>
-					<Text body1>{t('theme')}</Text>
+					<Text body1>{'some content'}</Text>
 					<View style={[styles.themeIcon, { backgroundColor: colors.primary }]} />
 				</TouchableOpacity>
 				<TouchableOpacity
@@ -93,7 +93,7 @@ export default function Setting({ isShowHeader = true }) {
 					]}
 					onPress={() => navigation.navigate('SelectFontOption')}
 				>
-					<Text body1>{t('font')}</Text>
+					<Text body1>{'some content'}</Text>
 					<View
 						style={{
 							flexDirection: 'row',
@@ -124,7 +124,7 @@ export default function Setting({ isShowHeader = true }) {
 						navigation.navigate('SelectDarkOption')
 					}}
 				>
-					<Text body1>{t('dark_theme')}</Text>
+					<Text body1>{'some content'}</Text>
 					<View
 						style={{
 							flexDirection: 'row',
@@ -153,7 +153,7 @@ export default function Setting({ isShowHeader = true }) {
 						{ paddingVertical: 15 },
 					]}
 				>
-					<Text body1>{t('notification')}</Text>
+					<Text body1>{'some content'}</Text>
 					<Switch size={18} onValueChange={toggleSwitch} value={reminders} />
 				</View>
 				<View
@@ -166,11 +166,11 @@ export default function Setting({ isShowHeader = true }) {
 						{ paddingVertical: 15 },
 					]}
 				>
-					<Text body1>{t('Display intro screen')}</Text>
+					<Text body1>{'some content'}</Text>
 					<Switch onValueChange={onChangeIntro} value={intro} />
 				</View>
 				<View style={styles.profileItem}>
-					<Text body1>{t('app_version')}</Text>
+					<Text body1>{'some content'}</Text>
 					<Text body1 grayColor>
 						{BaseSetting.appVersion}
 					</Text>
@@ -186,7 +186,7 @@ export default function Setting({ isShowHeader = true }) {
 	return (
 		<SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
 			<Header
-				title={t('setting')}
+				title={'some content'}
 				renderLeft={() => {
 					return <Icon name="angle-left" size={20} color={colors.primary} enableRTL={true} />
 				}}

@@ -1,4 +1,5 @@
 import { Images } from '@config'
+
 import {
 	ECommerceScreens,
 	FinanceScreens,
@@ -8,6 +9,8 @@ import {
 	ShareScreens,
 	ProjectScreens,
 } from '@navigation/config'
+
+console.log('printing Images', Images)
 
 const CommonScreens = { ...ShareScreens, ...ModalScreens }
 

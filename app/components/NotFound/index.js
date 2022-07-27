@@ -2,13 +2,12 @@ import React from 'react'
 import { View } from 'react-native'
 import styles from './styles'
 import { BaseStyle, useTheme } from '@config'
-import { useTranslation } from 'react-i18next'
+
 import Text from '@components/Text'
 import Icon from '@components/Icon'
 import { parseHexTransparency } from '@utils'
 
 const NotFound = () => {
-	const { t } = useTranslation()
 	const { colors } = useTheme()
 	return (
 		<View style={styles.container}>
@@ -28,7 +27,7 @@ const NotFound = () => {
 					color: parseHexTransparency(colors.text, 50),
 				}}
 			>
-				{t('not_found')}
+				{'some content'}
 			</Text>
 		</View>
 	)

@@ -4,14 +4,13 @@ import Button from '@components/Button'
 import { useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 import styles from './styles'
 
 const ModalOption = (props) => {
 	const { colors } = useTheme()
-	const { t } = useTranslation()
 	const cardColor = colors.card
 	const { options = [], value = {}, onPress, isMulti = false, ...attrs } = props
 	const [optionCustom, setOptionCustom] = useState(options)
@@ -90,7 +89,7 @@ const ModalOption = (props) => {
 								/>
 							)}
 							<Text body2 primaryColor={item.checked}>
-								{t(item.text)}
+								{item.text}
 							</Text>
 						</View>
 						{item.checked && <Icon name="check" size={14} color={colors.primary} />}
@@ -98,7 +97,7 @@ const ModalOption = (props) => {
 				))}
 				{isMulti && (
 					<Button full style={{ marginTop: 10, marginBottom: 20 }} onPress={onApply}>
-						{t('apply')}
+						{'some content'}
 					</Button>
 				)}
 			</View>

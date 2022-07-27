@@ -16,12 +16,11 @@ import { CategoryData } from '@data'
 import * as Utils from '@utils'
 import React, { useEffect, useState } from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
-import { useTranslation } from 'react-i18next'
+
 let timeoutChangeMode = null
 
 const Category = (props) => {
 	const { navigation } = props
-	const { t } = useTranslation()
 	const { colors } = useTheme()
 	const [refreshing, setRefreshing] = useState(false)
 	const [search, setSearch] = useState('')
@@ -199,7 +198,7 @@ const Category = (props) => {
 						style={{ marginBottom: 20 }}
 						renderLeft={() => (
 							<Text header bold>
-								{t('categories')}
+								{'some content'}
 							</Text>
 						)}
 						title={''}
@@ -227,7 +226,7 @@ const Category = (props) => {
 						style={[BaseStyle.textInput, Typography.body1]}
 						onChangeText={onChangeText}
 						autoCorrect={false}
-						placeholder={t('search')}
+						placeholder={'some content'}
 						placeholderTextColor={BaseColor.grayColor}
 						value={search}
 						selectionColor={colors.primary}

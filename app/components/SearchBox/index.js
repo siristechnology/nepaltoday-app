@@ -3,13 +3,12 @@ import TextInput from '@components/TextInput'
 import { BaseColor, useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React, { useState, forwardRef } from 'react'
-import { useTranslation } from 'react-i18next'
+
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import styles from './styles'
 
 const SearchBox = forwardRef((props, ref) => {
 	const { onSubmitEditing, loading } = props
-	const { t } = useTranslation()
 	const [keyword, setKeyword] = useState('')
 	const { colors } = useTheme()
 
@@ -27,7 +26,7 @@ const SearchBox = forwardRef((props, ref) => {
 					ref={ref}
 					style={styles.textInput}
 					autoCorrect={false}
-					placeholder={t('write_a_comment')}
+					placeholder={'some content'}
 					placeholderTextColor={BaseColor.grayColor}
 					value={keyword}
 					selectionColor={colors.primary}

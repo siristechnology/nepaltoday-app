@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux'
 import styles from './styles'
 import { ECategories, EFeaturedShop, EPopulars, EYourStores } from '@data'
 import { BaseColor, BaseStyle, useTheme } from '@config'
-import { useTranslation } from 'react-i18next'
 
 export const HeaderLargeTitleStore = ({ storesData = EYourStores, onChange = () => {}, style = {} }) => {
 	const { colors } = useTheme()
@@ -19,7 +18,6 @@ export const HeaderLargeTitleStore = ({ storesData = EYourStores, onChange = () 
 	const [stores, setStores] = useState(storesData)
 	const [storeChoosed, setStoreChoosed] = useState(storesData?.[0] ?? {})
 	const [modalVisible, setModalVisible] = useState(false)
-	const { t } = useTranslation()
 	useEffect(() => {
 		const stores = storesData.map((item, index) => {
 			return {
@@ -57,7 +55,7 @@ export const HeaderLargeTitleStore = ({ storesData = EYourStores, onChange = () 
 			<TouchableOpacity style={style} onPress={() => setModalVisible(true)}>
 				<Text body2 bold>
 					{' '}
-					{t('e_your_store')}
+					{'e_your_store'}
 				</Text>
 				<View style={styles.viewStore}>
 					{storeChoosed.image && <Image source={storeChoosed.image} style={styles.countryImg} />}

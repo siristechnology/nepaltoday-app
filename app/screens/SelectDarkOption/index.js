@@ -5,10 +5,8 @@ import { BaseStyle, useTheme } from '@config'
 import { SafeAreaView, Icon, Text } from '@components'
 import { ApplicationActions } from '@actions'
 import styles from './styles'
-import { useTranslation } from 'react-i18next'
 
 export default function SelectDarkOption({ navigation }) {
-	const { t } = useTranslation()
 	const { colors } = useTheme()
 	const dispatch = useDispatch()
 
@@ -46,7 +44,7 @@ export default function SelectDarkOption({ navigation }) {
 								}}
 							>
 								<Text body1 style={{ marginHorizontal: 8 }}>
-									{t('dynamic_system')}
+									{'some content'}
 								</Text>
 							</View>
 							{forceDarkMode == null && <Icon name="check" size={18} color={colors.primary} />}
@@ -68,7 +66,7 @@ export default function SelectDarkOption({ navigation }) {
 								}}
 							>
 								<Text body1 style={{ marginHorizontal: 8 }}>
-									{t('always_on')}
+									{'some content'}
 								</Text>
 							</View>
 							{forceDarkMode == true && <Icon name="check" size={18} color={colors.primary} />}
@@ -81,7 +79,7 @@ export default function SelectDarkOption({ navigation }) {
 								}}
 							>
 								<Text body1 style={{ marginHorizontal: 8 }}>
-									{t('always_off')}
+									{'some content'}
 								</Text>
 							</View>
 							{forceDarkMode == false && <Icon name="check" size={18} color={colors.primary} />}
@@ -93,13 +91,13 @@ export default function SelectDarkOption({ navigation }) {
 							onPress={() => navigation.goBack()}
 						>
 							<Text body1 grayColor>
-								{t('cancel')}
+								{'some content'}
 							</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity style={{ padding: 8 }} onPress={() => onChange(forceDarkMode)}>
 							<Text body1 primaryColor>
-								{t('apply')}
+								{'some content'}
 							</Text>
 						</TouchableOpacity>
 					</View>

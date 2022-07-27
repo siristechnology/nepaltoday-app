@@ -1,14 +1,12 @@
+import React from 'react'
+import { TouchableOpacity, View } from 'react-native'
+import PropTypes from 'prop-types'
 import Icon from '@components/Icon'
 import Text from '@components/Text'
 import { BaseColor, useTheme } from '@config'
-import PropTypes from 'prop-types'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { TouchableOpacity, View } from 'react-native'
 import styles from './styles'
 import Loading from './Loading'
 export default function CategoryIcon(props) {
-	const { t } = useTranslation()
 	const { colors } = useTheme()
 	const { style, icon, title, subtitle, onPress, loading } = props
 
