@@ -40,7 +40,7 @@ const Favourite = () => {
 						return (
 							<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
 								<Text title1 bold>
-									{'Top Tweets'}
+									{'शीर्ष ट्वीटहरू'}
 								</Text>
 							</View>
 						)

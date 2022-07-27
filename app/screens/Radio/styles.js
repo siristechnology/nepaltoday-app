@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-	paddingSrollView: { padding: 20 },
+	paddingView: { paddingLeft: 20, paddingRight: 20 },
 	paddingFlatList: {
 		paddingTop: 24,
 	},
