@@ -59,6 +59,20 @@ const ProximaNova = {
 	bold: 'Bold',
 }
 
+const OpenSans = {
+	100: 'Thin',
+	200: 'Thin',
+	300: 'Thin',
+	400: 'Regular',
+	500: 'Regular',
+	600: 'Bold',
+	700: 'Bold',
+	800: 'Bold',
+	900: 'Black',
+	normal: 'Regular',
+	bold: 'Bold',
+}
+
 export default function Index(props) {
 	const {
 		// props style
@@ -149,6 +163,11 @@ export default function Index(props) {
 		const fontStyle = textStyle.fontStyle == 'italic' ? 'Italic' : ''
 		const fontWeight = textStyle?.fontWeight ?? 400
 		switch (textStyle.fontFamily) {
+			case 'OpenSans':
+				textStyle.fontFamily = `${textStyle.fontFamily}-${
+					OpenSans[fontWeight] == 'Regular' ? OpenSans[fontWeight] : OpenSans[fontWeight] + fontStyle
+				}`
+				break
 			case 'Raleway':
 				textStyle.fontFamily = `${textStyle.fontFamily}-${
 					Raleway[fontWeight] == 'Regular' ? Raleway[fontWeight] : Raleway[fontWeight] + fontStyle

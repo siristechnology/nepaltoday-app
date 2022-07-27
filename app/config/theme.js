@@ -208,12 +208,12 @@ export const DefaultTheme = {
 /**
  * Define list font use for whole application
  */
-export const FontSupport = ['ProximaNova', 'Raleway', 'Roboto', 'Merriweather']
+export const FontSupport = ['OpenSans', 'ProximaNova', 'Raleway', 'Roboto', 'Merriweather']
 
 /**
  * Define font default use for whole application
  */
-export const DefaultFont = 'ProximaNova'
+export const DefaultFont = 'OpenSans'
 
 /**
  * export theme and colors for application
