@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
 import TrackPlayer, { TrackPlayerEvents, STATE_PLAYING } from 'react-native-track-player'
 import { useTrackPlayerEvents } from 'react-native-track-player/lib/hooks'
-import { BaseColor, BaseStyle } from '@config'
-import { Button, CardChannelGrid, CardSlide, CategoryList, SafeAreaView, Text } from '@components'
+import { BaseStyle } from '@config'
+import { CardChannelGrid, CategoryList, SafeAreaView, Text } from '@components'
 import SearchBox from './SearchBox'
 import styles from './styles'
 import { useQuery } from '@apollo/client'
 import GET_FM_QUERY from './GET_FM_QUERY'
-import BottomPlayer from './bottomPlayer'
+import BottomPlayer from './Player/index'
 
 const trackPlayerInit = async () => {
 	await TrackPlayer.setupPlayer()
@@ -136,14 +136,6 @@ const RadioScreen = (props) => {
 		navigation.navigate('Post', { item: item })
 	}
 
-	const goPostDetail = (item) => () => {
-		navigation.navigate('PostDetail', { item: item })
-	}
-
-	const goToCategory = () => {
-		navigation.navigate('Category')
-	}
-
 	const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
 
 	const provinces = [...new Set(fmList.map((f) => f.province))]
@@ -199,6 +191,7 @@ const RadioScreen = (props) => {
 								{provinceFms.map((item, index) => {
 									return (
 										<CategoryList
+											key={item.id}
 											loading={loading}
 											onPress={goPost(item)}
 											style={{
@@ -215,23 +208,16 @@ const RadioScreen = (props) => {
 					</View>
 				</ScrollView>
 			</View>
-			{currentChannelId != null && (
+			{currentChannel != null && (
 				<BottomPlayer
 					isPlaying={isPlaying}
 					initSuccess={isTrackPlayerInit}
-					onSkipPrevious={skipPrevious}
-					onPause={pause}
-					onPlay={play}
-					onStop={stop}
-					onSkipNext={skipNext}
 					currentChannel={currentChannel}
+					onPlay={play}
+					onPause={pause}
+					onSkipNext={skipNext}
 				/>
 			)}
-			{/* <View style={{ padding: 10 }}>
-				<Button loading={loading} onPress={() => {}}>
-					{'sign_out'}
-				</Button>
-			</View> */}
 		</SafeAreaView>
 	)
 }
