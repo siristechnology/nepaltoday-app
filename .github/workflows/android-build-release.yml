@@ -41,6 +41,7 @@ jobs:
               with:
                   files: android/app/build/outputs/apk/signed/release/app-signed-release.apk
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  automatic_release_tag: ${{ github.sha }}
                   title: 'Nepaltoday - Beta Build'
                   prerelease: false
 
