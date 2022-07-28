@@ -9,6 +9,7 @@ export default StyleSheet.create({
 		paddingLeft: 10,
 		paddingRight: 8,
 		paddingVertical: 8,
+		backgroundColor: BaseColor.lightGrayColor,
 	},
 	contain: {
 		flex: 1,

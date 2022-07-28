@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useLazyQuery } from '@apollo/react-hooks'
 import crashlytics from '@react-native-firebase/crashlytics'
 import { CardSlide, News169, NewsList, SafeAreaView, Text } from '@components'
-import { BaseColor, BaseStyle } from '@config'
+import { BaseStyle, useTheme } from '@config'
 import styles from './styles'
 import { fetchfromAsync, storetoAsync } from '../../helper/cacheStorage'
 import { getFormattedCurrentNepaliDate } from '../../helper/dateFormatter'
@@ -13,6 +12,7 @@ import Weather from './weather.component'
 
 const Home = (props) => {
 	const { navigation } = props
+	const { colors } = useTheme()
 	const [nepaliDate, setNepaliDate] = useState('')
 	const [refreshing, setRefreshing] = useState(false)
 	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
@@ -156,7 +156,14 @@ const Home = (props) => {
 							onPress={goPostDetail(item)}
 						/>
 					)}
-					refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+					refreshControl={
+						<RefreshControl
+							refreshing={refreshing}
+							onRefresh={handleRefresh}
+							colors={[colors.primary]}
+							tintColor={colors.primary}
+						/>
+					}
 				/>
 			</SafeAreaView>
 		)

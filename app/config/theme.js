@@ -6,6 +6,7 @@ import { useDarkMode } from 'react-native-dark-mode'
  */
 export const BaseColor = {
 	grayColor: '#9B9B9B',
+	lightGrayColor: '#F5F5F5',
 	dividerColor: '#BDBDBD',
 	whiteColor: '#FFFFFF',
 	fieldColor: '#F5F5F5',
