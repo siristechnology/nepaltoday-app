@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
-import TrackPlayer, { TrackPlayerEvents, STATE_PLAYING } from 'react-native-track-player'
-import { useTrackPlayerEvents } from 'react-native-track-player/lib/hooks'
+import TrackPlayer from 'react-native-track-player'
 import { BaseStyle } from '@config'
 import { CardChannelGrid, CategoryList, SafeAreaView, Text } from '@components'
 import SearchBox from './SearchBox'
@@ -43,16 +42,8 @@ const RadioScreen = (props) => {
 						pause()
 					})
 
-					TrackPlayer.addEventListener('remote-stop', () => {
-						stop()
-					})
-
 					TrackPlayer.addEventListener('remote-next', () => {
 						skipNext()
-					})
-
-					TrackPlayer.addEventListener('remote-previous', () => {
-						skipPrevious()
 					})
 
 					TrackPlayer.addEventListener('remote-duck', () => {
@@ -85,15 +76,12 @@ const RadioScreen = (props) => {
 		await TrackPlayer.play()
 		const currentId = await TrackPlayer.getCurrentTrack()
 		setCurrentChannelId(currentId)
+		setIsPlaying(true)
 	}
 
 	const pause = async () => {
 		await TrackPlayer.pause()
-	}
-
-	const stop = async () => {
-		await TrackPlayer.stop()
-		setCurrentChannelId('')
+		setIsPlaying(false)
 	}
 
 	const skipNext = async () => {
@@ -123,14 +111,6 @@ const RadioScreen = (props) => {
 	let favoriteList = (data && data.getMyFm.favoriteFm) || []
 	const fmList = (data && data.getMyFm.allFm) || []
 	favoriteList = fmList.slice(0, 10)
-
-	useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], (event) => {
-		if (event.state === STATE_PLAYING) {
-			setIsPlaying(true)
-		} else {
-			setIsPlaying(false)
-		}
-	})
 
 	const goPost = (item) => () => {
 		navigation.navigate('Post', { item: item })

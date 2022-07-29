@@ -24,8 +24,8 @@ const BottomPlayer = ({ initSuccess, currentChannel, isPlaying, onPause, onPlay,
 					</Text>
 				</View>
 				<View style={styles.playerBtns}>
-					{(isPlaying && <PlayerButton name="pause-circle" onAction={onPlay} />) || (
-						<PlayerButton name="pause-circle" onAction={onPause} />
+					{(isPlaying && <PlayerButton name="pause-circle" onAction={onPause} />) || (
+						<PlayerButton name="play-circle" onAction={onPlay} />
 					)}
 					<PlayerButton name="step-forward" onAction={onSkipNext} />
 				</View>
