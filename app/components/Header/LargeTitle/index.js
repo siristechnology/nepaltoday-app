@@ -8,10 +8,9 @@ import { StatusBar, View, TouchableOpacity } from 'react-native'
 import { useDarkMode } from 'react-native-dark-mode'
 import { useSelector } from 'react-redux'
 import styles from './styles'
-import { ECategories, EFeaturedShop, EPopulars, EYourStores } from '@data'
 import { BaseColor, BaseStyle, useTheme } from '@config'
 
-export const HeaderLargeTitleStore = ({ storesData = EYourStores, onChange = () => {}, style = {} }) => {
+export const HeaderLargeTitleStore = ({ storesData = 'EYourStores', onChange = () => {}, style = {} }) => {
 	const { colors } = useTheme()
 	const forceDark = useSelector((state) => state.application.force_dark)
 	const isDarkMode = useDarkMode()
@@ -108,7 +107,7 @@ function HeaderLargeTitle({ barStyle = '', style = {}, onPressBadge = () => {}, 
 
 	return (
 		<View style={[styles.contain, style]}>
-			<HeaderLargeTitleStore style={{ flex: 1 }} storesData={EYourStores} onChange={onChangeStore} />
+			<HeaderLargeTitleStore style={{ flex: 1 }} storesData={'EYourStores'} onChange={onChangeStore} />
 			<HeaderLargeTitleBadge onPress={onPressBadge} />
 		</View>
 	)
