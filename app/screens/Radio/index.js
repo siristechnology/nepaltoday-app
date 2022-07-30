@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
-import TrackPlayer from 'react-native-track-player'
+import TrackPlayer, { Capability } from 'react-native-track-player'
 import { BaseStyle } from '@config'
 import { CardChannelGrid, CategoryList, SafeAreaView, Text } from '@components'
 import SearchBox from './SearchBox'
@@ -13,13 +13,8 @@ const trackPlayerInit = async () => {
 	await TrackPlayer.setupPlayer()
 	TrackPlayer.updateOptions({
 		stopWithApp: true,
-		capabilities: [
-			TrackPlayer.CAPABILITY_PLAY,
-			TrackPlayer.CAPABILITY_PAUSE,
-			TrackPlayer.CAPABILITY_STOP,
-			TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-			TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-		],
+		capabilities: [Capability.Play, Capability.Pause, Capability.Skip, Capability.SkipToNext],
+		compactCapabilities: [Capability.Play, Capability.Pause, Capability.Stop],
 	})
 	return true
 }
@@ -55,7 +50,14 @@ const RadioScreen = (props) => {
 
 	const onFMSelect = async (channel, fmList) => {
 		await TrackPlayer.reset()
-		for (const fmDetail of fmList) {
+
+		let currentChannelIndex = 0
+		for (let i = 0; i < fmList.length; i++) {
+			const fmDetail = fmList[i]
+
+			if (channel.id == fmDetail.id) {
+				currentChannelIndex = i
+			}
 			await TrackPlayer.add({
 				id: fmDetail.id,
 				url: fmDetail.url,
@@ -66,8 +68,10 @@ const RadioScreen = (props) => {
 				artwork: fmDetail.artwork,
 			})
 		}
+
+		await TrackPlayer.add(channel)
 		await TrackPlayer.play()
-		await TrackPlayer.skip(channel.id)
+		await TrackPlayer.skip(currentChannelIndex)
 		setCurrentChannelId(channel.id)
 		setIsPlaying(true)
 	}
@@ -86,12 +90,6 @@ const RadioScreen = (props) => {
 
 	const skipNext = async () => {
 		await TrackPlayer.skipToNext()
-		const currentId = await TrackPlayer.getCurrentTrack()
-		setCurrentChannelId(currentId)
-	}
-
-	const skipPrevious = async () => {
-		await TrackPlayer.skipToPrevious()
 		const currentId = await TrackPlayer.getCurrentTrack()
 		setCurrentChannelId(currentId)
 	}
