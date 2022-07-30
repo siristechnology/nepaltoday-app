@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
-import TrackPlayer, { Capability } from 'react-native-track-player'
+import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
 import { BaseStyle } from '@config'
 import { CardChannelGrid, CategoryList, SafeAreaView, Text } from '@components'
 import SearchBox from './SearchBox'
@@ -50,48 +50,23 @@ const RadioScreen = (props) => {
 
 	const onFMSelect = async (channel, fmList) => {
 		await TrackPlayer.reset()
-
-		let currentChannelIndex = 0
-		for (let i = 0; i < fmList.length; i++) {
-			const fmDetail = fmList[i]
-
-			if (channel.id == fmDetail.id) {
-				currentChannelIndex = i
-			}
-			await TrackPlayer.add({
-				id: fmDetail.id,
-				url: fmDetail.url,
-				type: 'default',
-				title: fmDetail.title,
-				album: fmDetail.album,
-				artist: fmDetail.artist,
-				artwork: fmDetail.artwork,
-			})
-		}
-
-		await TrackPlayer.add(channel)
+		await TrackPlayer.add({ ...channel, type: 'default' })
 		await TrackPlayer.play()
-		await TrackPlayer.skip(currentChannelIndex)
 		setCurrentChannelId(channel.id)
-		setIsPlaying(true)
 	}
 
 	const play = async () => {
 		await TrackPlayer.play()
-		const currentId = await TrackPlayer.getCurrentTrack()
-		setCurrentChannelId(currentId)
-		setIsPlaying(true)
 	}
 
 	const pause = async () => {
 		await TrackPlayer.pause()
-		setIsPlaying(false)
 	}
 
 	const skipNext = async () => {
-		await TrackPlayer.skipToNext()
-		const currentId = await TrackPlayer.getCurrentTrack()
-		setCurrentChannelId(currentId)
+		const currentIndex = fmList.indexOf(fmList.find((f) => f.id == currentChannelId))
+		const nextIndex = (currentIndex + 1) % fmList.length
+		onFMSelect(fmList[nextIndex])
 	}
 
 	useEffect(() => {
@@ -113,6 +88,14 @@ const RadioScreen = (props) => {
 	const goPost = (item) => () => {
 		navigation.navigate('Post', { item: item })
 	}
+
+	useTrackPlayerEvents([Event.PlaybackState], (event) => {
+		if (event.state === State.Playing) {
+			setIsPlaying(true)
+		} else {
+			setIsPlaying(false)
+		}
+	})
 
 	const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
 
