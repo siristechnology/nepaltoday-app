@@ -23,6 +23,7 @@ const Index = forwardRef((props, ref) => {
 		inputStyle,
 		...attrs
 	} = props
+
 	return (
 		<View style={[BaseStyle.textInput, { backgroundColor: cardColor }, style]}>
 			<TextInput
@@ -47,7 +48,7 @@ const Index = forwardRef((props, ref) => {
 				secureTextEntry={secureTextEntry}
 				value={value}
 				selectionColor={colors.primary}
-				keyboardType={keyboardType}
+				keyboardType={keyboardType || 'default'}
 				multiline={multiline}
 				textAlignVertical={textAlignVertical}
 				onSubmitEditing={onSubmitEditing}

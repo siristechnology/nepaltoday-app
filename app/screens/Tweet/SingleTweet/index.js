@@ -42,7 +42,7 @@ const SingleTweet = (props) => {
 							<Text style={styles.marginVertical3}>{' ' + tweet.handle}</Text>
 						</View>
 
-						<Text numberOfLines={3} style={styles.marginVertical3}>
+						<Text numberOfLines={4} style={styles.marginVertical3}>
 							{tweet.text}
 						</Text>
 						<Text footnote grayColor style={styles.marginVertical3}>
