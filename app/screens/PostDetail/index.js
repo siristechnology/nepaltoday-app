@@ -6,6 +6,7 @@ import { BaseColor, BaseStyle, useTheme, Images } from '@config'
 import * as Utils from '@utils'
 import { getRelativeTime } from '../../helper/time'
 import styles from './styles'
+export const NEPALTODAY_URL = 'https://tinyurl.com/NepalTodayApp'
 
 const PostDetail = (props) => {
 	const { navigation, route } = props
@@ -24,19 +25,12 @@ const PostDetail = (props) => {
 
 	const onShare = async () => {
 		try {
-			const result = await Share.share({
-				message: 'https://codecanyon.net/user/passionui/portfolio',
+			const { link } = article
+			Share.share({
+				message: title + '  ' + link + ' #NEPALTODAYAPP ' + NEPALTODAY_URL,
+				url: link,
+				title: title,
 			})
-
-			if (result.action === Share.sharedAction) {
-				if (result.activityType) {
-					// shared with activity type of result.activityType
-				} else {
-					// shared
-				}
-			} else if (result.action === Share.dismissedAction) {
-				// dismissed
-			}
 		} catch (error) {
 			alert(error.message)
 		}

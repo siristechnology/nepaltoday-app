@@ -125,7 +125,6 @@ const NewsCategory = () => {
 		{ key: 'news', title: 'समाचार' },
 		{ key: 'entertainment', title: 'मनोरन्जन' },
 		{ key: 'sports', title: 'खेलकुद' },
-		{ key: 'cartoon', title: 'कार्टुन' },
 		{ key: 'business', title: 'अर्थ' },
 		{ key: 'social', title: 'समाज' },
 		{ key: 'health', title: 'स्वास्थ्य' },

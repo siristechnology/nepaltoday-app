@@ -8,7 +8,6 @@ const GET_ARTICLES_QUERY = gql`
 					{ name: "news", count: 10 }
 					{ name: "entertainment", count: 10 }
 					{ name: "sports", count: 10 }
-					{ name: "cartoon", count: 5 }
 					{ name: "business", count: 10 }
 					{ name: "social", count: 10 }
 					{ name: "health", count: 10 }
