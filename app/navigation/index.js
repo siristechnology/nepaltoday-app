@@ -1,10 +1,10 @@
+import React, { useEffect, useRef, useState } from 'react'
+import { Platform, StatusBar, View } from 'react-native'
 import { BaseSetting, useTheme } from '@config'
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { languageSelect } from '@selectors'
 import * as Utils from '@utils'
-import React, { useEffect, useRef, useState } from 'react'
-import { Platform, StatusBar, View } from 'react-native'
 import { DarkModeProvider, useDarkMode } from 'react-native-dark-mode'
 import SplashScreen from 'react-native-splash-screen'
 import { useDispatch, useSelector } from 'react-redux'
@@ -55,7 +55,7 @@ const Navigator = (props) => {
 			navigationRef?.current?.dispatch(StackActions.replace('NewsMenu'))
 			navigationRef?.current?.navigate('NewsMenu')
 		}
-		onProcess()
+		// onProcess()
 	}, [dispatch, language])
 
 	return (

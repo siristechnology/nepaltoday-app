@@ -34,6 +34,9 @@ android {
         versionName "1.0.5"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
+        ndk {
+            abiFilters 'armeabi-v7a', 'x86'
+        }
     }
 
     splits {

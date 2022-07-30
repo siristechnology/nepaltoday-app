@@ -10,7 +10,7 @@
     "start:fresh": "react-native start --reset-cache",
     "log:android": "react-native log-android",
     "refresh": "adb shell input text 'r'",
-    "reset": "react-native start --reset-cache",
+    "clean": "watchman watch-del-all  && cd android && ./gradlew app:assembleSignedRelease && cd ..",
     "build": "cd android && ./gradlew app:assembleSignedRelease && cd ..",
     "bundle": "cd android && ./gradlew app:bundleSignedRelease && cd ..",
     "build-detox-android": "detox build -c android.emu.debug",

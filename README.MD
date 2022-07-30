@@ -10,7 +10,7 @@
 <img src="android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" alt="screenshot-1" height="80" style="margin-right:10px"/>
 <a href='https://play.google.com/store/apps/details?id=com.siristechnology.nepaltodayapp&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1' target='_blank' rel="noopener noreferrer"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="80"/></a>
 </div>
-  
+
 ## Latest screenshot
 
 <div>
@@ -21,7 +21,8 @@
 ## How to Run Android app locally
 
 -   Install Android Studio
--   Install node (14.x), yarn (1.x)
+-   Install node (16.x), yarn (1.x)
+-   Create .env file from .env.qa
 -   Run Android emulator. (from Android Studio or Genymotion)
 -   Run Metro bundler. `yarn start`
 -   Run Android app. `yarn android`
@@ -29,7 +30,8 @@
 ## How to Run IOS app locally
 
 -   Install XCode
--   Install node (14.x), yarn (1.x)
+-   Install node (16.x), yarn (1.x)
+-   Create .env file from .env.qa
 -   Run Metro bundler. `yarn start`
 -   Install Pod depedencies. `pod install --repo-update`
 -   Run Android app. `yarn ios`
