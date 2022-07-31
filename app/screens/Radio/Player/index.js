@@ -3,13 +3,13 @@ import { View } from 'react-native'
 import PropTypes from 'prop-types'
 import { Text, Image } from '@components'
 import styles from './styles'
-import Loading from './Loading'
+// import Loading from './Loading'
 import PlayerButton from './Button'
 
 const BottomPlayer = ({ initSuccess, currentChannel, isPlaying, onPause, onPlay, onSkipNext }) => {
-	if (!initSuccess) {
-		return <Loading />
-	}
+	// if (!initSuccess) {
+	// 	return <Loading />
+	// }
 
 	return (
 		<View style={[styles.container]}>

@@ -5,7 +5,7 @@ import { CardChannelGrid, Text } from '@components'
 const ChannelGrid = ({ title, fmList, onFMSelect, styles }) => {
 	return (
 		<View style={[{ paddingTop: 10 }, styles.paddingView]}>
-			<Text title3 semibold style={styles.title}>
+			<Text title3 bold style={styles.title}>
 				{title}
 			</Text>
 			<ScrollView horizontal={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>

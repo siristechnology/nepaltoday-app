@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/client'
 import GET_FM_QUERY from './GET_FM_QUERY'
 import BottomPlayer from './Player/index'
 import ChannelGrid from './ChannelGrid'
+import RadioSearchResults from './SearchResults'
 
 const trackPlayerInit = async () => {
 	await TrackPlayer.setupPlayer()
@@ -21,10 +22,10 @@ const trackPlayerInit = async () => {
 }
 
 const RadioScreen = (props) => {
-	const { navigation } = props
 	const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false)
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [currentChannelId, setCurrentChannelId] = useState('')
+	const [search, setSearch] = useState('')
 
 	useEffect(() => {
 		TrackPlayer.registerPlaybackService(
@@ -49,7 +50,7 @@ const RadioScreen = (props) => {
 		)
 	}, [])
 
-	const onFMSelect = async (channel, fmList) => {
+	const onFMSelect = async (channel) => {
 		await TrackPlayer.reset()
 		await TrackPlayer.add({ ...channel, type: 'default' })
 		await TrackPlayer.play()
@@ -85,7 +86,6 @@ const RadioScreen = (props) => {
 	let favoriteList = (data && data.getMyFm.favoriteFm) || []
 	const fmList = (data && data.getMyFm.allFm) || []
 	favoriteList = fmList.slice(0, 10)
-	console.log('printing favoriteList.length', favoriteList.length)
 
 	useTrackPlayerEvents([Event.PlaybackState], (event) => {
 		if (event.state === State.Playing) {
@@ -103,51 +103,62 @@ const RadioScreen = (props) => {
 	return (
 		<SafeAreaView style={[BaseStyle.safeAreaView, { flex: 1 }]} edges={['right', 'top', 'left']}>
 			<View style={{ flex: 1 }}>
-				<ScrollView scrollEventThrottle={16}>
+				<ScrollView scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
 					<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
 						<Text title1 bold>
 							{'रेडियो'}
 						</Text>
 					</View>
 
-					<SearchBox onSubmitEditing={() => {}} loading={false} />
+					<SearchBox search={search} setSearch={setSearch} loading={loading} />
 
-					<View style={styles.paddingView}>
-						{favoriteList?.length > 0 && (
-							<View>
-								<Text title3 semibold style={styles.title}>
-									{'Your Stations'}
-								</Text>
-								<FlatList
-									contentContainerStyle={{ marginTop: 15 }}
-									horizontal={true}
-									showsHorizontalScrollIndicator={false}
-									data={favoriteList}
-									keyExtractor={(item) => item.id}
-									renderItem={({ item, index }) => (
-										<CardChannelGrid
-											loading={loading}
-											onPress={() => onFMSelect(item, fmList)}
-											style={{
-												marginRight: index == favoriteList.length - 1 ? 0 : 15,
-											}}
-											image={{ uri: item.artwork }}
-											title={item.title}
+					{search.trim() != '' && <RadioSearchResults search={search} fmList={fmList} onPlay={onFMSelect} />}
+
+					{search.trim() == '' && (
+						<>
+							<View style={styles.paddingView}>
+								{favoriteList?.length > 0 && (
+									<View>
+										<Text title3 bold style={styles.title}>
+											{'Your Stations'}
+										</Text>
+										<FlatList
+											contentContainerStyle={{ marginTop: 15 }}
+											horizontal={true}
+											showsHorizontalScrollIndicator={false}
+											data={favoriteList}
+											keyExtractor={(item) => item.id}
+											renderItem={({ item, index }) => (
+												<CardChannelGrid
+													loading={loading}
+													onPress={() => onFMSelect(item, fmList)}
+													style={{
+														marginRight: index == favoriteList.length - 1 ? 0 : 15,
+													}}
+													image={{ uri: item.artwork }}
+													title={item.title}
+												/>
+											)}
 										/>
-									)}
-								/>
+									</View>
+								)}
 							</View>
-						)}
-					</View>
 
-					<ChannelGrid
-						title={'Popular Stations'}
-						fmList={popularFms}
-						styles={styles}
-						onFMSelect={onFMSelect}
-					/>
+							<ChannelGrid
+								title={'Popular Stations'}
+								fmList={popularFms}
+								styles={styles}
+								onFMSelect={onFMSelect}
+							/>
 
-					<ChannelGrid title={'Recent Stations'} fmList={recentFms} styles={styles} onFMSelect={onFMSelect} />
+							<ChannelGrid
+								title={'Recent Stations'}
+								fmList={recentFms}
+								styles={styles}
+								onFMSelect={onFMSelect}
+							/>
+						</>
+					)}
 				</ScrollView>
 			</View>
 			{currentChannel != null && (
