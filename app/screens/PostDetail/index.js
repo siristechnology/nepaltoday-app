@@ -24,16 +24,12 @@ const PostDetail = (props) => {
 	}, [])
 
 	const onShare = async () => {
-		try {
-			const { link } = article
-			Share.share({
-				message: title + '  ' + link + ' #NEPALTODAYAPP ' + NEPALTODAY_URL,
-				url: link,
-				title: title,
-			})
-		} catch (error) {
-			alert(error.message)
-		}
+		const { link } = article
+		Share.share({
+			message: title + '  ' + link + ' #NEPALTODAYAPP ' + NEPALTODAY_URL,
+			url: link,
+			title: title,
+		})
 	}
 
 	// For header background color from transparent to header color
