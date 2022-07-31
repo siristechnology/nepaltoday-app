@@ -3,6 +3,7 @@ import { FlatList, ScrollView, View } from 'react-native'
 import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
 import auth from '@react-native-firebase/auth'
 import { BaseStyle, useTheme } from '@config'
+import * as Utils from '@utils'
 import { CardChannelGrid, SafeAreaView, Text } from '@components'
 import RadioService from './radio.services'
 import SearchBox from './SearchBox'
@@ -138,7 +139,6 @@ const RadioScreen = (props) => {
 											{'Your Stations'}
 										</Text>
 										<FlatList
-											contentContainerStyle={{ marginTop: 15 }}
 											horizontal={true}
 											showsHorizontalScrollIndicator={false}
 											data={favoriteList}
@@ -147,14 +147,21 @@ const RadioScreen = (props) => {
 												<CardChannelGrid
 													loading={loading}
 													onPress={() => onFMSelect(item, fmList)}
-													style={{
-														marginRight: index == favoriteList.length - 1 ? 0 : 15,
-													}}
 													image={{ uri: item.artwork }}
+													style={{
+														paddingTop: 10,
+														width: Utils.scaleWithPixel(100),
+														height: Utils.scaleWithPixel(100),
+														alignItems: 'center',
+														justifyContent: 'center',
+													}}
 													imgStyle={{
+														width: Utils.scaleWithPixel(70),
+														height: Utils.scaleWithPixel(70),
 														borderWidth: 1,
 														borderColor: colors.border,
 													}}
+													textStyle={{ fontSize: 16, width: Utils.scaleWithPixel(90) }}
 													title={item.title}
 												/>
 											)}

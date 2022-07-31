@@ -22,7 +22,6 @@ const NTApp = () => {
 	const [article, setArticle] = useState({})
 
 	const onRegister = (token) => {
-		console.log('printing signInAnonymously', signInAnonymously)
 		signInAnonymously().then(() => notificationHandler.register(auth().currentUser, token.token))
 	}
 
