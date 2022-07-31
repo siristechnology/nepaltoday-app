@@ -8,8 +8,8 @@ const ChannelGrid = ({ title, fmList, onFMSelect, styles }) => {
 	const { colors } = useTheme()
 
 	return (
-		<View style={[{ marginTop: 20 }, styles.paddingView]}>
-			<Text title3 bold style={styles.title}>
+		<View style={[{ marginTop: 20 }]}>
+			<Text title3 bold style={[styles.title, styles.paddingView]}>
 				{title}
 			</Text>
 			<ScrollView horizontal={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
@@ -25,7 +25,7 @@ const ChannelGrid = ({ title, fmList, onFMSelect, styles }) => {
 						<CardChannelGrid
 							onPress={() => onFMSelect(item)}
 							style={{
-								paddingTop: 10,
+								paddingTop: Utils.scaleWithPixel(10),
 								width: Utils.scaleWithPixel(100),
 								height: Utils.scaleWithPixel(100),
 								alignItems: 'center',

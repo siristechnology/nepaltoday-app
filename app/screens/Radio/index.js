@@ -132,10 +132,10 @@ const RadioScreen = (props) => {
 
 					{search.trim() == '' && (
 						<>
-							<View style={styles.paddingView}>
+							<View>
 								{favoriteList?.length > 0 && (
 									<View>
-										<Text title3 bold style={styles.title}>
+										<Text title3 bold style={[styles.title, styles.paddingView]}>
 											{'Your Stations'}
 										</Text>
 										<FlatList
