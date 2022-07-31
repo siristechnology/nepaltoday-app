@@ -110,7 +110,7 @@ const RadioScreen = (props) => {
 	})
 
 	const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
-	const iscurrentChannelFavorite = favoriteList.some((f) => f.id == currentChannel.id)
+	const iscurrentChannelFavorite = favoriteList?.some((f) => f.id == currentChannel?.id)
 
 	const popularFms = fmList.slice(0, 20)
 	const recentFms = fmList.slice(0, 10)
