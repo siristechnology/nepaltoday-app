@@ -37,7 +37,7 @@ const ChannelGrid = ({ title, fmList, onFMSelect, styles }) => {
 								borderWidth: 1,
 								borderColor: colors.border,
 							}}
-							textStyle={{ fontSize: 16, width: Utils.scaleWithPixel(90) }}
+							textStyle={{ fontSize: 16, textAlign: 'center' }}
 							// loading={loading}
 							image={{ uri: item.artwork }}
 							title={item.title}

@@ -9,15 +9,9 @@
         <item name="android:statusBarColor">#424242</item>
         <!-- Add the following line to set the default status bar text color for all the app 
         to be a light color (false) or a dark color (true) -->
-        <item name="android:windowLightStatusBar">false</item>
+<!--        <item name="android:windowLightStatusBar">false</item>-->
         <!-- Add the following line to set the default background color for all the app. -->
         <item name="android:windowBackground">@color/app_bg</item>
-    </style>
-
-    <!-- Adds the splash screen definition -->
-    <style name="BootTheme" parent="AppTheme">
-        <!-- set the generated bootsplash.xml drawable as activity background -->
-        <item name="android:background">@drawable/bootsplash</item>
     </style>
 
 </resources>

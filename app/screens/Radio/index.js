@@ -161,7 +161,10 @@ const RadioScreen = (props) => {
 														borderWidth: 1,
 														borderColor: colors.border,
 													}}
-													textStyle={{ fontSize: 16, width: Utils.scaleWithPixel(90) }}
+													textStyle={{
+														fontSize: 16,
+														textAlign: 'center',
+													}}
 													title={item.title}
 												/>
 											)}
