@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
 import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
-import { BaseStyle } from '@config'
+import { BaseStyle, useTheme } from '@config'
 import { CardChannelGrid, SafeAreaView, Text } from '@components'
 import SearchBox from './SearchBox'
 import styles from './styles'
@@ -26,6 +26,7 @@ const RadioScreen = (props) => {
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [currentChannelId, setCurrentChannelId] = useState('')
 	const [search, setSearch] = useState('')
+	const { colors } = useTheme()
 
 	useEffect(() => {
 		TrackPlayer.registerPlaybackService(
@@ -136,6 +137,10 @@ const RadioScreen = (props) => {
 														marginRight: index == favoriteList.length - 1 ? 0 : 15,
 													}}
 													image={{ uri: item.artwork }}
+													imgStyle={{
+														borderWidth: 1,
+														borderColor: colors.border,
+													}}
 													title={item.title}
 												/>
 											)}

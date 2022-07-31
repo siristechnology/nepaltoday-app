@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { TouchableHighlight, View } from 'react-native'
 import { useTheme } from '@config'
 import { Image, Text } from '@components'
 import PropTypes from 'prop-types'
@@ -14,7 +14,7 @@ const CardChannelGrid = ({ onPress, image, title, loading, style, imgStyle, text
 	}
 
 	return (
-		<TouchableOpacity
+		<TouchableHighlight
 			style={[styles.contain, style]}
 			onPress={onPress}
 			activeOpacity={0.9}
@@ -22,7 +22,7 @@ const CardChannelGrid = ({ onPress, image, title, loading, style, imgStyle, text
 		>
 			<>
 				<Image source={image} style={[styles.imageWishlist, imgStyle]} />
-				<View style={{ paddingHorizontal: 10 }}>
+				<View>
 					<Text headline semibold numberOfLines={1} style={[styles.marginVertical3, textStyle]}>
 						{title}
 					</Text>
@@ -30,7 +30,7 @@ const CardChannelGrid = ({ onPress, image, title, loading, style, imgStyle, text
 					<View style={styles.contentRate} />
 				</View>
 			</>
-		</TouchableOpacity>
+		</TouchableHighlight>
 	)
 }
 

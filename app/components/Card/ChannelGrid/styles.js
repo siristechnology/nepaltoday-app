@@ -5,13 +5,6 @@ import { BaseColor } from '@config'
 export default StyleSheet.create({
 	contain: {
 		alignItems: 'center',
-		marginVertical: 5,
-		marginRight: 10,
-	},
-	contentRate: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		marginTop: 10,
 	},
 	image: {
 		width: Utils.scaleWithPixel(110),
