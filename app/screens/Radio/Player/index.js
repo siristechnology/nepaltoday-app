@@ -1,12 +1,22 @@
 import React from 'react'
 import { View } from 'react-native'
 import PropTypes from 'prop-types'
+import { BaseColor } from '@config'
 import { Text, Image } from '@components'
 import styles from './styles'
 // import Loading from './Loading'
 import PlayerButton from './Button'
 
-const BottomPlayer = ({ initSuccess, currentChannel, isPlaying, onPause, onPlay, onSkipNext }) => {
+const BottomPlayer = ({
+	initSuccess,
+	currentChannel,
+	isPlaying,
+	onPlay,
+	onPause,
+	onSkipNext,
+	isFavourite,
+	onFavourite,
+}) => {
 	// if (!initSuccess) {
 	// 	return <Loading />
 	// }
@@ -24,6 +34,10 @@ const BottomPlayer = ({ initSuccess, currentChannel, isPlaying, onPause, onPlay,
 					</Text>
 				</View>
 				<View style={styles.playerBtns}>
+					{(!isFavourite && <PlayerButton name="star" onAction={onFavourite} />) || (
+						<PlayerButton name="star" onAction={onFavourite} style={{ color: BaseColor.yellowColor }} />
+					)}
+
 					{(isPlaying && <PlayerButton name="pause-circle" onAction={onPause} />) || (
 						<PlayerButton name="play-circle" onAction={onPlay} />
 					)}

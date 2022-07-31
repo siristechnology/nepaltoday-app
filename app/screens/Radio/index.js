@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
 import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
+import auth from '@react-native-firebase/auth'
 import { BaseStyle, useTheme } from '@config'
 import { CardChannelGrid, SafeAreaView, Text } from '@components'
+import RadioService from './radio.services'
 import SearchBox from './SearchBox'
 import styles from './styles'
 import { useQuery } from '@apollo/client'
@@ -72,6 +74,18 @@ const RadioScreen = (props) => {
 		onFMSelect(fmList[nextIndex])
 	}
 
+	const onFavourite = async () => {
+		const nid = auth().currentUser.uid
+		const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
+		const isFavorite = favoriteList.some((f) => f.id == currentChannel.id)
+
+		if (isFavorite) {
+			RadioService.deleteFavorite(nid, currentChannel.id).then(() => refetch())
+		} else {
+			RadioService.saveFavorite(nid, currentChannel.id).then(() => refetch())
+		}
+	}
+
 	useEffect(() => {
 		const startPlayer = async () => {
 			const isInit = await trackPlayerInit()
@@ -84,9 +98,8 @@ const RadioScreen = (props) => {
 		variables: {},
 	})
 
-	let favoriteList = (data && data.getMyFm.favoriteFm) || []
+	const favoriteList = (data && data.getMyFm.favoriteFm) || []
 	const fmList = (data && data.getMyFm.allFm) || []
-	favoriteList = fmList.slice(0, 10)
 
 	useTrackPlayerEvents([Event.PlaybackState], (event) => {
 		if (event.state === State.Playing) {
@@ -97,6 +110,7 @@ const RadioScreen = (props) => {
 	})
 
 	const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
+	const iscurrentChannelFavorite = favoriteList.some((f) => f.id == currentChannel.id)
 
 	const popularFms = fmList.slice(0, 20)
 	const recentFms = fmList.slice(0, 10)
@@ -174,6 +188,8 @@ const RadioScreen = (props) => {
 					onPlay={play}
 					onPause={pause}
 					onSkipNext={skipNext}
+					isFavourite={iscurrentChannelFavorite}
+					onFavourite={onFavourite}
 				/>
 			)}
 		</SafeAreaView>

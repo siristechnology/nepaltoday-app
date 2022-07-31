@@ -1,11 +1,9 @@
 import gql from 'graphql-tag'
-// import auth from '@react-native-firebase/auth'
-
-// getMyFm(nid: "${auth().currentUser?.uid}") {
+import auth from '@react-native-firebase/auth'
 
 const GET_FM_QUERY = gql`
 	query fmScreenQuery {
-		getMyFm {
+		getMyFm(nid: "${auth().currentUser?.uid}") {
 			allFm {
 				id
 				title
