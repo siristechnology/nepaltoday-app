@@ -8,7 +8,7 @@ import * as Utils from '@utils'
 import { DarkModeProvider, useDarkMode } from 'react-native-dark-mode'
 import SplashScreen from 'react-native-splash-screen'
 import { useDispatch, useSelector } from 'react-redux'
-import { AllScreens, ModalScreens } from './config'
+import { AllScreens } from './config'
 const RootStack = createStackNavigator()
 const MainStack = createStackNavigator()
 
@@ -86,10 +86,10 @@ const Navigator = (props) => {
 						mode="modal"
 					>
 						<RootStack.Screen name="MainScreens" component={MainScreens} options={{ headerShown: false }} />
-						{Object.keys(ModalScreens).map((name, index) => {
+						{/* {Object.keys(ModalScreens).map((name, index) => {
 							const { component, options } = ModalScreens[name]
 							return <RootStack.Screen key={name} name={name} component={component} options={options} />
-						})}
+						})} */}
 					</RootStack.Navigator>
 				</NavigationContainer>
 			</DarkModeProvider>

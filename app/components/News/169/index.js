@@ -1,6 +1,5 @@
 import ProfileAuthor from '@components/Profile/Author'
 import Text from '@components/Text'
-import { Images } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ImageBackground, TouchableOpacity } from 'react-native'
@@ -42,8 +41,6 @@ News169.propTypes = {
 
 News169.defaultProps = {
 	style: {},
-	image: Images.news,
-	avatar: Images.profile2,
 	name: '',
 	description: '',
 	title: '',

@@ -1,5 +1,5 @@
 import Image from '@components/Image'
-import { Images, useTheme } from '@config'
+import { useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
@@ -29,7 +29,6 @@ Card.propTypes = {
 }
 
 Card.defaultProps = {
-	image: Images.profile2,
 	style: {},
 	styleContent: {},
 	onPress: () => {},

@@ -3,7 +3,7 @@ import { Linking, TouchableHighlight, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Image from '@components/Image'
 import Text from '@components/Text'
-import { Images, useTheme } from '@config'
+import { useTheme } from '@config'
 import styles from './styles'
 import Loading from './Loading'
 
@@ -69,7 +69,6 @@ SingleTweet.defaultProps = {
 	style: {},
 	onPress: () => {},
 	onAction: () => {},
-	image: Images.news,
 	title: 'Hilton San Francisco',
 	subtitle: 'Arts & Humanities',
 }

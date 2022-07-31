@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
 import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
 import { BaseStyle } from '@config'
-import { CardChannelGrid, CategoryList, SafeAreaView, Text } from '@components'
+import { CardChannelGrid, SafeAreaView, Text } from '@components'
 import SearchBox from './SearchBox'
 import styles from './styles'
 import { useQuery } from '@apollo/client'
 import GET_FM_QUERY from './GET_FM_QUERY'
 import BottomPlayer from './Player/index'
+import ChannelGrid from './ChannelGrid'
 
 const trackPlayerInit = async () => {
 	await TrackPlayer.setupPlayer()
@@ -84,10 +85,7 @@ const RadioScreen = (props) => {
 	let favoriteList = (data && data.getMyFm.favoriteFm) || []
 	const fmList = (data && data.getMyFm.allFm) || []
 	favoriteList = fmList.slice(0, 10)
-
-	const goPost = (item) => () => {
-		navigation.navigate('Post', { item: item })
-	}
+	console.log('printing favoriteList.length', favoriteList.length)
 
 	useTrackPlayerEvents([Event.PlaybackState], (event) => {
 		if (event.state === State.Playing) {
@@ -99,8 +97,8 @@ const RadioScreen = (props) => {
 
 	const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
 
-	const provinces = [...new Set(fmList.map((f) => f.province))]
-	const provinceFms = provinces.map((p) => fmList.find((f) => f.province == p))
+	const popularFms = fmList.slice(0, 20)
+	const recentFms = fmList.slice(0, 10)
 
 	return (
 		<SafeAreaView style={[BaseStyle.safeAreaView, { flex: 1 }]} edges={['right', 'top', 'left']}>
@@ -118,7 +116,7 @@ const RadioScreen = (props) => {
 						{favoriteList?.length > 0 && (
 							<View>
 								<Text title3 semibold style={styles.title}>
-									{'Suggested Stations'}
+									{'Your Stations'}
 								</Text>
 								<FlatList
 									contentContainerStyle={{ marginTop: 15 }}
@@ -140,33 +138,16 @@ const RadioScreen = (props) => {
 								/>
 							</View>
 						)}
-
-						<View>
-							<Text title3 semibold style={styles.title}>
-								{'Browse Stations'}
-							</Text>
-							<Text light footnote regular grayColor>
-								{'Stations from all providences'}
-							</Text>
-							<View style={{ marginTop: 10 }}>
-								{provinceFms.map((item, index) => {
-									return (
-										<CategoryList
-											key={item.id}
-											loading={loading}
-											onPress={goPost(item)}
-											style={{
-												marginBottom: index == fmList.length - 1 ? 0 : 15,
-											}}
-											image={{ uri: item.artwork }}
-											title={item.province}
-											subtitle={item.title}
-										/>
-									)
-								})}
-							</View>
-						</View>
 					</View>
+
+					<ChannelGrid
+						title={'Popular Stations'}
+						fmList={popularFms}
+						styles={styles}
+						onFMSelect={onFMSelect}
+					/>
+
+					<ChannelGrid title={'Recent Stations'} fmList={recentFms} styles={styles} onFMSelect={onFMSelect} />
 				</ScrollView>
 			</View>
 			{currentChannel != null && (

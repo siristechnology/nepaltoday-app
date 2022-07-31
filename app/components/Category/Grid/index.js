@@ -1,5 +1,5 @@
 import Text from '@components/Text'
-import { Images, useTheme } from '@config'
+import { useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ImageBackground, TouchableOpacity, View } from 'react-native'
@@ -35,7 +35,6 @@ CategoryGrid.propTypes = {
 
 CategoryGrid.defaultProps = {
 	style: {},
-	image: Images.news,
 	title: '',
 	onPress: () => {},
 }

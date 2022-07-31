@@ -1,5 +1,5 @@
 import Text from '@components/Text'
-import { useTheme, Images } from '@config'
+import { useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { TouchableOpacity, View, ImageBackground } from 'react-native'
@@ -45,7 +45,6 @@ ProductCategory3.defaultProps = {
 	style: {},
 	subtitle: '',
 	title: '',
-	image: Images.location1,
 }
 
 export default ProductCategory3

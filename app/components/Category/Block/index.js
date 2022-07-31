@@ -1,6 +1,5 @@
 import Image from '@components/Image'
 import Text from '@components/Text'
-import { Images } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
@@ -41,7 +40,6 @@ CategoryBlock.propTypes = {
 
 CategoryBlock.defaultProps = {
 	style: {},
-	image: Images.location1,
 	title: '',
 	subtitle: '',
 	onPress: () => {},

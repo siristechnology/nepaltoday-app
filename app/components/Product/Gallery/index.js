@@ -2,36 +2,10 @@ import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import Image from '@components/Image'
 import Text from '@components/Text'
-import { Images, useTheme } from '@config'
-import { parseHexTransparency } from '@utils'
+import { useTheme } from '@config'
 import styles from './styles'
 
-const imagesInit = [
-	{
-		id: 1,
-		image: Images.profile1,
-	},
-	{
-		id: 1,
-		image: Images.profile1,
-	},
-	{
-		id: 1,
-		image: Images.profile1,
-	},
-	{
-		id: 1,
-		image: Images.profile1,
-	},
-	{
-		id: 1,
-		image: Images.profile1,
-	},
-	{
-		id: 1,
-		image: Images.profile1,
-	},
-]
+const imagesInit = []
 
 const ProductGallery = ({ images = imagesInit, onPress = () => {} }) => {
 	const { colors } = useTheme()

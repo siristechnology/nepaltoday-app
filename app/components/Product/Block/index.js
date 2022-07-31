@@ -1,7 +1,7 @@
 import Icon from '@components/Icon'
 import Tag from '@components/Tag'
 import Text from '@components/Text'
-import { BaseColor, Images, useTheme } from '@config'
+import { BaseColor, useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ImageBackground, TouchableOpacity, View } from 'react-native'
@@ -76,7 +76,6 @@ Block.defaultProps = {
 	description: '',
 	title: '',
 	style: {},
-	image: Images.eProduct,
 	costPrice: '',
 	salePrice: '',
 	salePercent: '',

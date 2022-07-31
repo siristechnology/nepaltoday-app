@@ -4,7 +4,7 @@ import Image from '@components/Image'
 import StarRating from '@components/StarRating'
 import Text from '@components/Text'
 import ProductGallery from '@components/Product/Gallery'
-import { BaseColor, Images, useTheme } from '@config'
+import { BaseColor, useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { View } from 'react-native'
@@ -125,7 +125,6 @@ CardCommentPhoto.propTypes = {
 
 CardCommentPhoto.defaultProps = {
 	style: {},
-	image: Images.profile2,
 	name: '',
 	rate: 0,
 	date: '',

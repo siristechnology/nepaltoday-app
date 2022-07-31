@@ -1,7 +1,7 @@
 import Icon from '@components/Icon'
 import Image from '@components/Image'
 import Text from '@components/Text'
-import { Images, useTheme } from '@config'
+import { useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { TouchableHighlight, View } from 'react-native'
@@ -67,7 +67,6 @@ NewsWishlist.defaultProps = {
 	style: {},
 	onPress: () => {},
 	onAction: () => {},
-	image: Images.news,
 	title: 'Hilton San Francisco',
 	subtitle: 'Arts & Humanities',
 }

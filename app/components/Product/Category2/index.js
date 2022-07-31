@@ -1,9 +1,8 @@
-import Icon from '@components/Icon'
-import Text from '@components/Text'
-import { useTheme, Images, BaseColor } from '@config'
-import PropTypes from 'prop-types'
 import React from 'react'
 import { TouchableOpacity, View, ImageBackground } from 'react-native'
+import Text from '@components/Text'
+import { useTheme, BaseColor } from '@config'
+import PropTypes from 'prop-types'
 import styles from './styles'
 import { parseHexTransparency } from '@utils'
 import Loading from './Loading'
@@ -54,7 +53,6 @@ ProductCategory2.defaultProps = {
 	style: {},
 	subtitle: '',
 	title: '',
-	image: Images.location1,
 }
 
 export default ProductCategory2

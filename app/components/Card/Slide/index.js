@@ -1,8 +1,8 @@
 import Text from '@components/Text'
-import { Images, useTheme } from '@config'
+import { useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Image as RNImage, ImageBackground, TouchableOpacity } from 'react-native'
+import { ImageBackground, TouchableOpacity } from 'react-native'
 import styles from './styles'
 import Loading from './Loading'
 import { getRelativeTime } from '../../../helper/time'
@@ -52,7 +52,6 @@ CardSlide.propTypes = {
 
 CardSlide.defaultProps = {
 	style: {},
-	image: Images.news,
 	date: '',
 	title: '',
 	onPress: () => {},

@@ -50,7 +50,6 @@ CategoryList.propTypes = {
 CategoryList.defaultProps = {
 	style: {},
 	onPress: () => {},
-	image: Images.channel1,
 	title: '',
 	subtitle: '',
 	isRound: false,

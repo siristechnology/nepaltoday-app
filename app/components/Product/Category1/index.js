@@ -1,6 +1,4 @@
-import Image from '@components/Image'
 import Text from '@components/Text'
-import { Images } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { TouchableOpacity, View, ImageBackground } from 'react-native'
@@ -40,7 +38,6 @@ ProductCategory1.propTypes = {
 
 ProductCategory1.defaultProps = {
 	style: {},
-	image: Images.location1,
 	title: '',
 	subtitle: '',
 	onPress: () => {},
