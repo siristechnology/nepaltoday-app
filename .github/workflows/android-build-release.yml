@@ -55,6 +55,11 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+            - name: Run Release Shell script
+              if: startsWith(github.ref, 'refs/tags/release')
+              run: |
+                  sh prepare_release.sh
+
             - name: Publish Android Bundle to Google Play Store
               uses: r0adkll/upload-google-play@v1.0.17
               if: startsWith(github.ref, 'refs/tags/release')
