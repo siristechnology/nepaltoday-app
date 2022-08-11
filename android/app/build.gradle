@@ -49,11 +49,11 @@ android {
     }
 
     signingConfigs {
-        debug {
-			storeFile file('beta.keystore')
-            storePassword 'android'
-            keyAlias 'androidbetakey'
-            keyPassword 'android'
+        release {
+			storeFile file('key.keystore')
+            storePassword 'nepal@today@123'
+            keyAlias 'upload'
+            keyPassword 'nepal@today@123'
         }
     }
 
@@ -61,7 +61,7 @@ android {
 
     productFlavors {
         signed {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
 
         unsigned {}

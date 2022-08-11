@@ -40,7 +40,7 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
-!beta.keystore
+!key.keystore
 !debug.keystore
 
 # fastlane
