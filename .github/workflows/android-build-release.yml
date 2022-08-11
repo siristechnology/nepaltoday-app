@@ -37,7 +37,7 @@ jobs:
 
             - name: Set outputs
               id: vars
-              run: echo "::set-output name=datestamp::$(date +'%Y-%m-%d %H:%M')"
+              run: echo "::set-output name=datestamp::$(date +%s)"
 
             - name: Publish Apk to Github Release
               uses: marvinpinto/action-automatic-releases@latest
