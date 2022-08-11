@@ -6,30 +6,30 @@ import { BaseColor, BaseStyle, useTheme } from '@config'
 
 export const tabBarIcon = ({ color, name }) => <Icon name={name} size={20} solid color={color} />
 
-export const tabBarIconHaveNoty = ({ color, name }) => (
-	<View>
-		{tabBarIcon({ color, name })}
-		<View
-			style={{
-				borderWidth: 1,
-				borderColor: BaseColor.whiteColor,
-				justifyContent: 'center',
-				alignItems: 'center',
-				position: 'absolute',
-				width: 20,
-				height: 20,
-				backgroundColor: 'red',
-				top: -5,
-				right: -12,
-				borderRadius: 10,
-			}}
-		>
-			<Text whiteColor caption2>
-				5
-			</Text>
-		</View>
-	</View>
-)
+// export const tabBarIconHaveNoty = ({ color, name, count_label }) => (
+// 	<View>
+// 		{tabBarIcon({ color, name })}
+// 		<View
+// 			style={{
+// 				borderWidth: 1,
+// 				borderColor: BaseColor.whiteColor,
+// 				justifyContent: 'center',
+// 				alignItems: 'center',
+// 				position: 'absolute',
+// 				width: 20,
+// 				height: 20,
+// 				backgroundColor: 'red',
+// 				top: -5,
+// 				right: -12,
+// 				borderRadius: 10,
+// 			}}
+// 		>
+// 			<Text whiteColor caption2>
+// 				{count_label}
+// 			</Text>
+// 		</View>
+// 	</View>
+// )
 
 const BottomTab = createBottomTabNavigator()
 

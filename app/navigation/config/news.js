@@ -23,7 +23,7 @@ export const NewsTabScreens = {
 	Tweet: {
 		component: Tweet,
 		options: {
-			tabBarIcon: ({ color }) => tabBarIconHaveNoty({ color, name: 'twitter' }),
+			tabBarIcon: ({ color }) => tabBarIcon({ color, name: 'twitter' }),
 		},
 	},
 	Radio: {
