@@ -46,7 +46,7 @@ jobs:
 
             - name: Publish Apk to Github Release
               uses: marvinpinto/action-automatic-releases@latest
-              if: github.ref == 'refs/heads/main'
+              if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/release')
               with:
                   title: 'Nepaltoday - Beta Build'
                   prerelease: false
