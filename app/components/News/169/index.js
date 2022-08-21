@@ -31,8 +31,7 @@ const News169 = (props) => {
 
 News169.propTypes = {
 	style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-	image: PropTypes.node.isRequired,
-	avatar: PropTypes.node.isRequired,
+	article: PropTypes.object,
 	name: PropTypes.string,
 	description: PropTypes.string,
 	title: PropTypes.string,

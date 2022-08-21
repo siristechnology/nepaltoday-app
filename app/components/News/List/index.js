@@ -39,7 +39,7 @@ const NewsList = (props) => {
 
 NewsList.propTypes = {
 	style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-	image: PropTypes.node.isRequired,
+	article: PropTypes.object.isRequired,
 	onPress: PropTypes.func,
 	title: PropTypes.string,
 	subtitle: PropTypes.string,

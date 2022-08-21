@@ -44,7 +44,7 @@ const CardSlide = (props) => {
 
 CardSlide.propTypes = {
 	style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-	image: PropTypes.node.isRequired,
+	article: PropTypes.object,
 	date: PropTypes.string,
 	title: PropTypes.string,
 	onPress: PropTypes.func,

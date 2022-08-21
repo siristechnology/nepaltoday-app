@@ -49,7 +49,6 @@ export default function ProfileAuthor(props) {
 
 ProfileAuthor.propTypes = {
 	style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-	image: PropTypes.node.isRequired,
 	name: PropTypes.string,
 	description: PropTypes.string,
 	textRight: PropTypes.string,
