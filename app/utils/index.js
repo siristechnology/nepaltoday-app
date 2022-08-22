@@ -1,6 +1,7 @@
 import { Platform, UIManager, LayoutAnimation, PixelRatio, Dimensions, I18nManager } from 'react-native'
 import RNRestart from 'react-native-restart'
 import { TRANSPARENCIES } from './transparencies'
+import perf from '@react-native-firebase/perf'
 
 const scaleValue = PixelRatio.get() / 2
 
@@ -140,4 +141,10 @@ export const haveChildren = (parent = '', children = '') => {
 	const parentNew = parent?.toLowerCase?.()
 	const childrenNew = children?.toLowerCase?.()
 	return parentNew?.includes(childrenNew)
+}
+
+let startTrace
+export const getStartTrace = () => {
+	if (!startTrace) startTrace = perf().startTrace('start_trace')
+	return startTrace
 }
