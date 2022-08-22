@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Animated, Platform, RefreshControl, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { Animated, RefreshControl, View } from 'react-native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import crashlytics from '@react-native-firebase/crashlytics'
 import { Text, News169, TabSlider, SafeAreaView } from '@components'
 import { BaseStyle, useTheme } from '@config'
-import * as Utils from '@utils'
 import { SceneMap } from 'react-native-tab-view'
 import styles from './styles'
 
@@ -17,7 +16,6 @@ const NewsCategory = () => {
 	const { colors } = useTheme()
 	const [refreshing, setRefreshing] = useState(false)
 	const [index, setIndex] = useState(0)
-
 	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
 	const [articles, setArticles] = useState([])
 
@@ -79,12 +77,15 @@ const NewsCategory = () => {
 		)
 	}
 
-	const renderList = (category) => {
+	const RenderList = (category) => {
+		const ref = useRef(null)
+		useScrollToTop(ref)
 		const categoryArticles = articles.filter((a) => a.category == category)
 
 		return (
 			<View style={{ flex: 1 }}>
 				<Animated.FlatList
+					ref={ref}
 					showsHorizontalScrollIndicator={false}
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={{
@@ -137,7 +138,7 @@ const NewsCategory = () => {
 		const scenes = {}
 		routes.forEach((route) => {
 			scenes[route.key] = () => {
-				return renderList(route.key)
+				return RenderList(route.key)
 			}
 		})
 		return SceneMap(scenes)

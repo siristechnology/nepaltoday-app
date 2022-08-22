@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
+import { useScrollToTop } from '@react-navigation/native'
 import crashlytics from '@react-native-firebase/crashlytics'
 import { BaseStyle, useTheme } from '@config'
 import { SafeAreaView, Text } from '@components'
@@ -10,6 +11,8 @@ import GET_TWEETS_QUERY from './GET_TWEETS_QUERY'
 
 const Favourite = () => {
 	const { colors } = useTheme()
+	const ref = useRef(null)
+	useScrollToTop(ref)
 
 	const [refreshing, setRefreshing] = useState(false)
 
@@ -32,10 +35,11 @@ const Favourite = () => {
 		return (
 			<View style={[{ flex: 1 }]}>
 				<FlatList
+					keyExtractor={(item) => item._id}
+					ref={ref}
 					showsHorizontalScrollIndicator={false}
 					showsVerticalScrollIndicator={false}
 					data={tweets}
-					keyExtractor={(item) => item._id}
 					ListHeaderComponent={() => {
 						return (
 							<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>

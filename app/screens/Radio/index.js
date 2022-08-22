@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
+import { useScrollToTop } from '@react-navigation/native'
 import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
 import auth from '@react-native-firebase/auth'
 import { BaseStyle, useTheme } from '@config'
@@ -30,6 +31,8 @@ const RadioScreen = (props) => {
 	const [currentChannelId, setCurrentChannelId] = useState('')
 	const [search, setSearch] = useState('')
 	const { colors } = useTheme()
+	const ref = useRef(null)
+	useScrollToTop(ref)
 
 	useEffect(() => {
 		TrackPlayer.registerPlaybackService(
@@ -119,7 +122,7 @@ const RadioScreen = (props) => {
 	return (
 		<SafeAreaView style={[BaseStyle.safeAreaView, { flex: 1 }]} edges={['right', 'top', 'left']}>
 			<View style={{ flex: 1 }}>
-				<ScrollView scrollEventThrottle={16} keyboardShouldPersistTaps="handled">
+				<ScrollView scrollEventThrottle={16} keyboardShouldPersistTaps="handled" ref={ref}>
 					<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
 						<Text title1 bold>
 							{'रेडियो'}

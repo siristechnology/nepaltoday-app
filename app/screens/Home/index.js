@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
 import { useLazyQuery } from '@apollo/react-hooks'
 import crashlytics from '@react-native-firebase/crashlytics'
+import { useScrollToTop } from '@react-navigation/native'
 import { CardSlide, News169, NewsList, SafeAreaView, Text } from '@components'
 import { BaseStyle, useTheme } from '@config'
 import styles from './styles'
@@ -16,6 +17,8 @@ const Home = (props) => {
 	const [nepaliDate, setNepaliDate] = useState('')
 	const [refreshing, setRefreshing] = useState(false)
 	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
+	const ref = useRef(null)
+	useScrollToTop(ref)
 
 	const [fetchNews, { loading, data, refetch, error, called }] = useLazyQuery(GET_ARTICLES_QUERY, {
 		variables: {},
@@ -91,6 +94,7 @@ const Home = (props) => {
 		return (
 			<SafeAreaView style={{ width: '100%' }}>
 				<FlatList
+					ref={ref}
 					contentContainerStyle={{ ...styles.paddingSrollView, paddingTop: 4 }}
 					data={topNews.slice(3)}
 					keyExtractor={(item) => item._id}
