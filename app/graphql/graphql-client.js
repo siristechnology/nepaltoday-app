@@ -35,7 +35,7 @@ const httpLink = new HttpLink({
 		const body = JSON.parse(options.body)
 		console.log('📡:', body.operationName)
 		API_LOG_LEVEL == 'debug' && console.log(body.query)
-		console.log(body.variables)
+		Object.keys(body.variables).length > 0 && console.log(body.variables)
 		return fetch(...pl)
 	},
 })
