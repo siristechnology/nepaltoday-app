@@ -15,8 +15,8 @@
 ## Latest screenshot
 
 <div>
-<img src="assets/images/screenshot-1.png" alt="screenshot-1" width="300" style="margin-right:20px"/>
-<img src="assets/images/screenshot-2.png" alt="screenshot-2" width="300"/>
+<img width="311" alt="image" src="https://user-images.githubusercontent.com/503803/188253396-acaa4c11-cbbb-4b19-a0c4-6fde32dd0a5b.png">
+<img width="310" alt="image" src="https://user-images.githubusercontent.com/503803/188253406-5982f1cd-8684-4418-b720-1792f7181cff.png">
 </div>
 
 ## How to Run Android app locally
