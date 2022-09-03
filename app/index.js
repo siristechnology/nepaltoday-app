@@ -48,22 +48,26 @@ const NTApp = () => {
 	}
 
 	useEffect(() => {
-		const configureNotification = async () => {
-			PushNotification.configure({
-				onRegister: onRegister,
-				onNotification: onNotif,
+		const timer = setTimeout(() => {
+			const configureNotification = async () => {
+				PushNotification.configure({
+					onRegister: onRegister,
+					onNotification: onNotif,
+				})
+			}
+
+			const addReadArticles = async () => {
+				const readArticles = await getReadArticles()
+				auth().currentUser && readArticlesService.saveReadArticle(auth().currentUser.uid, readArticles)
+				clearOldArticles()
+			}
+
+			configureNotification().then(() => {
+				addReadArticles()
 			})
-		}
+		}, 10000)
 
-		const addReadArticles = async () => {
-			const readArticles = await getReadArticles()
-			auth().currentUser && readArticlesService.saveReadArticle(auth().currentUser.uid, readArticles)
-			clearOldArticles()
-		}
-
-		configureNotification().then(() => {
-			addReadArticles()
-		})
+		return () => clearTimeout(timer)
 	}, [])
 
 	return (
