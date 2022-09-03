@@ -43,6 +43,11 @@
 -   Build apk for testing. `yarn build-detox-android`
 -   Run detox test on apk. `yarn test-detox-android`
 
+## How to Publish app into Google Play Store
+
+-   Create a git tag. `git tag -a release-09-02-second -m "release 09-02 second"`
+-   Push git tag. `git push origin release-09-02-second`
+
 ## Tips
 
 -   Run `yarn refresh` to reload android app quickly without rebuilding
