@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
 import { useLazyQuery } from '@apollo/react-hooks'
+import { useDebounceCallback } from '@react-hook/debounce'
 import crashlytics from '@react-native-firebase/crashlytics'
-import { useScrollToTop } from '@react-navigation/native'
+import { useFocusEffect, useScrollToTop } from '@react-navigation/native'
 import { CardSlide, News169, NewsList, SafeAreaView, Text } from '@components'
 import { BaseStyle, useTheme } from '@config'
 import styles from './styles'
@@ -25,7 +26,7 @@ const Home = (props) => {
 		variables: {},
 	})
 
-	const handleRefresh = () => {
+	const handleRefresh = useCallback(() => {
 		setRefreshing(true)
 		if (called) {
 			refetch()
@@ -37,7 +38,7 @@ const Home = (props) => {
 			fetchNews()
 			setRefreshing(false)
 		}
-	}
+	}, [called, fetchNews, refetch])
 
 	const fetchArticlesFromAsyncStorage = async () => {
 		fetchfromAsync()
@@ -65,6 +66,16 @@ const Home = (props) => {
 				}
 			})
 	}, [fetchNews])
+
+	useFocusEffect(
+		useDebounceCallback(
+			useCallback(() => {
+				handleRefresh()
+			}, [handleRefresh]),
+			10000,
+			true,
+		),
+	)
 
 	if (!loading && data != null && data.getArticles && data.getArticles.length) {
 		const myArticles = data.getArticles

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 const GET_ARTICLES_QUERY = gql`
-	query headlineScreenQuery {
+	query categoryScreenQuery {
 		getArticles(
 			criteria: {
 				categories: [

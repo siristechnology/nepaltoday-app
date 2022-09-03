@@ -23,6 +23,7 @@
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@apollo/react-hooks": "^4.0.0",
+    "@react-hook/debounce": "^4.0.0",
     "@react-native-async-storage/async-storage": "^1.15.4",
     "@react-native-firebase/analytics": "^15.2.0",
     "@react-native-firebase/app": "^15.2.0",

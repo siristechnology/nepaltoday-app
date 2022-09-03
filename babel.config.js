@@ -14,7 +14,7 @@ module.exports = {
 				blacklist: null,
 				whitelist: null,
 				safe: false,
-				allowlist: ['SERVER_URL', 'WEATHER_API_APPID'],
+				allowlist: ['SERVER_URL', 'WEATHER_API_APPID', 'API_LOG_LEVEL'],
 			},
 		],
 	],
