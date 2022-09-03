@@ -9,9 +9,9 @@ BUILD_GRADLE=./android/app/build.gradle
 ANDROID_STRINGS_FILE=./android/app/src/main/res/values/strings.xml
 IC_LAUNCHER_BACKGROUND_FILE=./android/app/src/main/res/values/ic_launcher_background.xml
 
-sed -i '' -e 's/\sapplicationId "[^"]*"/ applicationId "'$PACKAGE_NAME'"/' $BUILD_GRADLE
-sed -i '' -e 's/\sversionCode .*$/ versionCode '$TIME_STAMP'/' $BUILD_GRADLE
-sed -i '' -e 's/\sversionName .*$/ versionName '\"$DATE_STAMP\"'/' $BUILD_GRADLE
+sed -i '' -e 's/applicationId "[^"]*"/applicationId "'$PACKAGE_NAME'"/' $BUILD_GRADLE
+sed -i '' -e 's/versionCode .*$/versionCode '$TIME_STAMP'/' $BUILD_GRADLE
+sed -i '' -e 's/versionName .*$/versionName '\"$DATE_STAMP\"'/' $BUILD_GRADLE
 
 sed -i '' -e 's/"app_name">[^<]*</"app_name">'$APP_NAME'</' $ANDROID_STRINGS_FILE
 
