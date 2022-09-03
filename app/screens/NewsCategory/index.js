@@ -18,8 +18,6 @@ const NewsCategory = () => {
 	const [index, setIndex] = useState(0)
 	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
 	const [articles, setArticles] = useState([])
-
-	// const [loading, setLoading] = useState(true)
 	const scrollAnim = useRef(new Animated.Value(0)).current
 
 	const [fetchNews, { loading, data, refetch, error }] = useLazyQuery(GET_ARTICLES_QUERY, {
@@ -143,6 +141,7 @@ const NewsCategory = () => {
 		})
 		return SceneMap(scenes)
 	}
+	const categoryTabs = renderCategoryTabs()
 
 	return (
 		<SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
@@ -156,7 +155,7 @@ const NewsCategory = () => {
 					index,
 					routes: routes,
 				}}
-				renderScene={renderCategoryTabs()}
+				renderScene={categoryTabs}
 				onIndexChange={setIndex}
 			/>
 		</SafeAreaView>
