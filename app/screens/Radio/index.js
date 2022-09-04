@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
-import { useScrollToTop } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
 import auth from '@react-native-firebase/auth'
 import { BaseStyle, useTheme } from '@config'
@@ -14,6 +14,7 @@ import GET_FM_QUERY from './GET_FM_QUERY'
 import BottomPlayer from './Player/index'
 import ChannelGrid from './ChannelGrid'
 import RadioSearchResults from './SearchResults'
+import ScreenContainer from '../ScreenContainer/Index'
 
 const trackPlayerInit = async () => {
 	await TrackPlayer.setupPlayer()
@@ -26,6 +27,7 @@ const trackPlayerInit = async () => {
 }
 
 const RadioScreen = (props) => {
+	const navigation = useNavigation()
 	const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false)
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [currentChannelId, setCurrentChannelId] = useState('')
@@ -33,6 +35,7 @@ const RadioScreen = (props) => {
 	const { colors } = useTheme()
 	const ref = useRef(null)
 	useScrollToTop(ref)
+	const [refreshing, setRefreshing] = useState(false)
 
 	useEffect(() => {
 		TrackPlayer.registerPlaybackService(
@@ -113,6 +116,11 @@ const RadioScreen = (props) => {
 		}
 	})
 
+	const handleRefresh = () => {
+		setRefreshing(true)
+		refetch().then(() => setRefreshing(false))
+	}
+
 	const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
 	const iscurrentChannelFavorite = favoriteList?.some((f) => f.id == currentChannel?.id)
 
@@ -120,7 +128,7 @@ const RadioScreen = (props) => {
 	const recentFms = fmList.slice(0, 10)
 
 	return (
-		<SafeAreaView style={[BaseStyle.safeAreaView, { flex: 1 }]} edges={['right', 'top', 'left']}>
+		<ScreenContainer navigation={navigation} handleRefresh={handleRefresh}>
 			<View style={{ flex: 1 }}>
 				<ScrollView scrollEventThrottle={16} keyboardShouldPersistTaps="handled" ref={ref}>
 					<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
@@ -205,7 +213,7 @@ const RadioScreen = (props) => {
 					onFavourite={onFavourite}
 				/>
 			)}
-		</SafeAreaView>
+		</ScreenContainer>
 	)
 }
 

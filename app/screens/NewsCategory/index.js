@@ -5,11 +5,11 @@ import crashlytics from '@react-native-firebase/crashlytics'
 import { Text, News169, TabSlider, SafeAreaView } from '@components'
 import { BaseStyle, useTheme } from '@config'
 import { SceneMap } from 'react-native-tab-view'
-import styles from './styles'
-
 import { useLazyQuery } from '@apollo/client'
 import GET_ARTICLES_QUERY from './GET_ARTICLES_QUERY'
 import { fetchCategoryArticlesfromAsync, storeCategoryArticlestoAsync } from '../../helper/cacheStorage'
+import ScreenContainer from '../ScreenContainer/Index'
+import styles from './styles'
 
 const NewsCategory = () => {
 	const navigation = useNavigation()
@@ -144,7 +144,7 @@ const NewsCategory = () => {
 	const categoryTabs = renderCategoryTabs()
 
 	return (
-		<SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
+		<ScreenContainer navigation={navigation} handleRefresh={handleRefresh}>
 			<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
 				<Text title1 bold>
 					{'शीर्षकहरू'}
@@ -158,7 +158,7 @@ const NewsCategory = () => {
 				renderScene={categoryTabs}
 				onIndexChange={setIndex}
 			/>
-		</SafeAreaView>
+		</ScreenContainer>
 	)
 }
 

@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
+import { useScrollToTop } from '@react-navigation/native'
 import { useLazyQuery } from '@apollo/react-hooks'
-import { useDebounceCallback } from '@react-hook/debounce'
 import crashlytics from '@react-native-firebase/crashlytics'
-import { useFocusEffect, useScrollToTop } from '@react-navigation/native'
-import { CardSlide, News169, NewsList, SafeAreaView, Text } from '@components'
-import { BaseStyle, useTheme } from '@config'
+import { CardSlide, News169, NewsList, Text } from '@components'
+import { useTheme } from '@config'
 import styles from './styles'
 import { fetchfromAsync, storetoAsync } from '../../helper/cacheStorage'
 import { getFormattedCurrentNepaliDate } from '../../helper/dateFormatter'
 import GET_ARTICLES_QUERY from './GET_ARTICLES_QUERY'
 import Weather from './weather.component'
 import * as Utils from '@utils'
+import ScreenContainer from '../ScreenContainer/Index'
 
 const Home = (props) => {
 	const { navigation } = props
@@ -67,16 +67,6 @@ const Home = (props) => {
 			})
 	}, [fetchNews])
 
-	useFocusEffect(
-		useDebounceCallback(
-			useCallback(() => {
-				handleRefresh()
-			}, [handleRefresh]),
-			10000,
-			true,
-		),
-	)
-
 	if (!loading && data != null && data.getArticles && data.getArticles.length) {
 		const myArticles = data.getArticles
 		storetoAsync(myArticles)
@@ -106,7 +96,7 @@ const Home = (props) => {
 	}
 
 	return (
-		<SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
+		<ScreenContainer navigation={navigation} scrollRef={ref} handleRefresh={handleRefresh}>
 			<FlatList
 				ref={ref}
 				contentContainerStyle={{ ...styles.paddingSrollView, paddingTop: 4 }}
@@ -183,7 +173,7 @@ const Home = (props) => {
 					/>
 				}
 			/>
-		</SafeAreaView>
+		</ScreenContainer>
 	)
 }
 

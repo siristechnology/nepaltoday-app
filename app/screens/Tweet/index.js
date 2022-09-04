@@ -1,19 +1,19 @@
 import React, { useRef, useState } from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
-import { useScrollToTop } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import crashlytics from '@react-native-firebase/crashlytics'
-import { BaseStyle, useTheme } from '@config'
-import { SafeAreaView, Text } from '@components'
+import { useTheme } from '@config'
+import { Text } from '@components'
 import SingleTweet from './SingleTweet'
-import styles from './styles'
 import { useQuery } from '@apollo/client'
 import GET_TWEETS_QUERY from './GET_TWEETS_QUERY'
+import ScreenContainer from '../ScreenContainer/Index'
 
-const Favourite = () => {
+const TweetScreen = () => {
+	const navigation = useNavigation()
 	const { colors } = useTheme()
 	const ref = useRef(null)
 	useScrollToTop(ref)
-
 	const [refreshing, setRefreshing] = useState(false)
 
 	const handleRefresh = () => {
@@ -31,8 +31,8 @@ const Favourite = () => {
 
 	const tweets = data?.getTweets || []
 
-	const renderContent = () => {
-		return (
+	return (
+		<ScreenContainer navigation={navigation} handleRefresh={handleRefresh}>
 			<View style={[{ flex: 1 }]}>
 				<FlatList
 					keyExtractor={(item) => item._id}
@@ -60,14 +60,8 @@ const Favourite = () => {
 					}
 				/>
 			</View>
-		)
-	}
-
-	return (
-		<SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
-			{renderContent()}
-		</SafeAreaView>
+		</ScreenContainer>
 	)
 }
 
-export default Favourite
+export default TweetScreen
