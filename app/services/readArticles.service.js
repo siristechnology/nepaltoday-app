@@ -1,9 +1,8 @@
-import client from '../graphql/graphql-client'
 import gql from 'graphql-tag'
 import crashlytics from '@react-native-firebase/crashlytics'
 
 class ReadArticleService {
-	saveReadArticle = async (nid, articles) => {
+	saveReadArticle = async (client, nid, articles) => {
 		articles = articles.map((article) => {
 			return {
 				articleId: article.articleId,

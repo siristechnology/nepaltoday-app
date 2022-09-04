@@ -6,13 +6,14 @@ import { ApolloProvider } from '@apollo/client'
 import crashlytics from '@react-native-firebase/crashlytics'
 import auth from '@react-native-firebase/auth'
 import PushNotification from 'react-native-push-notification'
-import GraphqlClient from './graphql/graphql-client'
+import { useApolloClient } from './graphql/graphql-client'
 import App from './navigation'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import notificationHandler from './services/notification-handler'
 import { getReadArticles, clearOldArticles } from './services/asyncStorageService'
 import readArticlesService from './services/readArticles.service'
 import * as Utils from '@utils'
+import { Text } from 'react-native'
 console.disableYellowBox = true
 Utils.setupLayoutAnimation()
 const startTrace = Utils.getStartTrace()
@@ -21,6 +22,7 @@ const NTApp = () => {
 	const [loading, setLoading] = useState(false)
 	const [clicked, setClicked] = useState(false)
 	const [article, setArticle] = useState({})
+	const { client } = useApolloClient()
 
 	const onRegister = (token) => {
 		signInAnonymously().then(() => notificationHandler.register(auth().currentUser, token.token))
@@ -58,7 +60,7 @@ const NTApp = () => {
 
 			const addReadArticles = async () => {
 				const readArticles = await getReadArticles()
-				auth().currentUser && readArticlesService.saveReadArticle(auth().currentUser.uid, readArticles)
+				auth().currentUser && readArticlesService.saveReadArticle(client, auth().currentUser.uid, readArticles)
 				clearOldArticles()
 			}
 
@@ -70,8 +72,12 @@ const NTApp = () => {
 		return () => clearTimeout(timer)
 	}, [])
 
+	if (!client) {
+		return <Text>Initializing app...</Text>
+	}
+
 	return (
-		<ApolloProvider client={GraphqlClient}>
+		<ApolloProvider client={client}>
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
 					<SafeAreaProvider>
