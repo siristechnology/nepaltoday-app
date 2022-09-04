@@ -46,13 +46,13 @@ jobs:
 
             - name: Set outputs
               id: vars
-              run: echo "::set-output name=datestamp::$(date +%s)"
+              run: echo "::set-output name=datestamp::$(date '+%Y-%m-%d__%H:%M')"
 
             - name: Publish Apk to Github Release
               uses: marvinpinto/action-automatic-releases@latest
               if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/release')
               with:
-                  title: 'Nepaltoday - Beta Build'
+                  title: 'Nepaltoday - ${{ steps.vars.outputs.datestamp }}'
                   prerelease: false
                   files: android/app/build/outputs/apk/signed/release/app-signed-release.apk
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
