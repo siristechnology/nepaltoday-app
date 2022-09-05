@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Platform, StatusBar, View } from 'react-native'
-import { BaseSetting, useTheme } from '@config'
-import { NavigationContainer, StackActions } from '@react-navigation/native'
+import { useTheme } from '@config'
+import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { languageSelect } from '@selectors'
-import * as Utils from '@utils'
 import { DarkModeProvider, useDarkMode } from 'react-native-dark-mode'
 import SplashScreen from 'react-native-splash-screen'
-import { useDispatch, useSelector } from 'react-redux'
 import { AllScreens } from './config'
 const RootStack = createStackNavigator()
 const MainStack = createStackNavigator()
@@ -31,9 +28,6 @@ const MainScreens = () => {
 const Navigator = (props) => {
 	const { theme, colors } = useTheme()
 	const isDarkMode = useDarkMode()
-	const language = useSelector(languageSelect)
-	const { navigation } = props
-	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(true)
 	const navigationRef = useRef(null)
 
@@ -47,16 +41,7 @@ const Navigator = (props) => {
 
 	useEffect(() => {
 		SplashScreen.hide()
-
-		const onProcess = async () => {
-			Utils.enableExperimental()
-			setLoading(false)
-
-			navigationRef?.current?.dispatch(StackActions.replace('NewsMenu'))
-			navigationRef?.current?.navigate('NewsMenu')
-		}
-		// onProcess()
-	}, [dispatch, language])
+	}, [])
 
 	return (
 		<View style={{ flex: 1, position: 'relative' }}>
@@ -86,10 +71,6 @@ const Navigator = (props) => {
 						mode="modal"
 					>
 						<RootStack.Screen name="MainScreens" component={MainScreens} options={{ headerShown: false }} />
-						{/* {Object.keys(ModalScreens).map((name, index) => {
-							const { component, options } = ModalScreens[name]
-							return <RootStack.Screen key={name} name={name} component={component} options={options} />
-						})} */}
 					</RootStack.Navigator>
 				</NavigationContainer>
 			</DarkModeProvider>

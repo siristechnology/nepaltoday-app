@@ -3,7 +3,7 @@ import { InvalidationPolicyCache } from 'apollo-invalidation-policies'
 import { onError } from '@apollo/client/link/error'
 import { RetryLink } from '@apollo/client/link/retry'
 import crashlytics from '@react-native-firebase/crashlytics'
-import { SERVER_URL, API_LOG_LEVEL } from '@env'
+import { SERVER_URL } from '@env'
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
 	if (graphQLErrors) {
@@ -27,18 +27,7 @@ const retryLink = new RetryLink({
 	},
 })
 
-const httpLink = new HttpLink({
-	uri: SERVER_URL,
-	fetch: (...pl) => {
-		if (API_LOG_LEVEL != 'debug' && API_LOG_LEVEL != 'info') return fetch(...pl)
-		const [_, options] = pl
-		const body = JSON.parse(options.body)
-		console.log('📡:', body.operationName)
-		API_LOG_LEVEL == 'debug' && console.log(body.query)
-		Object.keys(body.variables).length > 0 && console.log(body.variables)
-		return fetch(...pl)
-	},
-})
+const httpLink = new HttpLink({ uri: SERVER_URL })
 
 const cache = new InvalidationPolicyCache({
 	invalidationPolicies: {

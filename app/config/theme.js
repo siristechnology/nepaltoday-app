@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux'
 import { useDarkMode } from 'react-native-dark-mode'
 
 /**
@@ -222,9 +221,8 @@ export const DefaultFont = 'OpenSans'
  */
 export const useTheme = () => {
 	const isDarkMode = useDarkMode()
-	const forceDark = useSelector((state) => state.application.force_dark)
-	const themeStorage = useSelector((state) => state.application.theme)
-	const listTheme = ThemeSupport.filter((item) => item.theme == themeStorage)
+	const forceDark = false
+	const listTheme = ThemeSupport.filter((item) => item.theme == 'orange')
 	const theme = listTheme.length > 0 ? listTheme[0] : DefaultTheme
 
 	if (forceDark) {
@@ -236,13 +234,4 @@ export const useTheme = () => {
 	return isDarkMode
 		? { theme: theme.dark, colors: theme.dark.colors }
 		: { theme: theme.light, colors: theme.light.colors }
-}
-
-/**
- * export font for application
- * @returns font
- */
-export const useFont = () => {
-	const font = useSelector((state) => state.application.font)
-	return font ?? DefaultFont
 }

@@ -1,7 +1,4 @@
-import { persistor, store } from 'app/store'
 import React, { useEffect, useState } from 'react'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
 import { ApolloProvider } from '@apollo/client'
 import crashlytics from '@react-native-firebase/crashlytics'
 import auth from '@react-native-firebase/auth'
@@ -64,20 +61,16 @@ const NTApp = () => {
 			configureNotification().then(() => {
 				addReadArticles()
 			})
-		}, 10000)
+		}, 5000)
 
 		return () => clearTimeout(timer)
 	}, [])
 
 	return (
 		<ApolloProvider client={GraphqlClient}>
-			<Provider store={store}>
-				<PersistGate loading={null} persistor={persistor}>
-					<SafeAreaProvider>
-						<App />
-					</SafeAreaProvider>
-				</PersistGate>
-			</Provider>
+			<SafeAreaProvider>
+				<App />
+			</SafeAreaProvider>
 		</ApolloProvider>
 	)
 }

@@ -1,4 +1,4 @@
-import { BaseColor, FontWeight, Typography, useFont, useTheme } from '@config'
+import { BaseColor, FontWeight, Typography, DefaultFont, useTheme } from '@config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
@@ -118,7 +118,7 @@ export default function Index(props) {
 	} = props
 
 	const { colors } = useTheme()
-	const font = useFont()
+	const font = DefaultFont
 
 	const textStyle = StyleSheet.flatten([
 		header && Typography.header,
