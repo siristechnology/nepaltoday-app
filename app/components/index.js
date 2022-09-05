@@ -51,7 +51,6 @@ export { default as ListSearchResultLabel } from './List/SearchResultLabel'
 
 // Header components
 export { default as Header } from './Header/Header'
-export { default as HeaderLargeTitle, HeaderLargeTitleStore, HeaderLargeTitleBadge } from './Header/LargeTitle'
 export { default as HeaderAnimated } from './Header/Animated'
 export { default as HeaderText } from './Header/Text'
 
@@ -68,12 +67,10 @@ export { default as StarRating } from './StarRating'
 export { default as RateDetail } from './RateDetail'
 export { default as PlaceItem } from './PlaceItem'
 export { default as SearchBox } from './SearchBox'
-export { default as ModalFilter } from './ModalFilter'
 export { default as ShopCard1 } from './ShopCard1'
 export { default as TimeLine } from './TimeLine'
 export { default as Avatars } from './Avatars'
 export { PlaceholderLine, Placeholder } from './Placeholder'
-export { default as ModalOption } from './ModalOption'
 // Label
 export { default as LabelUpper2Row } from './Label/Upper2Row'
 
