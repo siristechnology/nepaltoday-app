@@ -15,7 +15,6 @@ import readArticlesService from './services/readArticles.service'
 import * as Utils from '@utils'
 console.disableYellowBox = true
 Utils.setupLayoutAnimation()
-const startTrace = Utils.getStartTrace()
 
 const NTApp = () => {
 	const [loading, setLoading] = useState(false)
@@ -87,8 +86,6 @@ const signInAnonymously = () => {
 	return auth()
 		.signInAnonymously()
 		.then(() => {
-			startTrace.putAttribute('user', auth().currentUser.uid)
-			startTrace.putMetric('user_sign_in', new Date())
 			console.log('User signed in anonymously')
 		})
 		.catch((error) => {

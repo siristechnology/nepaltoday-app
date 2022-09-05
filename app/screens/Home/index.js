@@ -3,6 +3,7 @@ import { FlatList, RefreshControl, View } from 'react-native'
 import { useScrollToTop } from '@react-navigation/native'
 import { useLazyQuery } from '@apollo/react-hooks'
 import crashlytics from '@react-native-firebase/crashlytics'
+import perf from '@react-native-firebase/perf'
 import { CardSlide, News169, NewsList, Text } from '@components'
 import { useTheme } from '@config'
 import styles from './styles'
@@ -10,7 +11,6 @@ import { fetchfromAsync, storetoAsync } from '../../helper/cacheStorage'
 import { getFormattedCurrentNepaliDate } from '../../helper/dateFormatter'
 import GET_ARTICLES_QUERY from './GET_ARTICLES_QUERY'
 import Weather from './weather.component'
-import * as Utils from '@utils'
 import ScreenContainer from '../ScreenContainer/Index'
 
 const Home = (props) => {
@@ -26,14 +26,17 @@ const Home = (props) => {
 		variables: {},
 	})
 
-	const handleRefresh = useCallback(() => {
+	const handleRefresh = useCallback(async () => {
 		setRefreshing(true)
 		if (called) {
-			refetch()
-				.then(() => {
-					setRefreshing(false)
-				})
-				.catch((err) => setRefreshing(false))
+			try {
+				const query_time = await perf().startTrace('query_time')
+				await refetch()
+				setRefreshing(false)
+				query_time.stop()
+			} catch {
+				setRefreshing(false)
+			}
 		} else {
 			fetchNews()
 			setRefreshing(false)
@@ -52,9 +55,6 @@ const Home = (props) => {
 	}
 
 	useEffect(() => {
-		getFormattedCurrentNepaliDate().then((npDate) => {
-			setNepaliDate(npDate)
-		})
 		fetchArticlesFromAsyncStorage()
 			.then(() => {
 				fetchNews()
@@ -65,14 +65,14 @@ const Home = (props) => {
 					props.navigation.navigate('ArticleDetail', { article, articles: [article] })
 				}
 			})
+		getFormattedCurrentNepaliDate().then((npDate) => {
+			setNepaliDate(npDate)
+		})
 	}, [fetchNews])
 
 	if (!loading && data != null && data.getArticles && data.getArticles.length) {
 		const myArticles = data.getArticles
 		storetoAsync(myArticles)
-
-		const startTrace = Utils.getStartTrace()
-		startTrace && startTrace.stop && startTrace.stop()
 	}
 
 	if (error) {

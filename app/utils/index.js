@@ -142,9 +142,3 @@ export const haveChildren = (parent = '', children = '') => {
 	const childrenNew = children?.toLowerCase?.()
 	return parentNew?.includes(childrenNew)
 }
-
-let startTrace
-export const getStartTrace = () => {
-	if (!startTrace) startTrace = perf().startTrace('start_trace')
-	return startTrace
-}
