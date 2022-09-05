@@ -49,6 +49,12 @@ export { default as ListOptionSelected } from './List/OptionSelected'
 export { default as ListSearchResult } from './List/SearchResult'
 export { default as ListSearchResultLabel } from './List/SearchResultLabel'
 
+// Header components
+export { default as Header } from './Header/Header'
+export { default as HeaderLargeTitle, HeaderLargeTitleStore, HeaderLargeTitleBadge } from './Header/LargeTitle'
+export { default as HeaderAnimated } from './Header/Animated'
+export { default as HeaderText } from './Header/Text'
+
 // Common components
 export { default as Text } from './Text'
 export { default as Button } from './Button'
