@@ -18,6 +18,7 @@ const Home = (props) => {
 	const { colors } = useTheme()
 	const [nepaliDate, setNepaliDate] = useState('')
 	const [refreshing, setRefreshing] = useState(false)
+	const [home_page_load_time, setHome_page_load_time] = useState()
 	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
 	const ref = useRef(null)
 	useScrollToTop(ref)
@@ -53,6 +54,20 @@ const Home = (props) => {
 				setLocalArticles([])
 			})
 	}
+
+	useEffect(() => {
+		const init = async () => {
+			const metric = await perf().startTrace('home_page_load_time')
+			setHome_page_load_time(metric)
+		}
+		!home_page_load_time && init()
+	}, [])
+
+	useEffect(() => {
+		if (!loading) {
+			home_page_load_time && home_page_load_time.stop()
+		}
+	}, [home_page_load_time, loading])
 
 	useEffect(() => {
 		fetchArticlesFromAsyncStorage()
