@@ -1,11 +1,11 @@
 import React from 'react'
-import PostDetail from '@screens/PostDetail'
-/* Bottom News Screen */
+import { tabBarIcon, BottomTabNavigatorMazi } from '@navigation/components'
 import Home from '@screens/Home'
 import NewsCategory from '@screens/NewsCategory'
+import PostDetail from '@screens/PostDetail'
 import Radio from '@screens/Radio'
 import Tweet from '@screens/Tweet'
-import { tabBarIcon, tabBarIconHaveNoty, BottomTabNavigatorMazi } from '@navigation/components'
+import ArticleWeb from '@screens/ArticleWeb'
 
 export const NewsTabScreens = {
 	Home: {
@@ -47,6 +47,12 @@ export default {
 		component: PostDetail,
 		options: {
 			title: 'post_detail',
+		},
+	},
+	ArticleWeb: {
+		component: ArticleWeb,
+		options: {
+			title: 'article_web',
 		},
 	},
 }

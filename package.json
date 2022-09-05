@@ -58,6 +58,7 @@
     "react-native-tab-view": "^3.1.1",
     "react-native-track-player": "^2.2.0-rc4",
     "react-native-vector-icons": "^8.1.0",
+    "react-native-webview": "^11.23.1",
     "rn-placeholder": "^3.0.3"
   },
   "devDependencies": {

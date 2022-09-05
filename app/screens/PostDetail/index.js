@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { Animated, I18nManager, ScrollView, Share, TouchableOpacity, View } from 'react-native'
-import { Header, Image, SafeAreaView, Tag, Text, PlaceholderLine, Placeholder } from '@components'
+import { Button, Header, Image, SafeAreaView, Tag, Text, PlaceholderLine, Placeholder } from '@components'
 import ProfileAuthor from '@components/Profile/Author'
 import { BaseColor, BaseStyle, useTheme, Images } from '@config'
 import * as Utils from '@utils'
@@ -56,6 +56,10 @@ const PostDetail = (props) => {
 		useNativeDriver: true,
 	})
 
+	const handleLinkClick = () => {
+		props.navigation.navigate('ArticleWeb', { article })
+	}
+
 	const renderPlaceholder = () => {
 		const holders = Array.from(Array(5))
 
@@ -102,6 +106,11 @@ const PostDetail = (props) => {
 							</Tag>
 						)
 					})}
+				</View>
+				<View style={styles.wrapContent}>
+					<Button onPress={handleLinkClick} full>
+						पूरा पढ्नुहोस्
+					</Button>
 				</View>
 			</Fragment>
 		)

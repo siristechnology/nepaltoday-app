@@ -5,7 +5,6 @@ import { StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { convertToNepaliDigit } from '../../helper/utils'
 import crashlytics from '@react-native-firebase/crashlytics'
-// import { useTheme, Text } from 'react-native-paper'
 import { Text } from '@components'
 
 export const FETCH_WEATHER_INFO_QUERY = gql`

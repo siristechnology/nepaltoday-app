@@ -42,11 +42,11 @@ export const Typography = StyleSheet.create({
 		fontWeight: FontWeight.bold,
 	},
 	headline: {
-		fontSize: 17,
+		fontSize: 19,
 		fontWeight: FontWeight.bold,
 	},
 	body1: {
-		fontSize: 17,
+		fontSize: 19,
 		fontWeight: FontWeight.regular,
 	},
 	body2: {
