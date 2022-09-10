@@ -23,26 +23,21 @@ const Home = (props) => {
 	const ref = useRef(null)
 	useScrollToTop(ref)
 
-	const [fetchNews, { loading, data, refetch, error, called }] = useLazyQuery(GET_ARTICLES_QUERY, {
+	const [fetchNews, { loading, data, refetch, error }] = useLazyQuery(GET_ARTICLES_QUERY, {
 		variables: {},
 	})
 
 	const handleRefresh = useCallback(async () => {
 		setRefreshing(true)
-		if (called) {
-			try {
-				const query_time = await perf().startTrace('query_time')
-				await refetch()
-				setRefreshing(false)
-				query_time.stop()
-			} catch {
-				setRefreshing(false)
-			}
-		} else {
-			fetchNews()
+		try {
+			const query_trace = await perf().startTrace('query_time')
+			await refetch()
+			setRefreshing(false)
+			query_trace.stop()
+		} catch (err) {
 			setRefreshing(false)
 		}
-	}, [called, fetchNews, refetch])
+	}, [refetch])
 
 	const fetchArticlesFromAsyncStorage = async () => {
 		fetchfromAsync()

@@ -7,12 +7,13 @@ import { BaseStyle } from '@config'
 
 const ScreenContainer = (props) => {
 	const appState = useRef(AppState.currentState)
+	const { children, handleRefresh } = props
 
 	useFocusEffect(
 		useDebounceCallback(
 			useCallback(() => {
-				props.handleRefresh()
-			}, [props]),
+				handleRefresh()
+			}, [handleRefresh]),
 			10000,
 			true,
 		),
@@ -21,7 +22,7 @@ const ScreenContainer = (props) => {
 	useEffect(() => {
 		const subscription = AppState.addEventListener('change', (nextAppState) => {
 			if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-				props.handleRefresh()
+				handleRefresh()
 			}
 
 			appState.current = nextAppState
@@ -34,7 +35,7 @@ const ScreenContainer = (props) => {
 
 	return (
 		<SafeAreaView style={BaseStyle.safeAreaView} edges={['right', 'top', 'left']}>
-			{props.children}
+			{children}
 		</SafeAreaView>
 	)
 }
