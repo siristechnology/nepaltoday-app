@@ -78,6 +78,7 @@ const GET_ARTICLE_QUERY = gql`
 			createdDate
 			modifiedDate
 			category
+			tags
 			source {
 				_id
 				name
