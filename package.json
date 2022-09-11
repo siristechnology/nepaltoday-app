@@ -33,6 +33,7 @@
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
+    "@reduxjs/toolkit": "^1.8.5",
     "apollo-invalidation-policies": "^1.0.0-beta16",
     "graphql": "^16.5.0",
     "graphql-tag": "^2.12.6",
@@ -59,6 +60,7 @@
     "react-native-track-player": "^2.2.0-rc4",
     "react-native-vector-icons": "^8.1.0",
     "react-native-webview": "^11.23.1",
+    "react-redux": "^8.0.2",
     "rn-placeholder": "^3.0.3"
   },
   "devDependencies": {

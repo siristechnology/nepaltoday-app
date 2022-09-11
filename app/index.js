@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { Provider as ReduxProvider } from 'react-redux'
 import { ApolloProvider } from '@apollo/client'
 import crashlytics from '@react-native-firebase/crashlytics'
 import auth from '@react-native-firebase/auth'
 import PushNotification from 'react-native-push-notification'
+import store from './store'
 import GraphqlClient from './graphql/graphql-client'
 import App from './navigation'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
@@ -69,7 +71,9 @@ const NTApp = () => {
 	return (
 		<ApolloProvider client={GraphqlClient}>
 			<SafeAreaProvider>
-				<App />
+				<ReduxProvider store={store}>
+					<App />
+				</ReduxProvider>
 			</SafeAreaProvider>
 		</ApolloProvider>
 	)

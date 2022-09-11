@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { FlatList, ScrollView, View } from 'react-native'
-import { useNavigation, useScrollToTop } from '@react-navigation/native'
+import { useFocusEffect, useNavigation, useScrollToTop } from '@react-navigation/native'
 import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
 import auth from '@react-native-firebase/auth'
 import { BaseStyle, useTheme } from '@config'
 import * as Utils from '@utils'
-import { CardChannelGrid, SafeAreaView, Text } from '@components'
+import { CardChannelGrid, Text } from '@components'
 import RadioService from './radio.services'
 import SearchBox from './SearchBox'
 import styles from './styles'
@@ -23,12 +24,11 @@ const trackPlayerInit = async () => {
 		capabilities: [Capability.Play, Capability.Pause, Capability.Skip, Capability.SkipToNext],
 		compactCapabilities: [Capability.Play, Capability.Pause, Capability.Stop],
 	})
-	return true
 }
 
 const RadioScreen = (props) => {
 	const navigation = useNavigation()
-	const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false)
+	const appState = useSelector((state) => state.appState.value)
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [currentChannelId, setCurrentChannelId] = useState('')
 	const [search, setSearch] = useState('')
@@ -36,6 +36,7 @@ const RadioScreen = (props) => {
 	const ref = useRef(null)
 	useScrollToTop(ref)
 	const [refreshing, setRefreshing] = useState(false)
+	console.log('printing appState', appState)
 
 	useEffect(() => {
 		TrackPlayer.registerPlaybackService(
@@ -94,12 +95,13 @@ const RadioScreen = (props) => {
 	}
 
 	useEffect(() => {
-		const startPlayer = async () => {
-			const isInit = await trackPlayerInit()
-			setIsTrackPlayerInit(isInit)
+		if (appState == 'active') {
+			const startPlayer = async () => {
+				await trackPlayerInit()
+			}
+			startPlayer().catch(() => {})
 		}
-		startPlayer()
-	}, [])
+	}, [appState])
 
 	const { data, loading, error, refetch } = useQuery(GET_FM_QUERY, {
 		variables: {},
@@ -204,7 +206,6 @@ const RadioScreen = (props) => {
 			{currentChannel != null && (
 				<BottomPlayer
 					isPlaying={isPlaying}
-					initSuccess={isTrackPlayerInit}
 					currentChannel={currentChannel}
 					onPlay={play}
 					onPause={pause}

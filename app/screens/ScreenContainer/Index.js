@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import { AppState } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { useDebounceCallback } from '@react-hook/debounce'
 import { useFocusEffect } from '@react-navigation/native'
+import { setAppState } from './appStateSlice'
 import { SafeAreaView } from '@components'
 import { BaseStyle } from '@config'
 
 const ScreenContainer = (props) => {
+	const dispatch = useDispatch()
 	const appState = useRef(AppState.currentState)
 	const { children, handleRefresh } = props
 
@@ -21,6 +24,8 @@ const ScreenContainer = (props) => {
 
 	useEffect(() => {
 		const subscription = AppState.addEventListener('change', (nextAppState) => {
+			dispatch(setAppState(nextAppState))
+
 			if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
 				handleRefresh()
 			}
@@ -29,7 +34,7 @@ const ScreenContainer = (props) => {
 		})
 
 		return () => {
-			subscription.remove()
+			subscription && subscription.remove()
 		}
 	}, [])
 
