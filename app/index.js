@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/client'
 import crashlytics from '@react-native-firebase/crashlytics'
 import auth from '@react-native-firebase/auth'
 import PushNotification from 'react-native-push-notification'
+import SplashScreen from 'react-native-splash-screen'
 import store from './store'
 import GraphqlClient from './graphql/graphql-client'
 import App from './navigation'
@@ -12,6 +13,7 @@ import notificationHandler from './services/notification-handler'
 import { getReadArticles, clearOldArticles } from './services/asyncStorageService'
 import readArticlesService from './services/readArticles.service'
 import * as Utils from '@utils'
+
 console.disableYellowBox = true
 Utils.setupLayoutAnimation()
 
@@ -20,11 +22,7 @@ const NTApp = () => {
 	const [clicked, setClicked] = useState(false)
 	const [article, setArticle] = useState({})
 
-	const onRegister = (token) => {
-		signInAnonymously().then(() => notificationHandler.register(auth().currentUser, token.token))
-	}
-
-	const onNotif = (notif) => {
+	const onNotificationClicked = (notif) => {
 		if (notif.data && notif.data._id && notif.foreground === false) {
 			setLoading(true)
 			notificationHandler
@@ -38,10 +36,6 @@ const NTApp = () => {
 					crashlytics().recordError(err)
 					setLoading(false)
 				})
-		} else if (notif.data && notif.data.notifType === 'corona' && notif.foreground === false) {
-			setLoading(true)
-			setClicked(true)
-			setLoading(false)
 		}
 	}
 
@@ -50,7 +44,7 @@ const NTApp = () => {
 			const configureNotification = async () => {
 				PushNotification.configure({
 					onRegister: onRegister,
-					onNotification: onNotif,
+					onNotification: onNotificationClicked,
 				})
 			}
 
@@ -68,6 +62,10 @@ const NTApp = () => {
 		return () => clearTimeout(timer)
 	}, [])
 
+	useEffect(() => {
+		SplashScreen.hide()
+	}, [])
+
 	return (
 		<ApolloProvider client={GraphqlClient}>
 			<SafeAreaProvider>
@@ -77,6 +75,10 @@ const NTApp = () => {
 			</SafeAreaProvider>
 		</ApolloProvider>
 	)
+}
+
+const onRegister = (token) => {
+	signInAnonymously().then(() => notificationHandler.register(auth().currentUser, token.token))
 }
 
 const signInAnonymously = () => {

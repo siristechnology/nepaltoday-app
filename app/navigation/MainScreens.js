@@ -1,5 +1,5 @@
 import React from 'react'
-import { tabBarIcon, BottomTabNavigatorMazi } from '@navigation/components'
+import { tabBarIcon, BottomTabNavigator } from './BottomTabNavigator'
 import Home from '@screens/Home'
 import NewsCategory from '@screens/NewsCategory'
 import PostDetail from '@screens/PostDetail'
@@ -34,7 +34,7 @@ export const NewsTabScreens = {
 	},
 }
 
-const NewsMenu = () => <BottomTabNavigatorMazi tabScreens={NewsTabScreens} />
+const NewsMenu = () => <BottomTabNavigator tabScreens={NewsTabScreens} />
 
 export default {
 	NewsMenu: {

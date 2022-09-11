@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FlatList, ScrollView, View } from 'react-native'
-import { useFocusEffect, useNavigation, useScrollToTop } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
 import auth from '@react-native-firebase/auth'
-import { BaseStyle, useTheme } from '@config'
+import { useTheme } from '@config'
 import * as Utils from '@utils'
 import { CardChannelGrid, Text } from '@components'
 import RadioService from './radio.services'
@@ -36,7 +36,6 @@ const RadioScreen = (props) => {
 	const ref = useRef(null)
 	useScrollToTop(ref)
 	const [refreshing, setRefreshing] = useState(false)
-	console.log('printing appState', appState)
 
 	useEffect(() => {
 		TrackPlayer.registerPlaybackService(

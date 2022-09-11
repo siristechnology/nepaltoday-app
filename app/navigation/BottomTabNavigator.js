@@ -33,7 +33,7 @@ export const tabBarIcon = ({ color, name }) => <Icon name={name} size={20} solid
 
 const BottomTab = createBottomTabNavigator()
 
-export const BottomTabNavigatorMazi = ({ tabScreens = {} }) => {
+export const BottomTabNavigator = ({ tabScreens = {} }) => {
 	const { colors } = useTheme()
 	return (
 		<BottomTab.Navigator
