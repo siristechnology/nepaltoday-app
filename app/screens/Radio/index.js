@@ -36,6 +36,7 @@ const RadioScreen = (props) => {
 	const ref = useRef(null)
 	useScrollToTop(ref)
 	const [refreshing, setRefreshing] = useState(false)
+	const [favoriteList, setFavoriteList] = useState([])
 
 	useEffect(() => {
 		TrackPlayer.registerPlaybackService(
@@ -81,17 +82,25 @@ const RadioScreen = (props) => {
 		onFMSelect(fmList[nextIndex])
 	}
 
-	const onFavourite = async () => {
+	const onFavourite = () => {
 		const nid = auth().currentUser.uid
 		const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
 		const isFavorite = favoriteList.some((f) => f.id == currentChannel.id)
 
 		if (isFavorite) {
-			RadioService.deleteFavorite(nid, currentChannel.id).then(() => refetch())
+			RadioService.deleteFavorite(nid, currentChannel.id).then((favList) => {
+				setFavoriteList(favList)
+			})
 		} else {
-			RadioService.saveFavorite(nid, currentChannel.id).then(() => refetch())
+			RadioService.saveFavorite(nid, currentChannel).then((favList) => {
+				setFavoriteList(favList)
+			})
 		}
 	}
+
+	useEffect(() => {
+		RadioService.getFavorites().then((fmList) => setFavoriteList(fmList))
+	}, [])
 
 	useEffect(() => {
 		if (appState == 'active') {
@@ -106,7 +115,6 @@ const RadioScreen = (props) => {
 		variables: {},
 	})
 
-	const favoriteList = (data && data.getMyFm.favoriteFm) || []
 	const fmList = (data && data.getMyFm.allFm) || []
 
 	useTrackPlayerEvents([Event.PlaybackState], (event) => {

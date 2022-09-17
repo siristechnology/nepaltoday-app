@@ -12,14 +12,6 @@ const GET_FM_QUERY = gql`
 				artwork
 				province
 			}
-			favoriteFm {
-				id
-				title
-				url
-				artist
-				artwork
-				province
-			}
 		}
 	}
 `

@@ -31,7 +31,7 @@ const SearchBox = ({ search, setSearch }) => {
 				style={[BaseStyle.textInput, Typography.body1, { flex: 1 }]}
 				onChangeText={onChangeText}
 				autoCorrect={false}
-				placeholder={'Search FM'}
+				placeholder={'Search FM stations'}
 				placeholderTextColor={BaseColor.grayColor}
 				value={search}
 				selectionColor={colors.primary}
