@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import crashlytics from '@react-native-firebase/crashlytics'
-import { useTheme } from '@config'
 import { Text } from '@components'
 import SingleTweet from './SingleTweet'
 import { useQuery } from '@apollo/client'
@@ -33,33 +33,31 @@ const TweetScreen = () => {
 
 	return (
 		<ScreenContainer navigation={navigation} handleRefresh={handleRefresh}>
-			<View style={[{ flex: 1 }]}>
-				<FlatList
-					keyExtractor={(item) => item._id}
-					ref={ref}
-					showsHorizontalScrollIndicator={false}
-					showsVerticalScrollIndicator={false}
-					data={tweets}
-					ListHeaderComponent={() => {
-						return (
-							<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
-								<Text title1 bold>
-									{'शीर्ष ट्वीटहरू'}
-								</Text>
-							</View>
-						)
-					}}
-					renderItem={({ item, index }) => <SingleTweet tweet={item} loading={loading} />}
-					refreshControl={
-						<RefreshControl
-							colors={[colors.primary]}
-							tintColor={colors.primary}
-							refreshing={refreshing}
-							onRefresh={handleRefresh}
-						/>
-					}
-				/>
-			</View>
+			<FlatList
+				keyExtractor={(item) => item._id}
+				ref={ref}
+				showsHorizontalScrollIndicator={false}
+				showsVerticalScrollIndicator={false}
+				data={tweets}
+				ListHeaderComponent={() => {
+					return (
+						<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+							<Text title1 bold>
+								{'शीर्ष ट्वीटहरू'}
+							</Text>
+						</View>
+					)
+				}}
+				renderItem={({ item, index }) => <SingleTweet tweet={item} loading={loading} />}
+				refreshControl={
+					<RefreshControl
+						colors={[colors.primary]}
+						tintColor={colors.primary}
+						refreshing={refreshing}
+						onRefresh={handleRefresh}
+					/>
+				}
+			/>
 		</ScreenContainer>
 	)
 }

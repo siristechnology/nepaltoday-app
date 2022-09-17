@@ -1,9 +1,8 @@
 import React from 'react'
 import { Linking, TouchableHighlight, View } from 'react-native'
+import { useTheme, Text } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import Image from '@components/Image'
-import Text from '@components/Text'
-import { useTheme } from '@config'
 import styles from './styles'
 import Loading from './Loading'
 
@@ -36,7 +35,7 @@ const SingleTweet = (props) => {
 					</TouchableHighlight>
 					<View style={{ paddingLeft: 10, flex: 1 }}>
 						<View style={{ flexDirection: 'row' }}>
-							<Text semibold style={styles.marginVertical3}>
+							<Text variant="titleMedium" style={styles.marginVertical3}>
 								{tweet.name}
 							</Text>
 							<Text style={styles.marginVertical3}>{' ' + tweet.handle}</Text>

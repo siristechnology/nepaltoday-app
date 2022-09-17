@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
+import { Provider as PaperProvider } from 'react-native-paper'
+import theme from './config/theme-paper'
 import { ApolloProvider } from '@apollo/client'
 import SplashScreen from 'react-native-splash-screen'
 import { DarkModeProvider, useDarkMode } from 'react-native-dark-mode'
@@ -29,13 +31,15 @@ const NTApp = () => {
 
 	return (
 		<ApolloProvider client={GraphqlClient}>
-			<SafeAreaProvider>
-				<ReduxProvider store={store}>
-					<DarkModeProvider>
-						<App />
-					</DarkModeProvider>
-				</ReduxProvider>
-			</SafeAreaProvider>
+			<PaperProvider theme={theme}>
+				<SafeAreaProvider>
+					<ReduxProvider store={store}>
+						<DarkModeProvider>
+							<App />
+						</DarkModeProvider>
+					</ReduxProvider>
+				</SafeAreaProvider>
+			</PaperProvider>
 		</ApolloProvider>
 	)
 }

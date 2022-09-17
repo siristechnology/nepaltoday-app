@@ -37,9 +37,9 @@ export default StyleSheet.create({
 		color: BaseColor.grayColor,
 	},
 	thumb: {
-		width: Utils.scaleWithPixel(40),
-		height: Utils.scaleWithPixel(40),
-		borderRadius: 30,
+		width: Utils.scaleWithPixel(50),
+		height: Utils.scaleWithPixel(50),
+		borderRadius: 40,
 		marginRight: 5,
 	},
 	btnAction: {

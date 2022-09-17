@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View } from 'react-native'
 import { useTheme } from '@config'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -57,20 +56,18 @@ const Navigator = (props) => {
 	}, [])
 
 	return (
-		<View style={{ flex: 1, position: 'relative' }}>
-			<NavigationContainer theme={theme} ref={navigationRef}>
-				<RootStack.Navigator
-					screenOptions={{
-						headerShown: false,
-					}}
-				>
-					{Object.keys(MainScreens).map((name, index) => {
-						const { component, options } = MainScreens[name]
-						return <RootStack.Screen key={name} name={name} component={component} options={options} />
-					})}
-				</RootStack.Navigator>
-			</NavigationContainer>
-		</View>
+		<NavigationContainer theme={theme} ref={navigationRef}>
+			<RootStack.Navigator
+				screenOptions={{
+					headerShown: false,
+				}}
+			>
+				{Object.keys(MainScreens).map((name, index) => {
+					const { component, options } = MainScreens[name]
+					return <RootStack.Screen key={name} name={name} component={component} options={options} />
+				})}
+			</RootStack.Navigator>
+		</NavigationContainer>
 	)
 }
 
