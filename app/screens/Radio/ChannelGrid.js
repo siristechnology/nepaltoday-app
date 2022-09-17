@@ -4,7 +4,7 @@ import { CardChannelGrid, Text } from '@components'
 import { useTheme } from '@config'
 import * as Utils from '@utils'
 
-const ChannelGrid = ({ title, fmList, onFMSelect, styles }) => {
+const ChannelGrid = ({ title, fmList, onFMSelect, styles, loading }) => {
 	const { colors } = useTheme()
 
 	return (
@@ -38,7 +38,7 @@ const ChannelGrid = ({ title, fmList, onFMSelect, styles }) => {
 								borderColor: colors.border,
 							}}
 							textStyle={{ fontSize: 16, textAlign: 'center' }}
-							// loading={loading}
+							loading={loading}
 							image={{ uri: item.artwork }}
 							title={item.title}
 						/>

@@ -124,7 +124,7 @@ const RadioScreen = (props) => {
 		variables: {},
 	})
 
-	const fmList = (data && data.getMyFm.allFm) || []
+	const fmList = data?.getMyFm?.allFm.filter((fm) => !fm.isDisabled) || []
 
 	useTrackPlayerEvents([Event.PlaybackState], (event) => {
 		if (event.state === State.Playing) {
@@ -142,83 +142,85 @@ const RadioScreen = (props) => {
 	const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
 	const iscurrentChannelFavorite = favoriteList?.some((f) => f.id == currentChannel?.id)
 
-	const popularFms = fmList.slice(0, 20)
+	const popularFms = fmList
+		.filter((fm) => fm.popularity != null)
+		.sort((a, b) => b.popularity - a.popularity)
+		.slice(0, 20)
 	const recentFms = fmList.slice(0, 10)
 
 	return (
 		<ScreenContainer navigation={navigation} handleRefresh={handleRefresh}>
-			<View style={{ flex: 1 }}>
-				<ScrollView scrollEventThrottle={16} keyboardShouldPersistTaps="handled" ref={ref}>
-					<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
-						<Text title1 bold>
-							{'रेडियो'}
-						</Text>
-					</View>
+			<ScrollView scrollEventThrottle={16} keyboardShouldPersistTaps="handled" ref={ref}>
+				<View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+					<Text title1 bold>
+						{'रेडियो'}
+					</Text>
+				</View>
 
-					<SearchBox search={search} setSearch={setSearch} loading={loading} />
+				<SearchBox search={search} setSearch={setSearch} loading={loading} />
 
-					{search.trim() != '' && <RadioSearchResults search={search} fmList={fmList} onPlay={onFMSelect} />}
+				{search.trim() != '' && <RadioSearchResults search={search} fmList={fmList} onPlay={onFMSelect} />}
 
-					{search.trim() == '' && (
-						<>
-							<View>
-								{favoriteList?.length > 0 && (
-									<View>
-										<Text title3 bold style={[styles.title, styles.paddingView]}>
-											{'Your Stations'}
-										</Text>
-										<FlatList
-											horizontal={true}
-											showsHorizontalScrollIndicator={false}
-											data={favoriteList}
-											keyExtractor={(item) => item.id}
-											renderItem={({ item, index }) => (
-												<CardChannelGrid
-													loading={loading}
-													onPress={() => onFMSelect(item, fmList)}
-													image={{ uri: item.artwork }}
-													style={{
-														paddingTop: 10,
-														width: Utils.scaleWithPixel(100),
-														height: Utils.scaleWithPixel(100),
-														alignItems: 'center',
-														justifyContent: 'center',
-													}}
-													imgStyle={{
-														width: Utils.scaleWithPixel(70),
-														height: Utils.scaleWithPixel(70),
-														borderWidth: 1,
-														borderColor: colors.border,
-													}}
-													textStyle={{
-														fontSize: 16,
-														textAlign: 'center',
-													}}
-													title={item.title}
-												/>
-											)}
-										/>
-									</View>
-								)}
-							</View>
+				{search.trim() == '' && (
+					<>
+						<View>
+							{favoriteList?.length > 0 && (
+								<View>
+									<Text title3 bold style={[styles.title, styles.paddingView]}>
+										{'Your Stations'}
+									</Text>
+									<FlatList
+										horizontal={true}
+										showsHorizontalScrollIndicator={false}
+										data={favoriteList}
+										keyExtractor={(item) => item.id}
+										renderItem={({ item, index }) => (
+											<CardChannelGrid
+												onPress={() => onFMSelect(item, fmList)}
+												image={{ uri: item.artwork }}
+												style={{
+													paddingTop: 10,
+													width: Utils.scaleWithPixel(100),
+													height: Utils.scaleWithPixel(100),
+													alignItems: 'center',
+													justifyContent: 'center',
+												}}
+												imgStyle={{
+													width: Utils.scaleWithPixel(70),
+													height: Utils.scaleWithPixel(70),
+													borderWidth: 1,
+													borderColor: colors.border,
+												}}
+												textStyle={{
+													fontSize: 16,
+													textAlign: 'center',
+												}}
+												title={item.title}
+											/>
+										)}
+									/>
+								</View>
+							)}
+						</View>
 
-							<ChannelGrid
-								title={'Popular Stations'}
-								fmList={popularFms}
-								styles={styles}
-								onFMSelect={onFMSelect}
-							/>
+						<ChannelGrid
+							title={'Popular Stations'}
+							fmList={popularFms}
+							onFMSelect={onFMSelect}
+							loading={loading}
+							styles={styles}
+						/>
 
-							<ChannelGrid
-								title={'Recent Stations'}
-								fmList={recentFms}
-								styles={styles}
-								onFMSelect={onFMSelect}
-							/>
-						</>
-					)}
-				</ScrollView>
-			</View>
+						<ChannelGrid
+							title={'Recent Stations'}
+							fmList={recentFms}
+							onFMSelect={onFMSelect}
+							loading={loading}
+							styles={styles}
+						/>
+					</>
+				)}
+			</ScrollView>
 			{currentChannel != null && (
 				<BottomPlayer
 					isPlaying={isPlaying}

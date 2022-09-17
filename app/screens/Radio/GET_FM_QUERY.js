@@ -11,6 +11,8 @@ const GET_FM_QUERY = gql`
 				artist
 				artwork
 				province
+				popularity
+				isDisabled
 			}
 		}
 	}
