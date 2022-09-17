@@ -21,7 +21,7 @@ const trackPlayerInit = async () => {
 	await TrackPlayer.setupPlayer()
 	TrackPlayer.updateOptions({
 		stopWithApp: true,
-		capabilities: [Capability.Play, Capability.Pause, Capability.Skip, Capability.SkipToNext],
+		capabilities: [Capability.Play, Capability.Pause, Capability.Stop, Capability.Skip, Capability.SkipToNext],
 		compactCapabilities: [Capability.Play, Capability.Pause, Capability.Stop],
 	})
 }
@@ -50,6 +50,10 @@ const RadioScreen = (props) => {
 						pause()
 					})
 
+					TrackPlayer.addEventListener('remote-stop', () => {
+						stop()
+					})
+
 					TrackPlayer.addEventListener('remote-next', () => {
 						skipNext()
 					})
@@ -74,6 +78,11 @@ const RadioScreen = (props) => {
 
 	const pause = async () => {
 		await TrackPlayer.pause()
+	}
+
+	const stop = async () => {
+		setCurrentChannelId('')
+		await TrackPlayer.reset()
 	}
 
 	const skipNext = async () => {
