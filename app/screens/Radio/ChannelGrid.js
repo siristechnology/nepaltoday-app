@@ -26,8 +26,8 @@ const ChannelGrid = ({ title, fmList, onFMSelect, styles }) => {
 							onPress={() => onFMSelect(item)}
 							style={{
 								paddingTop: Utils.scaleWithPixel(10),
-								width: Utils.scaleWithPixel(100),
-								height: Utils.scaleWithPixel(100),
+								width: Utils.scaleWithPixel(110),
+								height: Utils.scaleWithPixel(110),
 								alignItems: 'center',
 								justifyContent: 'center',
 							}}

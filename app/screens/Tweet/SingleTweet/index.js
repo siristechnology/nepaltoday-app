@@ -41,10 +41,10 @@ const SingleTweet = (props) => {
 							<Text style={styles.marginVertical3}>{' ' + tweet.handle}</Text>
 						</View>
 
-						<Text numberOfLines={4} style={styles.marginVertical3}>
+						<Text variant="bodyLarge" numberOfLines={4} style={styles.marginVertical3}>
 							{tweet.text}
 						</Text>
-						<Text footnote grayColor style={styles.marginVertical3}>
+						<Text variant="bodySmall" style={styles.marginVertical3}>
 							{'१ घण्टा अघि'}
 						</Text>
 

@@ -26,8 +26,6 @@ const CardChannelGrid = ({ onPress, image, title, loading, style, imgStyle, text
 					<Text headline semibold numberOfLines={1} style={[styles.marginVertical3, textStyle]}>
 						{title}
 					</Text>
-
-					<View style={styles.contentRate} />
 				</View>
 			</>
 		</TouchableHighlight>
