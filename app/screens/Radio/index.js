@@ -36,7 +36,8 @@ const RadioScreen = (props) => {
 	const ref = useRef(null)
 	useScrollToTop(ref)
 	const [refreshing, setRefreshing] = useState(false)
-	const [favoriteList, setFavoriteList] = useState([])
+	const [favoriteFms, setFavoriteFms] = useState([])
+	const [recentFms, setRecentFms] = useState([])
 
 	useEffect(() => {
 		TrackPlayer.registerPlaybackService(
@@ -70,6 +71,7 @@ const RadioScreen = (props) => {
 		await TrackPlayer.add({ ...channel, type: 'default' })
 		await TrackPlayer.play()
 		setCurrentChannelId(channel.id)
+		RadioService.saveRecent(channel).then((fms) => setRecentFms(fms))
 	}
 
 	const play = async () => {
@@ -94,21 +96,22 @@ const RadioScreen = (props) => {
 	const onFavourite = () => {
 		const nid = auth().currentUser.uid
 		const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
-		const isFavorite = favoriteList.some((f) => f.id == currentChannel.id)
+		const isFavorite = favoriteFms.some((f) => f.id == currentChannel.id)
 
 		if (isFavorite) {
 			RadioService.deleteFavorite(nid, currentChannel.id).then((favList) => {
-				setFavoriteList(favList)
+				setFavoriteFms(favList)
 			})
 		} else {
 			RadioService.saveFavorite(nid, currentChannel).then((favList) => {
-				setFavoriteList(favList)
+				setFavoriteFms(favList)
 			})
 		}
 	}
 
 	useEffect(() => {
-		RadioService.getFavorites().then((fmList) => setFavoriteList(fmList))
+		RadioService.getFavorites().then((fmList) => setFavoriteFms(fmList))
+		RadioService.getRecents().then((fmList) => setRecentFms(fmList))
 	}, [])
 
 	useEffect(() => {
@@ -140,13 +143,12 @@ const RadioScreen = (props) => {
 	}
 
 	const currentChannel = fmList.filter((x) => x.id === currentChannelId)[0]
-	const iscurrentChannelFavorite = favoriteList?.some((f) => f.id == currentChannel?.id)
+	const iscurrentChannelFavorite = favoriteFms?.some((f) => f.id == currentChannel?.id)
 
 	const popularFms = fmList
 		.filter((fm) => fm.popularity != null)
 		.sort((a, b) => b.popularity - a.popularity)
 		.slice(0, 20)
-	const recentFms = fmList.slice(0, 10)
 
 	return (
 		<ScreenContainer navigation={navigation} handleRefresh={handleRefresh}>
@@ -164,7 +166,7 @@ const RadioScreen = (props) => {
 				{search.trim() == '' && (
 					<>
 						<View>
-							{favoriteList?.length > 0 && (
+							{favoriteFms?.length > 0 && (
 								<View>
 									<Text title3 bold style={[styles.title, styles.paddingView]}>
 										{'Your Stations'}
@@ -172,7 +174,7 @@ const RadioScreen = (props) => {
 									<FlatList
 										horizontal={true}
 										showsHorizontalScrollIndicator={false}
-										data={favoriteList}
+										data={favoriteFms}
 										keyExtractor={(item) => item.id}
 										renderItem={({ item, index }) => (
 											<CardChannelGrid

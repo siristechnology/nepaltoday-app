@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 const FAVORITE_FMS = 'FAVORITE_FMS'
+const RECENT_FMS = 'RECENT_FMS'
 
 class RadioService {
 	getFavorites = async (nid) => {
@@ -29,6 +30,22 @@ class RadioService {
 		AsyncStorage.setItem(FAVORITE_FMS, JSON.stringify(allFavFms))
 
 		return allFavFms
+	}
+
+	getRecents = async (nid) => {
+		const savedRecentFmStr = await AsyncStorage.getItem(RECENT_FMS)
+		const savedRecentFms = savedRecentFmStr != null ? JSON.parse(savedRecentFmStr) : []
+		return savedRecentFms
+	}
+
+	saveRecent = async (fm) => {
+		const savedRecentFmStr = await AsyncStorage.getItem(RECENT_FMS)
+		const savedRecentFms = savedRecentFmStr != null ? JSON.parse(savedRecentFmStr) : []
+
+		const allRecentFms = [fm].concat(savedRecentFms.filter((f) => f.id != fm.id)).slice(-20)
+
+		AsyncStorage.setItem(RECENT_FMS, JSON.stringify(allRecentFms))
+		return allRecentFms
 	}
 }
 
