@@ -1,5 +1,4 @@
 import Image from '@components/Image'
-import StarRating from '@components/StarRating'
 import Tag from '@components/Tag'
 import Text from '@components/Text'
 import { BaseColor } from '@config'
@@ -24,14 +23,6 @@ const CardList = (props) => {
 					<Tag onPress={onPressTag} rateSmall style={{ marginRight: 5 }}>
 						{rate}
 					</Tag>
-					<StarRating
-						disabled={true}
-						starSize={10}
-						maxStars={5}
-						rating={rate}
-						selectedStar={onPressTag}
-						fullStarColor={BaseColor.yellowColor}
-					/>
 				</View>
 			</View>
 		</TouchableOpacity>
