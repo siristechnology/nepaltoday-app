@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { Animated, I18nManager, ScrollView, Share, View } from 'react-native'
-import { Button, Header, Image, SafeAreaView, Tag, PlaceholderLine, Placeholder } from '@components'
+import { Button, Header, Image, SafeAreaView, Tag } from '@components'
 import ProfileAuthor from '@components/Profile/Author'
 import { BaseColor, BaseStyle, useTheme, Images } from '@config'
 import * as Utils from '@utils'
@@ -13,16 +13,9 @@ const PostDetail = (props) => {
 	const { navigation, route } = props
 	const { colors } = useTheme()
 	const article = route?.params?.article
-	const [loading, setLoading] = useState(true)
 	const [heightHeader, setHeightHeader] = useState(Utils.heightHeader())
 	const scrollY = useRef(new Animated.Value(0)).current
 	const { imageLink, title, source, createdDate, content } = article
-
-	useEffect(() => {
-		setTimeout(() => {
-			setLoading(false)
-		}, 100)
-	}, [])
 
 	const onShare = async () => {
 		const { link } = article
@@ -61,21 +54,7 @@ const PostDetail = (props) => {
 		props.navigation.navigate('ArticleWeb', { article })
 	}
 
-	const renderPlaceholder = () => {
-		const holders = Array.from(Array(5))
-
-		return (
-			<Placeholder>
-				<View style={{ padding: 20 }}>
-					{holders.map((item, index) => (
-						<PlaceholderLine key={index} width={100} />
-					))}
-				</View>
-			</Placeholder>
-		)
-	}
-
-	const renderContent = () => {
+	const ArticleContent = () => {
 		return (
 			<Fragment>
 				<View style={styles.contentDescription}>
@@ -155,7 +134,7 @@ const PostDetail = (props) => {
 						<Text variant="bodySmall">{getRelativeTime(createdDate)}</Text>
 					</View>
 
-					{loading ? renderPlaceholder() : renderContent()}
+					<ArticleContent />
 				</ScrollView>
 			</SafeAreaView>
 			<Animated.View
