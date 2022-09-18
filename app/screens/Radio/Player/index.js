@@ -1,46 +1,40 @@
 import React from 'react'
 import { View } from 'react-native'
+import { Text } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import { BaseColor } from '@config'
-import { Text, Image } from '@components'
+import { Image, PlaceholderLine, Placeholder } from '@components'
 import styles from './styles'
-// import Loading from './Loading'
 import PlayerButton from './Button'
+import { State } from 'react-native-track-player'
 
-const BottomPlayer = ({
-	initSuccess,
-	currentChannel,
-	isPlaying,
-	onPlay,
-	onPause,
-	onSkipNext,
-	isFavourite,
-	onFavourite,
-}) => {
-	// if (!initSuccess) {
-	// 	return <Loading />
-	// }
-
+const BottomPlayer = ({ currentChannel, playerState, onPlay, onPause, onSkipNext, isFavourite, onFavourite }) => {
 	return (
 		<View style={[styles.container]}>
 			<View style={styles.contain} activeOpacity={0.9}>
 				<Image source={{ uri: currentChannel.artwork }} style={styles.imageStation} />
-				<View style={{ paddingLeft: 10, flex: 1 }}>
-					<Text headline semibold numberOfLines={1} style={styles.marginVertical3}>
+				<View style={{ paddingLeft: 10, flex: 1, justifyContent: 'flex-start', minHeight: 60 }}>
+					<Text variant="titleMedium" numberOfLines={1} style={styles.marginVertical3}>
 						{currentChannel.title}
 					</Text>
-					<Text footnote semibold grayColor style={styles.marginVertical3}>
-						{currentChannel.province}
-					</Text>
+					{[State.Playing, State.Paused].indexOf(playerState) == -1 && (
+						<Placeholder>
+							<PlaceholderLine width={80} />
+						</Placeholder>
+					)}
+					{[State.Playing, State.Paused].indexOf(playerState) != -1 && (
+						<Text variant="bodySmall">{currentChannel.province}</Text>
+					)}
 				</View>
 				<View style={styles.playerBtns}>
 					{(!isFavourite && <PlayerButton name="star" onAction={onFavourite} />) || (
 						<PlayerButton name="star" onAction={onFavourite} style={{ color: BaseColor.yellowColor }} />
 					)}
 
-					{(isPlaying && <PlayerButton name="pause-circle" onAction={onPause} />) || (
-						<PlayerButton name="play-circle" onAction={onPlay} />
-					)}
+					{(playerState == State.Playing && <PlayerButton name="pause-circle" onAction={onPause} />) ||
+						(playerState == State.Paused && <PlayerButton name="play-circle" onAction={onPlay} />) || (
+							<PlayerButton name="circle" onAction={onPlay} />
+						)}
 					<PlayerButton name="step-forward" onAction={onSkipNext} />
 				</View>
 			</View>

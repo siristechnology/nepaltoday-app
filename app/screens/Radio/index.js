@@ -29,7 +29,8 @@ const trackPlayerInit = async () => {
 const RadioScreen = (props) => {
 	const navigation = useNavigation()
 	const appState = useSelector((state) => state.appState.value)
-	const [isPlaying, setIsPlaying] = useState(false)
+	// const [isPlaying, setIsPlaying] = useState(false)
+	const [playerState, setPlayerState] = useState()
 	const [currentChannelId, setCurrentChannelId] = useState('')
 	const [search, setSearch] = useState('')
 	const { colors } = useTheme()
@@ -130,11 +131,7 @@ const RadioScreen = (props) => {
 	const fmList = data?.getMyFm?.allFm.filter((fm) => !fm.isDisabled) || []
 
 	useTrackPlayerEvents([Event.PlaybackState], (event) => {
-		if (event.state === State.Playing) {
-			setIsPlaying(true)
-		} else {
-			setIsPlaying(false)
-		}
+		setPlayerState(event.state)
 	})
 
 	const handleRefresh = () => {
@@ -225,7 +222,7 @@ const RadioScreen = (props) => {
 			</ScrollView>
 			{currentChannel != null && (
 				<BottomPlayer
-					isPlaying={isPlaying}
+					playerState={playerState}
 					currentChannel={currentChannel}
 					onPlay={play}
 					onPause={pause}
