@@ -2,14 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Animated, RefreshControl, View } from 'react-native'
 import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import crashlytics from '@react-native-firebase/crashlytics'
-import { Text, News169, TabSlider, SafeAreaView } from '@components'
-import { BaseStyle, useTheme } from '@config'
+import { Text, News169, TabSlider } from '@components'
+import { useTheme } from '@config'
 import { SceneMap } from 'react-native-tab-view'
 import { useLazyQuery } from '@apollo/client'
 import GET_ARTICLES_QUERY from './GET_ARTICLES_QUERY'
 import { fetchCategoryArticlesfromAsync, storeCategoryArticlestoAsync } from '../../helper/cacheStorage'
 import ScreenContainer from '../ScreenContainer/Index'
-import styles from './styles'
 
 const NewsCategory = () => {
 	const navigation = useNavigation()
@@ -23,6 +22,10 @@ const NewsCategory = () => {
 	const [fetchNews, { loading, data, refetch, error }] = useLazyQuery(GET_ARTICLES_QUERY, {
 		variables: {},
 	})
+
+	if (error) {
+		crashlytics().recordError(new Error(error))
+	}
 
 	const handleRefresh = () => {
 		setRefreshing(true)
@@ -41,23 +44,20 @@ const NewsCategory = () => {
 	}
 
 	useEffect(() => {
-		fetchArticlesFromAsyncStorage()
-		fetchNews()
+		fetchArticlesFromAsyncStorage().then(() => {
+			fetchNews()
+		})
 	}, [fetchNews])
 
 	useEffect(() => {
 		const categoryArticles = data?.getArticles || localArticles.getArticles
 		const sortedArticles = categoryArticles.slice().sort((a, b) => b.createdDate - a.createdDate)
 		setArticles(sortedArticles)
+
+		if (!loading && data?.getArticles?.length) {
+			storeCategoryArticlestoAsync(data.getArticles)
+		}
 	}, [loading, data, localArticles])
-
-	if (error) {
-		crashlytics().recordError(new Error(error))
-	}
-
-	if (!loading && data?.getArticles?.length) {
-		storeCategoryArticlestoAsync(data.getArticles)
-	}
 
 	const goPostDetail = (article) => () => {
 		navigation.navigate('PostDetail', { article: article })

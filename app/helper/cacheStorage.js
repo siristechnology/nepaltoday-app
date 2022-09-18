@@ -48,10 +48,4 @@ const removeAsync = () => {
 	AsyncStorage.removeItem(ASYNC_NAME)
 }
 
-export {
-	storetoAsync,
-	storeCategoryArticlestoAsync,
-	fetchfromAsync,
-	fetchCategoryArticlesfromAsync,
-	removeAsync,
-}
+export { storetoAsync, storeCategoryArticlestoAsync, fetchfromAsync, fetchCategoryArticlesfromAsync, removeAsync }

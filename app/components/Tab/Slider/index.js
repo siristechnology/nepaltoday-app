@@ -39,7 +39,7 @@ const TabSlider = (props) => {
 		/>
 	)
 
-	return <TabView scrollEnabled={true} initialLayout={initialLayout} renderTabBar={renderTabBar} {...props} />
+	return <TabView lazy scrollEnabled={true} initialLayout={initialLayout} renderTabBar={renderTabBar} {...props} />
 }
 
 export default TabSlider
