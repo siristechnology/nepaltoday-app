@@ -3,8 +3,9 @@ import { TouchableHighlight, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { useTheme } from '@config'
 import styles from './styles'
+import { ActivityIndicator } from 'react-native-paper'
 
-const PlayerButton = ({ name, onAction, style }) => {
+const PlayerButton = ({ name, onAction, style, isloading }) => {
 	const { colors } = useTheme()
 
 	return (
@@ -15,7 +16,8 @@ const PlayerButton = ({ name, onAction, style }) => {
 			style={[styles.btnAction]}
 		>
 			<View style={[styles.btnAction]}>
-				<Icon name={name} size={35} style={[styles.icon, style]} />
+				{!isloading && <Icon name={name} size={35} style={[styles.icon, style]} />}
+				{isloading && <ActivityIndicator color={styles.icon.color} size={35} style={[styles.icon, style]} />}
 			</View>
 		</TouchableHighlight>
 	)

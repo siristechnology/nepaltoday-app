@@ -45,7 +45,8 @@ export default StyleSheet.create({
 	btnAction: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderRadius: 12,
-		margin: 4,
+		borderRadius: Utils.scaleWithPixel(10),
+		margin: Utils.scaleWithPixel(2),
+		minWidth: Utils.scaleWithPixel(20),
 	},
 })

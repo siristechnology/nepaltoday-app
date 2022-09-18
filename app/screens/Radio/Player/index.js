@@ -33,7 +33,7 @@ const BottomPlayer = ({ currentChannel, playerState, onPlay, onPause, onSkipNext
 
 					{(playerState == State.Playing && <PlayerButton name="pause-circle" onAction={onPause} />) ||
 						(playerState == State.Paused && <PlayerButton name="play-circle" onAction={onPlay} />) || (
-							<PlayerButton name="circle" onAction={onPlay} />
+							<PlayerButton isloading={true} />
 						)}
 					<PlayerButton name="step-forward" onAction={onSkipNext} />
 				</View>
