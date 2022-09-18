@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { FlatList, ScrollView, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import TrackPlayer, { Capability, Event, useTrackPlayerEvents } from 'react-native-track-player'
 import auth from '@react-native-firebase/auth'
-import { useTheme } from '@config'
-import * as Utils from '@utils'
-import { CardChannelGrid, Text } from '@components'
+import { Text } from '@components'
 import RadioService from './radio.services'
 import SearchBox from './SearchBox'
 import styles from './styles'
@@ -32,7 +30,6 @@ const RadioScreen = (props) => {
 	const [playerState, setPlayerState] = useState()
 	const [currentChannelId, setCurrentChannelId] = useState('')
 	const [search, setSearch] = useState('')
-	const { colors } = useTheme()
 	const [refreshing, setRefreshing] = useState(false)
 	const [favoriteFms, setFavoriteFms] = useState([])
 	const [recentFms, setRecentFms] = useState([])

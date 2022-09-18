@@ -7,11 +7,11 @@ import styles from './styles'
 import Loading from './Loading'
 import { Text } from 'react-native-paper'
 
-const CardChannelGrid = ({ onPress, image, title, loading, style, imgStyle, textStyle }) => {
+const CardChannelGrid = ({ onPress, image, title, loading, style, imgStyle }) => {
 	const { colors } = useTheme()
 
 	if (loading) {
-		return <Loading style={style} />
+		return <Loading style={style} imgStyle={imgStyle} />
 	}
 
 	return (

@@ -20,6 +20,6 @@ export default StyleSheet.create({
 		borderRadius: 8,
 	},
 	loading: {
-		width: Utils.scaleWithPixel(100),
+		width: Utils.scaleWithPixel(110),
 	},
 })
