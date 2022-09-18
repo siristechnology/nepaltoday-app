@@ -27,6 +27,10 @@ const Home = (props) => {
 		variables: {},
 	})
 
+	if (error) {
+		crashlytics().recordError(new Error(error))
+	}
+
 	const handleRefresh = useCallback(async () => {
 		setRefreshing(true)
 		try {
@@ -85,12 +89,7 @@ const Home = (props) => {
 		storetoAsync(myArticles)
 	}
 
-	if (error) {
-		crashlytics().recordError(new Error(error))
-	}
-
-	const dataArticles = (data && data.getArticles) || []
-
+	const dataArticles = data?.getArticles || []
 	const homeArticles = (dataArticles.length && dataArticles) || localArticles.getArticles
 
 	const topHeadline = homeArticles.find((a) => a.category === 'headline') || homeArticles[0]

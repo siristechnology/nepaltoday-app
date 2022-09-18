@@ -42,7 +42,7 @@ class RadioService {
 		const savedRecentFmStr = await AsyncStorage.getItem(RECENT_FMS)
 		const savedRecentFms = savedRecentFmStr != null ? JSON.parse(savedRecentFmStr) : []
 
-		const allRecentFms = [fm].concat(savedRecentFms.filter((f) => f.id != fm.id)).slice(-20)
+		const allRecentFms = [fm].concat(savedRecentFms.filter((f) => f.id != fm.id)).slice(0, 20)
 
 		AsyncStorage.setItem(RECENT_FMS, JSON.stringify(allRecentFms))
 		return allRecentFms

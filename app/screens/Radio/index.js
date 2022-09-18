@@ -29,16 +29,15 @@ const trackPlayerInit = async () => {
 const RadioScreen = (props) => {
 	const navigation = useNavigation()
 	const appState = useSelector((state) => state.appState.value)
-	// const [isPlaying, setIsPlaying] = useState(false)
 	const [playerState, setPlayerState] = useState()
 	const [currentChannelId, setCurrentChannelId] = useState('')
 	const [search, setSearch] = useState('')
 	const { colors } = useTheme()
-	const ref = useRef(null)
-	useScrollToTop(ref)
 	const [refreshing, setRefreshing] = useState(false)
 	const [favoriteFms, setFavoriteFms] = useState([])
 	const [recentFms, setRecentFms] = useState([])
+	const ref = useRef(null)
+	useScrollToTop(ref)
 
 	useEffect(() => {
 		TrackPlayer.registerPlaybackService(
@@ -210,13 +209,15 @@ const RadioScreen = (props) => {
 							styles={styles}
 						/>
 
-						<ChannelGrid
-							title={'Recent Stations'}
-							fmList={recentFms}
-							onFMSelect={onFMSelect}
-							loading={loading}
-							styles={styles}
-						/>
+						{recentFms.length > 0 && (
+							<ChannelGrid
+								title={'Recent Stations'}
+								fmList={recentFms}
+								onFMSelect={onFMSelect}
+								loading={loading}
+								styles={styles}
+							/>
+						)}
 					</>
 				)}
 			</ScrollView>
