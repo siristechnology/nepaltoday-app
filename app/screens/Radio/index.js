@@ -163,41 +163,12 @@ const RadioScreen = (props) => {
 					<>
 						<View>
 							{favoriteFms?.length > 0 && (
-								<View>
-									<Text title3 bold style={[styles.title, styles.paddingView]}>
-										{'Your Stations'}
-									</Text>
-									<FlatList
-										horizontal={true}
-										showsHorizontalScrollIndicator={false}
-										data={favoriteFms}
-										keyExtractor={(item) => item.id}
-										renderItem={({ item, index }) => (
-											<CardChannelGrid
-												onPress={() => onFMSelect(item, fmList)}
-												image={{ uri: item.artwork }}
-												style={{
-													paddingTop: 10,
-													width: Utils.scaleWithPixel(100),
-													height: Utils.scaleWithPixel(100),
-													alignItems: 'center',
-													justifyContent: 'center',
-												}}
-												imgStyle={{
-													width: Utils.scaleWithPixel(70),
-													height: Utils.scaleWithPixel(70),
-													borderWidth: 1,
-													borderColor: colors.border,
-												}}
-												textStyle={{
-													fontSize: 16,
-													textAlign: 'center',
-												}}
-												title={item.title}
-											/>
-										)}
-									/>
-								</View>
+								<ChannelGrid
+									title={'Your Stations'}
+									fmList={favoriteFms}
+									onFMSelect={onFMSelect}
+									styles={styles}
+								/>
 							)}
 						</View>
 

@@ -26,7 +26,7 @@ const SearchBox = ({ search, setSearch }) => {
 	}, [])
 
 	return (
-		<View style={[BaseStyle.container, { flexDirection: 'row', alignItems: 'center' }]}>
+		<View style={[BaseStyle.container, { flexDirection: 'row', alignItems: 'center', paddingBottom: 0 }]}>
 			<TextInput
 				style={[BaseStyle.textInput, Typography.body1, { flex: 1 }]}
 				onChangeText={onChangeText}

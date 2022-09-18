@@ -9,4 +9,5 @@ export default StyleSheet.create({
 		marginVertical: 24,
 	},
 	title: { marginBottom: 5 },
+	channelGrid: { marginTop: 20 },
 })

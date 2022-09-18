@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, AppState, Image, Share, View } from 'react-native'
+import React from 'react'
+import { ActivityIndicator, Image, Share, View } from 'react-native'
+import { useSelector } from 'react-redux'
 import { WebView } from 'react-native-webview'
 import { Header, SafeAreaView } from '@components'
 import { BaseStyle, Images } from '@config'
@@ -10,7 +11,7 @@ const ArticleWeb = (props) => {
 	const { navigation, route } = props
 	const article = route?.params?.article
 	const { link, title } = article
-	const [appState, setAppState] = useState(AppState.currentState)
+	const appState = useSelector((state) => state.appState.value)
 
 	const onShare = async () => {
 		Share.share({
@@ -18,17 +19,6 @@ const ArticleWeb = (props) => {
 			url: link,
 			title: title,
 		})
-	}
-
-	useEffect(() => {
-		const eventSubs = AppState.addEventListener('change', updateAppState)
-		return () => {
-			eventSubs && eventSubs.remove(updateAppState)
-		}
-	}, [])
-
-	const updateAppState = (nextAppState) => {
-		setAppState(nextAppState)
 	}
 
 	if (appState != 'active') {

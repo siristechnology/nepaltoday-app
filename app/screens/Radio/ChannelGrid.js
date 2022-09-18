@@ -8,7 +8,7 @@ const ChannelGrid = ({ title, fmList, onFMSelect, styles, loading }) => {
 	const { colors } = useTheme()
 
 	return (
-		<View style={[{ marginTop: 20 }]}>
+		<View style={styles.channelGrid}>
 			<Text title3 bold style={[styles.title, styles.paddingView]}>
 				{title}
 			</Text>
@@ -37,7 +37,6 @@ const ChannelGrid = ({ title, fmList, onFMSelect, styles, loading }) => {
 								borderWidth: 1,
 								borderColor: colors.border,
 							}}
-							textStyle={{ fontSize: 16, textAlign: 'center' }}
 							loading={loading}
 							image={{ uri: item.artwork }}
 							title={item.title}

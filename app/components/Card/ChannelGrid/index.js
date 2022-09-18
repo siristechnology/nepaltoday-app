@@ -1,10 +1,11 @@
 import React from 'react'
 import { TouchableHighlight, View } from 'react-native'
 import { useTheme } from '@config'
-import { Image, Text } from '@components'
+import { Image } from '@components'
 import PropTypes from 'prop-types'
 import styles from './styles'
 import Loading from './Loading'
+import { Text } from 'react-native-paper'
 
 const CardChannelGrid = ({ onPress, image, title, loading, style, imgStyle, textStyle }) => {
 	const { colors } = useTheme()
@@ -23,7 +24,7 @@ const CardChannelGrid = ({ onPress, image, title, loading, style, imgStyle, text
 			<>
 				<Image source={image} style={[styles.imageWishlist, imgStyle]} />
 				<View>
-					<Text headline semibold numberOfLines={1} style={[styles.marginVertical3, textStyle]}>
+					<Text variant="bodyMedium" numberOfLines={1} style={[styles.marginVertical3]}>
 						{title}
 					</Text>
 				</View>
