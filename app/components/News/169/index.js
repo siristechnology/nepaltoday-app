@@ -8,9 +8,9 @@ import Loading from './Loading'
 import { getRelativeTime } from '../../../helper/time'
 
 const News169 = (props) => {
-	const { article, style, onPress, loading } = props
+	const { article, style, onPress } = props
 
-	if (loading || !article) {
+	if (!article) {
 		return <Loading style={style} />
 	}
 

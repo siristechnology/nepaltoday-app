@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { Animated, I18nManager, ScrollView, Share, TouchableOpacity, View } from 'react-native'
-import { Button, Header, Image, SafeAreaView, Tag, Text, PlaceholderLine, Placeholder } from '@components'
+import { Animated, I18nManager, ScrollView, Share, View } from 'react-native'
+import { Button, Header, Image, SafeAreaView, Tag, PlaceholderLine, Placeholder } from '@components'
 import ProfileAuthor from '@components/Profile/Author'
 import { BaseColor, BaseStyle, useTheme, Images } from '@config'
 import * as Utils from '@utils'
 import { getRelativeTime } from '../../helper/time'
 import styles from './styles'
+import { Text } from 'react-native-paper'
 export const NEPALTODAY_URL = 'https://tinyurl.com/NepalTodayApp'
 
 const PostDetail = (props) => {
@@ -20,7 +21,7 @@ const PostDetail = (props) => {
 	useEffect(() => {
 		setTimeout(() => {
 			setLoading(false)
-		}, 1000)
+		}, 100)
 	}, [])
 
 	const onShare = async () => {
@@ -79,9 +80,8 @@ const PostDetail = (props) => {
 			<Fragment>
 				<View style={styles.contentDescription}>
 					<Text
-						body1
+						variant="bodyLarge"
 						style={{
-							lineHeight: 20,
 							paddingTop: 10,
 							paddingBottom: 20,
 						}}
@@ -149,12 +149,10 @@ const PostDetail = (props) => {
 							paddingHorizontal: 20,
 						}}
 					>
-						<Text medium caption1 grayColor>
-							{getRelativeTime(createdDate)}
-						</Text>
-						<Text title1 semibold style={{ marginTop: 10 }}>
+						<Text variant="titleLarge" style={{ marginTop: 10 }}>
 							{title}
 						</Text>
+						<Text variant="bodySmall">{getRelativeTime(createdDate)}</Text>
 					</View>
 
 					{loading ? renderPlaceholder() : renderContent()}
@@ -170,12 +168,9 @@ const PostDetail = (props) => {
 				]}
 			>
 				<Image source={{ uri: imageLink }} style={{ height: '100%', width: '100%' }} />
-				<TouchableOpacity
-					style={[styles.viewIcon, { backgroundColor: colors.primaryLight }]}
-					onPress={() => console.log('Your code')}
-				>
+				<View style={[styles.viewIcon, { backgroundColor: colors.primaryLight }]}>
 					<ProfileAuthor image={{ uri: source.logoLink }} size={20} />
-				</TouchableOpacity>
+				</View>
 			</Animated.View>
 			<Animated.View style={[styles.headerStyle, { position: 'absolute' }]}>
 				<SafeAreaView style={{ width: '100%' }} forceInset={{ top: 'always', bottom: 'never' }}>

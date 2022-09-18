@@ -19,7 +19,10 @@ const Home = (props) => {
 	const [nepaliDate, setNepaliDate] = useState('')
 	const [refreshing, setRefreshing] = useState(false)
 	const [home_page_load_time, setHome_page_load_time] = useState()
-	const [localArticles, setLocalArticles] = useState({ getArticles: [] })
+	const [localArticles, setLocalArticles] = useState([])
+	const [homeArticles, setHomeArticles] = useState([])
+	const [topHeadline, setTopHeadline] = useState()
+
 	const ref = useRef(null)
 	useScrollToTop(ref)
 
@@ -46,7 +49,7 @@ const Home = (props) => {
 	const fetchArticlesFromAsyncStorage = async () => {
 		fetchfromAsync()
 			.then((res) => {
-				setLocalArticles({ getArticles: res })
+				setLocalArticles(res)
 			})
 			.catch((err) => {
 				crashlytics().recordError(err)
@@ -63,40 +66,47 @@ const Home = (props) => {
 	}, [])
 
 	useEffect(() => {
-		if (!loading) {
+		if (localArticles) {
 			home_page_load_time && home_page_load_time.stop()
 		}
-	}, [home_page_load_time, loading])
+	}, [home_page_load_time, localArticles])
 
 	useEffect(() => {
-		fetchArticlesFromAsyncStorage()
-			.then(() => {
-				fetchNews()
-			})
-			.then(() => {
-				const article = props.route.params?.article
-				if (article && article.source) {
-					props.navigation.navigate('ArticleDetail', { article, articles: [article] })
-				}
-			})
+		fetchArticlesFromAsyncStorage().then(() => {
+			fetchNews()
+		})
 		getFormattedCurrentNepaliDate().then((npDate) => {
 			setNepaliDate(npDate)
 		})
 	}, [fetchNews])
 
-	if (!loading && data != null && data.getArticles && data.getArticles.length) {
-		const myArticles = data.getArticles
-		storetoAsync(myArticles)
-	}
+	useEffect(() => {
+		const article = props.route.params?.article
+		if (article && article.source) {
+			props.navigation.navigate('ArticleDetail', { article, articles: [article] })
+		}
+	}, [props.navigation, props.route.params?.article])
 
-	const dataArticles = data?.getArticles || []
-	const homeArticles = (dataArticles.length && dataArticles) || localArticles.getArticles
+	useEffect(() => {
+		if (!loading && data?.getArticles?.length) {
+			const myArticles = data.getArticles
+			storetoAsync(myArticles)
+		}
+	}, [data?.getArticles, loading])
 
-	const topHeadline = homeArticles.find((a) => a.category === 'headline') || homeArticles[0]
-	const topNews = homeArticles
-		.filter((a) => a._id !== topHeadline._id)
-		.sort((a, b) => b.totalWeight - a.totalWeight)
-		.slice(0, 100)
+	useEffect(() => {
+		const articles = data?.getArticles?.length ? data.getArticles : localArticles
+
+		const topArticle = articles.find((a) => a.category === 'headline') || articles[0]
+		setTopHeadline(topArticle)
+
+		const sortedArticles = articles
+			.filter((a) => a._id !== topArticle._id)
+			.sort((a, b) => b.totalWeight - a.totalWeight)
+			.slice(0, 100)
+
+		setHomeArticles(sortedArticles)
+	}, [data?.getArticles, loading, localArticles])
 
 	const entertainmentArticles = homeArticles.filter((x) => x.category == 'entertainment') || []
 
@@ -104,13 +114,37 @@ const Home = (props) => {
 		navigation.navigate('PostDetail', { article: article })
 	}
 
+	const renderNewsItem = ({ item, index }) => (
+		<NewsList
+			key={item?._id || index}
+			article={item}
+			style={{
+				marginBottom: index == homeArticles.slice(3).length - 1 ? 0 : 15,
+			}}
+			onPress={goPostDetail(item)}
+		/>
+	)
+
+	const renderCardSlide = ({ item, index }) => (
+		<CardSlide
+			key={item._id}
+			article={item}
+			onPress={goPostDetail(item)}
+			style={{
+				marginRight: index == entertainmentArticles.length - 1 ? 0 : 15,
+			}}
+		/>
+	)
+
 	return (
 		<ScreenContainer navigation={navigation} scrollRef={ref} handleRefresh={handleRefresh}>
 			<FlatList
 				ref={ref}
 				contentContainerStyle={{ ...styles.paddingSrollView, paddingTop: 4 }}
-				data={topNews.slice(3)}
+				data={homeArticles.slice(3)}
 				keyExtractor={(item) => item._id}
+				initialNumToRender={3}
+				maxToRenderPerBatch={3}
 				ListHeaderComponent={
 					<>
 						<View style={{ paddingBottom: 10 }}>
@@ -120,10 +154,10 @@ const Home = (props) => {
 							<Weather />
 						</View>
 
-						<News169 article={topHeadline} loading={loading} onPress={goPostDetail(topHeadline)} />
+						<News169 article={topHeadline} onPress={goPostDetail(topHeadline)} />
 
 						<View style={styles.paddingFlatList}>
-							{topNews.slice(0, 3).map((item, index) => {
+							{homeArticles.slice(0, 3).map((item, index) => {
 								return (
 									<NewsList
 										key={item._id}
@@ -148,31 +182,11 @@ const Home = (props) => {
 							showsHorizontalScrollIndicator={false}
 							data={entertainmentArticles}
 							keyExtractor={(item) => item._id}
-							renderItem={({ item, index }) => (
-								<CardSlide
-									key={item._id}
-									article={item}
-									loading={loading}
-									onPress={goPostDetail(item)}
-									style={{
-										marginRight: index == entertainmentArticles.length - 1 ? 0 : 15,
-									}}
-								/>
-							)}
+							renderItem={renderCardSlide}
 						/>
 					</>
 				}
-				renderItem={({ item, index }) => (
-					<NewsList
-						key={item._id}
-						article={item}
-						loading={loading}
-						style={{
-							marginBottom: index == topNews.slice(3).length - 1 ? 0 : 15,
-						}}
-						onPress={goPostDetail(item)}
-					/>
-				)}
+				renderItem={renderNewsItem}
 				refreshControl={
 					<RefreshControl
 						refreshing={refreshing}

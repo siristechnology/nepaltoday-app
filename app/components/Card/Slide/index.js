@@ -8,9 +8,10 @@ import Loading from './Loading'
 import { getRelativeTime } from '../../../helper/time'
 
 const CardSlide = (props) => {
-	const { article, style, onPress, loading } = props
+	const { article, style, onPress } = props
 	const { colors } = useTheme()
-	if (loading && !article) {
+
+	if (!article) {
 		return <Loading style={style} />
 	}
 	return (
