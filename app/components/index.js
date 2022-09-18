@@ -42,7 +42,6 @@ export { default as HeaderText } from './Header/Text'
 // Common components
 export { default as Text } from './Text'
 export { default as Button } from './Button'
-export { default as Tag } from './Tag'
 export { default as Icon } from './Icon'
 export { default as Image } from './Image'
 export { default as CheckBox } from './CheckBox'
@@ -53,16 +52,6 @@ export { PlaceholderLine, Placeholder } from './Placeholder'
 
 // Tab
 export { default as TabSlider } from './Tab/Slider'
-export { default as TabTag } from './Tab/Tag'
-
-// Title
-export { default as TitleFintech } from './Title/Fintech'
-
-// Progress
-export { default as ProgressBar } from './Progress/Bar'
-export { default as ProgressCircle } from './Progress/Circle'
 
 // TextInput
 export { default as TextInput } from './TextInput'
-
-export { default as NotFound } from './NotFound'
