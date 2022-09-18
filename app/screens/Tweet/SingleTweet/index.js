@@ -10,7 +10,7 @@ const SingleTweet = (props) => {
 	const { tweet, style, loading } = props
 	const { colors } = useTheme()
 
-	if (loading || !tweet) {
+	if (loading || !tweet._id) {
 		return <Loading style={style} />
 	}
 
@@ -23,36 +23,34 @@ const SingleTweet = (props) => {
 	}
 
 	return (
-		<>
-			<View style={[styles.container, style]}>
-				<View style={styles.contain} activeOpacity={0.9}>
-					<TouchableHighlight
-						activeOpacity={0.6}
-						underlayColor={colors.border}
-						onPress={handleTwitterHandlePress}
-					>
-						<Image source={{ uri: tweet.profileImage }} style={styles.thumb} />
-					</TouchableHighlight>
-					<View style={{ paddingLeft: 10, flex: 1 }}>
-						<View style={{ flexDirection: 'row' }}>
-							<Text variant="titleMedium" style={styles.marginVertical3}>
-								{tweet.name}
-							</Text>
-							<Text style={styles.marginVertical3}>{' ' + tweet.handle}</Text>
-						</View>
-
-						<Text variant="bodyLarge" numberOfLines={4} style={styles.marginVertical3}>
-							{tweet.text}
+		<View style={[styles.container, style]}>
+			<View style={styles.contain} activeOpacity={0.9}>
+				<TouchableHighlight
+					activeOpacity={0.6}
+					underlayColor={colors.border}
+					onPress={handleTwitterHandlePress}
+				>
+					<Image source={{ uri: tweet.profileImage }} style={styles.thumb} />
+				</TouchableHighlight>
+				<View style={{ paddingLeft: 10, flex: 1 }}>
+					<View style={{ flexDirection: 'row' }}>
+						<Text variant="titleMedium" style={styles.marginVertical3}>
+							{tweet.name}
 						</Text>
-						<Text variant="bodySmall" style={styles.marginVertical3}>
-							{'१ घण्टा अघि'}
-						</Text>
-
-						<View style={styles.contentRate} />
+						<Text style={styles.marginVertical3}>{' ' + tweet.handle}</Text>
 					</View>
+
+					<Text variant="bodyLarge" numberOfLines={4} style={styles.marginVertical3}>
+						{tweet.text}
+					</Text>
+					<Text variant="bodySmall" style={styles.marginVertical3}>
+						{'१ घण्टा अघि'}
+					</Text>
+
+					<View style={styles.contentRate} />
 				</View>
 			</View>
-		</>
+		</View>
 	)
 }
 

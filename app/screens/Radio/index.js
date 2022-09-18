@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FlatList, ScrollView, View } from 'react-native'
 import { useNavigation, useScrollToTop } from '@react-navigation/native'
-import TrackPlayer, { Capability, Event, State, useTrackPlayerEvents } from 'react-native-track-player'
+import TrackPlayer, { Capability, Event, useTrackPlayerEvents } from 'react-native-track-player'
 import auth from '@react-native-firebase/auth'
 import { useTheme } from '@config'
 import * as Utils from '@utils'
@@ -203,7 +203,7 @@ const RadioScreen = (props) => {
 
 						<ChannelGrid
 							title={'Popular Stations'}
-							fmList={popularFms}
+							fmList={popularFms?.length ? popularFms : [{ id: 'loading1' }, { id: 'loading2' }]}
 							onFMSelect={onFMSelect}
 							loading={loading}
 							styles={styles}
@@ -214,7 +214,6 @@ const RadioScreen = (props) => {
 								title={'Recent Stations'}
 								fmList={recentFms}
 								onFMSelect={onFMSelect}
-								loading={loading}
 								styles={styles}
 							/>
 						)}

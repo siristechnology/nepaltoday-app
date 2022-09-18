@@ -29,7 +29,7 @@ const TweetScreen = () => {
 		crashlytics().recordError(new Error('Twitter Api error' + error.message))
 	}
 
-	const tweets = data?.getTweets || []
+	const tweets = data?.getTweets || [{ _id: 'loading1' }, { _id: 'loading2' }, { _id: 'loading3' }]
 
 	return (
 		<ScreenContainer navigation={navigation} handleRefresh={handleRefresh}>
@@ -48,7 +48,7 @@ const TweetScreen = () => {
 						</View>
 					)
 				}}
-				renderItem={({ item, index }) => <SingleTweet tweet={item} loading={loading} />}
+				renderItem={({ item }) => <SingleTweet tweet={item} loading={loading} />}
 				refreshControl={
 					<RefreshControl
 						colors={[colors.primary]}
