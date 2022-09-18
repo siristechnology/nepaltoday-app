@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useTheme } from '@config'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -11,24 +11,13 @@ import notificationHandler from '../services/notification-handler'
 import MainScreens from './MainScreens'
 const RootStack = createStackNavigator()
 
-const Navigator = (props) => {
-	const { theme, colors } = useTheme()
+const Navigator = () => {
+	const { theme } = useTheme()
 	const navigationRef = useRef(null)
-	const [loading, setLoading] = useState(false)
 
 	const onNotificationClicked = (notif) => {
-		if (notif.data && notif.data._id && notif.foreground === false) {
-			setLoading(true)
-			notificationHandler
-				.handleNotificationClick(notif.data._id)
-				.then((res) => {
-					navigationRef.current.navigate('PostDetail', { article: res.data.getArticle })
-					setLoading(false)
-				})
-				.catch((err) => {
-					crashlytics().recordError(err)
-					setLoading(false)
-				})
+		if (notif?.data?._id && notif.foreground === false) {
+			navigationRef.current.navigate('PostDetailLive', { articleId: notif.data._id })
 		}
 	}
 

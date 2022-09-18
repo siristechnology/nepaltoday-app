@@ -81,13 +81,6 @@ const Home = (props) => {
 	}, [fetchNews])
 
 	useEffect(() => {
-		const article = props.route.params?.article
-		if (article && article.source) {
-			props.navigation.navigate('ArticleDetail', { article, articles: [article] })
-		}
-	}, [props.navigation, props.route.params?.article])
-
-	useEffect(() => {
 		if (!loading && data?.getArticles?.length) {
 			const myArticles = data.getArticles
 			storetoAsync(myArticles)

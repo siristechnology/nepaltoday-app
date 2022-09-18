@@ -12,7 +12,7 @@ export const NEPALTODAY_URL = 'https://tinyurl.com/NepalTodayApp'
 const PostDetail = (props) => {
 	const { navigation, route } = props
 	const { colors } = useTheme()
-	const article = route?.params?.article
+	const article = route?.params?.article || props.article
 	const [heightHeader, setHeightHeader] = useState(Utils.heightHeader())
 	const scrollY = useRef(new Animated.Value(0)).current
 	const { imageLink, title, source, createdDate, content } = article

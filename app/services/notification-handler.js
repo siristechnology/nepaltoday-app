@@ -9,20 +9,6 @@ class NotificationHandler {
 		this.storeFcmToken(user, token)
 	}
 
-	handleNotificationClick(articleId) {
-		return new Promise((resolve, reject) => {
-			if (articleId) {
-				this.fetchArticle(articleId)
-					.then((res) => {
-						resolve(res)
-					})
-					.catch((err) => reject(err))
-			} else {
-				reject(new Error('FCMToken Not found'))
-			}
-		})
-	}
-
 	storeFcmToken = async (user, token) => {
 		client
 			.mutate({
@@ -39,51 +25,12 @@ class NotificationHandler {
 			})
 			.catch((reason) => crashlytics().recordError(reason))
 	}
-
-	fetchArticle(id) {
-		return new Promise((resolve, reject) => {
-			client
-				.query({
-					query: GET_ARTICLE_QUERY,
-					variables: { _id: id },
-				})
-				.then((res) => {
-					resolve(res)
-				})
-				.catch((error) => {
-					crashlytics().recordError(error)
-					reject(error)
-				})
-		})
-	}
 }
 
 const STORE_FCM_MUTATION = gql`
 	mutation storeFcmMutation($input: StoreFcmInput!) {
 		storeFcmToken(input: $input) {
 			success
-		}
-	}
-`
-
-const GET_ARTICLE_QUERY = gql`
-	query articleQuery($_id: String!) {
-		getArticle(_id: $_id) {
-			_id
-			title
-			shortDescription
-			content
-			link
-			imageLink
-			createdDate
-			modifiedDate
-			category
-			tags
-			source {
-				_id
-				name
-				logoLink
-			}
 		}
 	}
 `

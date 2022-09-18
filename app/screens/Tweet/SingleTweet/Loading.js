@@ -8,7 +8,7 @@ const Loading = (props) => {
 	return (
 		<Placeholder>
 			<View style={[styles.container, style]}>
-				<PlaceholderLine style={styles.imageWishlist} noMargin />
+				<PlaceholderLine style={styles.thumb} noMargin />
 				<View
 					style={{
 						paddingHorizontal: 10,
