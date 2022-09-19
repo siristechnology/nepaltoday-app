@@ -4,12 +4,17 @@
 		"node": true,
 		"jest": true
 	},
+	"overrides": [
+		{
+			"files": ["*.e2e.js"],
+			"env": {
+				"detox/detox": true,
+				"jest": true,
+				"jest/globals": true
+			}
+		}
+	],
 	"extends": ["standard", "plugin:prettier/recommended", "@react-native-community"],
-	"globals": {
-		"Atomics": "readonly",
-		"SharedArrayBuffer": "readonly",
-		"fetch": "readonly"
-	},
 	"parser": "babel-eslint",
 	"parserOptions": {
 		"ecmaFeatures": {
@@ -45,5 +50,10 @@
 		"quotes": "warn",
 		"comma-dangle": "off",
 		"eqeqeq": "off"
+	},
+	"globals": {
+		"Atomics": "readonly",
+		"SharedArrayBuffer": "readonly",
+		"fetch": "readonly"
 	}
 }
