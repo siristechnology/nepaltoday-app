@@ -4,7 +4,6 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import theme from './config/theme-paper'
 import { ApolloProvider } from '@apollo/client'
 import SplashScreen from 'react-native-splash-screen'
-import { DarkModeProvider, useDarkMode } from 'react-native-dark-mode'
 import store from './store'
 import GraphqlClient from './graphql/graphql-client'
 import App from './navigation'
@@ -16,7 +15,7 @@ console.disableYellowBox = true
 Utils.setupLayoutAnimation()
 
 const NTApp = () => {
-	const isDarkMode = useDarkMode()
+	const isDarkMode = false
 
 	useEffect(() => {
 		SplashScreen.hide()
@@ -34,9 +33,7 @@ const NTApp = () => {
 			<PaperProvider theme={theme}>
 				<SafeAreaProvider>
 					<ReduxProvider store={store}>
-						<DarkModeProvider>
-							<App />
-						</DarkModeProvider>
+						<App />
 					</ReduxProvider>
 				</SafeAreaProvider>
 			</PaperProvider>

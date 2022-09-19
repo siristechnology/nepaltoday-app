@@ -1,5 +1,3 @@
-import { useDarkMode } from 'react-native-dark-mode'
-
 /**
  * Define Const color use for whole application
  */
@@ -220,7 +218,7 @@ export const DefaultFont = 'OpenSans'
  * @returns theme,colors
  */
 export const useTheme = () => {
-	const isDarkMode = useDarkMode()
+	const isDarkMode = false
 	const forceDark = false
 	const listTheme = ThemeSupport.filter((item) => item.theme == 'orange')
 	const theme = listTheme.length > 0 ? listTheme[0] : DefaultTheme

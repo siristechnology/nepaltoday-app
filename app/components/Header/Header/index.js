@@ -2,7 +2,6 @@ import Text from '@components/Text'
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { StatusBar, TouchableOpacity, View } from 'react-native'
-import { useDarkMode } from 'react-native-dark-mode'
 import styles from './styles'
 
 export default function Header(props) {
@@ -25,7 +24,7 @@ export default function Header(props) {
 		renderRight,
 		barStyle,
 	} = props
-	const isDarkMode = useDarkMode()
+	const isDarkMode = false
 
 	useEffect(() => {
 		let option = isDarkMode ? 'light-content' : 'dark-content'
