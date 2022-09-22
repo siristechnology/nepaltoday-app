@@ -3,8 +3,9 @@ import { useTheme } from '@config'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import PushNotification from 'react-native-push-notification'
-import crashlytics from '@react-native-firebase/crashlytics'
 import auth from '@react-native-firebase/auth'
+import analytics from '@react-native-firebase/analytics';
+import crashlytics from '@react-native-firebase/crashlytics'
 import { getReadArticles, clearOldArticles } from '../services/asyncStorageService'
 import readArticlesService from '../services/readArticles.service'
 import notificationHandler from '../services/notification-handler'
@@ -14,6 +15,7 @@ const RootStack = createStackNavigator()
 const Navigator = () => {
 	const { theme } = useTheme()
 	const navigationRef = useRef(null)
+	const routeNameRef = React.useRef();
 
 	const onNotificationClicked = (notif) => {
 		if (notif?.data?._id && notif.foreground === false) {
@@ -45,7 +47,22 @@ const Navigator = () => {
 	}, [])
 
 	return (
-		<NavigationContainer theme={theme} ref={navigationRef}>
+		<NavigationContainer theme={theme} ref={navigationRef}
+			onReady={() => {
+				routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+			}}
+			onStateChange={async () => {
+				const previousRouteName = routeNameRef.current;
+				const currentRouteName = navigationRef.current.getCurrentRoute().name;
+
+				if (previousRouteName !== currentRouteName) {
+					await analytics().logScreenView({
+						screen_name: currentRouteName,
+						screen_class: currentRouteName,
+					});
+				}
+				routeNameRef.current = currentRouteName;
+			}}>
 			<RootStack.Navigator
 				screenOptions={{
 					headerShown: false,
